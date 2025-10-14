@@ -8,7 +8,7 @@
     <Button label="FR" />
     <Button label="EN" />
     <Button label="ABOUT" href="/about" />
-    <Button img={logo} />
+    <Button img={logo} href="/" />
 </header>
 
 <style>

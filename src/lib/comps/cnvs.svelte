@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy, tick } from 'svelte';
-  import { draw } from 'svelte/transition';
+  import { draw, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
 
   export let numCurves: number = 2; // up to 3
@@ -11,7 +11,6 @@
   // transition timings (ms)
   const IN_MS = 1200;
   const OUT_MS = 600;
-  const VISIBLE_MS = 3000;
 
   let svgEl: SVGSVGElement;
   let width = 1000;
@@ -68,11 +67,9 @@
     // trigger out transitions by removing paths
     paths = [];
     markers = [];
-    // after out transition completes, regenerate and schedule next fade
+    // after out transition completes, regenerate once (no auto-loop)
     loopTimeout = window.setTimeout(() => {
       regenerate();
-      // wait for in-transition to complete, then keep visible for VISIBLE_MS
-      loopTimeout = window.setTimeout(startFadeOutAndRegen, IN_MS + VISIBLE_MS);
     }, OUT_MS + 50);
   }
 
@@ -119,8 +116,6 @@
     width = rect.width || width;
     height = rect.height || height;
     regenerate();
-    // start the loop: after in-transition + visible period, fade out and regenerate
-    loopTimeout = window.setTimeout(startFadeOutAndRegen, IN_MS + VISIBLE_MS);
 
     const onResize = () => {
       const r = svgEl.getBoundingClientRect();
@@ -158,7 +153,17 @@
     />
   {/each}
   {#each markers as m}
-    <rect x={m.x - 11} y={m.y - 11} width="22" height="22" fill={stroke} opacity={opacity} shape-rendering="geometricPrecision" />
+    <rect
+    x={m.x - 11}
+    y={m.y - 11}
+    width="22"
+    height="22"
+    fill='var(--primary-color)'
+    opacity={opacity}
+    stroke={stroke}
+    stroke-width={strokeWidth}
+    shape-rendering="geometricPrecision"
+    in:fade={{ duration: IN_MS, easing: cubicOut, delay: 1000 }}/>
   {/each}
   <!-- optional: defs/filters could be added here -->
   <defs></defs>
@@ -171,5 +176,8 @@
     pointer-events: none;
     display: block;
     shape-rendering: geometricPrecision;
+    background-color: transparent;
+    position: absolute;
+    z-index: -1;
   }
 </style>

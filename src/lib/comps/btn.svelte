@@ -3,7 +3,9 @@
     let props = $props();
 </script>
 
-<button class="generic_btn" onclick={() => goto(props?.href)} style={props?.img ? 'background-color: white' : ''}>
+<a
+data-sveltekit-reload
+class="generic_btn" onclick={() => goto(props?.href)} style={props?.img ? 'background-color: white' : ''}>
     {#if props?.label}
         <p class="m">
             {props.label}
@@ -12,29 +14,31 @@
     {#if props?.img}
         <img src="{props?.img}" alt="{props?.imgAlt}" />
     {/if}
-</button>
+</a>
 
 <style>
     .generic_btn {
+        display: flex;
         width: fit-content;
         height: fit-content;
         min-height: 30px;
         padding: 10px 20px;
         border-radius: 5px;
-        background-color: #CEFFBF;
-        color: #111111;
+        background-color: var(--primary-color);
+        color: var(--primary-dark);
         cursor: pointer;
-        border: 1.5px solid black;
-        font-weight: 700;
+        border: 2px solid var(--primary-dark);
+        font-weight: 500;
     }
 
     .generic_btn:hover {
-        background-color: #7ddb60;
+        background-color: var(--primary-color);
+        filter: invert(0.1);
     }
 
     .generic_btn:active {
-        background-color: #111111;
-        color: #CEFFBF;
+        background-color: var(--primary-dark);
+        color: var(--primary-color);
     }
 
     img {

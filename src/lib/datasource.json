@@ -1,0 +1,528 @@
+{
+  "metadata": {
+    "title": "Trajectories of engagement",
+    "meta_authors": [
+      {
+        "firstName": "Marta",
+        "lastName": "Severo",
+        "role": "creator"
+      },
+      {
+        "firstName": "Robin",
+        "lastName": "de Mourat",
+        "role": "creator"
+      },
+      {
+        "firstName": "Donato",
+        "lastName": "Ricci",
+        "role": "creator"
+      },
+      {
+        "firstName": "Élie",
+        "lastName": "Petit",
+        "role": "creator"
+      },
+      {
+        "firstName": "Tommaso",
+        "lastName": "Prinetti",
+        "role": "creator"
+      }
+    ]
+  },
+  "intro": {
+    "markdown": "### Abstract\n\nTrajectories of engagement refer to moments in the research process where external actors are involved and co-construct knowledge with the research team. These research paths involving an outside can take various forms of material production based on physical and/or digital environments . Often used in digital data-grounded labs or citizen science projects, trajectories of engagement are shaped in research which aims to address social concerns or public issues.\n\nThis research project aims to explore and describe the different forms that trajectories of engagement can take in the humanities and social sciences, the interactions between internal and external actors that they can generate, and the materiality of the socio-technical choices involved. The expected outputs are to build an observatory and a network of researchers interested in studying these trajectories and a book will be written to present the identified trajectories."
+  },
+  "projects": [
+    {
+      "metadata": {
+        "id": "replay-it-again",
+        "title": "Replay it again",
+        "year": "",
+        "project_leaders": "Baptiste Buob, Jérémy Demesmaeker et Laurence Maillot",
+        "research_center": "Université Paris Nanterre / Dodescaden"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=8139Z4q7kqU",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:2:48",
+            "2:5:5"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "mmat",
+        "title": "mMAT",
+        "year": "",
+        "project_leaders": "Fredy Vallejos, Alexander Duque Garcia",
+        "research_center": "Universidad de las artes, Équateur"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=1Ngb0a-9vDs",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:0:10",
+            "2:1:23"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "le-sommet-qui-cache-la-montagne",
+        "title": "Le sommet qui cache la montagne",
+        "year": "",
+        "project_leaders": "Simon Dumas Primbault",
+        "research_center": "EPFL"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=AgbhPAtrzdw",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "0:20:12",
+            "0:28:39"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "1:59:17",
+            "2:0:10"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "extreme-citizen-science",
+        "title": "Extreme Citizen Science",
+        "year": "",
+        "project_leaders": "Fabien Moustard",
+        "research_center": "UCL"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=tDtcfD6lcC0",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "0:47:14",
+            "0:54:8"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:3:12",
+            "1:11:46"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:6:54",
+            "2:8:49"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "devenez-mod-rateurs--devenez-mod-ratrices",
+        "title": "Devenez modérateurs, devenez modératrices",
+        "year": "",
+        "project_leaders": "Valentine Crosset",
+        "research_center": "Sciences Po"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=Lghgf-R1Eog",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "0:39:30",
+            "0:47:14"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "0:54:8",
+            "1:3:12"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:5:5",
+            "2:6:54"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "controverses-en-action",
+        "title": "Controverses en action",
+        "year": "",
+        "project_leaders": "Thomas Tari",
+        "research_center": "Sciences Po"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=Aa_bCI-A-zM",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "0:11:56",
+            "0:20:12"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "0:28:39",
+            "0:39:30"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:1:23",
+            "2:2:48"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "ateliers-de-situation-interculturelle",
+        "title": "Ateliers de situation interculturelle",
+        "year": "",
+        "project_leaders": "Anthony Grégoire, Manon Deschenes",
+        "research_center": "Université de Montréal / Ville de Québec"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=Bujk6_fq2mI",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:14:30",
+            "2:26:0"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "infrastructuring-care",
+        "title": "Infrastructuring care",
+        "year": "",
+        "project_leaders": "Sol Martinez Demarco",
+        "research_center": "Universität Tübingen"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=TiHWErAiWME",
+      "excerpts": []
+    },
+    {
+      "metadata": {
+        "id": "neurodiversit-s",
+        "title": "Neurodiversités",
+        "year": "",
+        "project_leaders": "Lucas Fritz",
+        "research_center": "Université Paris Nanterre"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=HWzi02PUJaY",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "1:58:10",
+            "1:59:17"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "experimental-audience-metrics-with-the-royal-danish-theatre",
+        "title": "Experimental audience metrics with the Royal Danish Theatre",
+        "year": "",
+        "project_leaders": "Anders Kristian Munk",
+        "research_center": "Aalborg University"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=TQOYz_gKopU",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:36:54",
+            "1:42:1"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:50:7",
+            "1:53:29"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:18:28",
+            "2:26:0"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "sur-les--ternit-s-et-la-mort-num-rique",
+        "title": "Sur les éternités et la mort numérique",
+        "year": "",
+        "project_leaders": "Fanny Georges",
+        "research_center": "Université Sorbonne Nouvelle"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=IgtHAmNxUg0",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:31:12",
+            "1:36:54"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:45:3",
+            "1:50:7"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:56:3",
+            "1:56:54"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:18:28",
+            "2:21:42"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "captoth-que",
+        "title": "Captothèque",
+        "year": "",
+        "project_leaders": "Laurence Allard",
+        "research_center": "Université de Lille"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=ftJXEhYN1rM",
+      "excerpts": []
+    },
+    {
+      "metadata": {
+        "id": "cov-culture",
+        "title": "Cov Culture",
+        "year": "",
+        "project_leaders": "Sarah Montero, Aurélie Chêne Giraux",
+        "research_center": "Université Bordeaux Montaigne / Université Jean Monnet Saint-Etienne"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=CYumZp1I700",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:10:33",
+            "2:13:14"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "cinemaf",
+        "title": "CINEMAF",
+        "year": "",
+        "project_leaders": "Monica Heintz",
+        "research_center": "Université Paris Nanterre"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=jxTsx--txr0",
+      "excerpts": []
+    },
+    {
+      "metadata": {
+        "id": "generic-visuals-in-the-news",
+        "title": "Generic visuals in the news",
+        "year": "",
+        "project_leaders": "Giorgia Aiello",
+        "research_center": "University of Leeds and University of Bologna"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=VxyKIs_pTdA",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:13:14",
+            "2:14:30"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "shaping-ia",
+        "title": "Shaping IA",
+        "year": "",
+        "project_leaders": "Pauline Gourlet",
+        "research_center": "Sciences Po"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=6KzRyC90QS8",
+      "excerpts": []
+    },
+    {
+      "metadata": {
+        "id": "a-l-ombre-des-biblioth-ques",
+        "title": "A l'ombre des bibliothèques",
+        "year": "",
+        "project_leaders": "Clément Bert-Erboul",
+        "research_center": "Université Sorbonne Nouvelle"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=yrzADhJAf7Y",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:21:42",
+            "2:23:25"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "encyclop-die-atimatekw",
+        "title": "Encyclopédie Atimatekw",
+        "year": "",
+        "project_leaders": "Nathalie Casemajor, Thérèse Ottawa",
+        "research_center": "INRS, Canada / Wikimédia Canada"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=Oeedh9aHrbU",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:19:59",
+            "1:26:35"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:30:51",
+            "1:31:12"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:8:49",
+            "2:10:33"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "coeso",
+        "title": "COESO : Collaborative Engagement on Societal Issues",
+        "year": "2020 - 2023",
+        "project_leaders": "Alessia Smaniotto",
+        "research_center": "EHESS / OpenEdition"
+      },
+      "texts": {
+        "presentation": "The workshop experience had a significant impact on the way I relate to both my research project and its actors. It embodied a form of mutual learning: listening to other coordinators reflect on the participatory dimensions of their projects—whether they had initiated or contributed to them—allowed me to rethink my own participatory framework. It helped me not only refine the mechanisms I put in place but also find the right words to describe and support them.\n\nOne moment that particularly stayed with me was a presentation by researcher Anders Kristian Munk from the Experimental audience metrics with the Royal Danish Theatre project. What struck me was how he emphasized that every participatory process inevitably encounters a moment of failure—not necessarily a collapse, but a structural moment of tension or wavering. He framed this not as a flaw but as a normal and inherent part of participatory dynamics. That insight was extremely powerful for me.\n\nRealizing that others had experienced—and even theorized—these critical moments gave me tools and language to better understand and support the projects I’m involved in. Ultimately, the shared reflections during the workshop helped me return to my work with new clarity, and a stronger capacity to accompany the participatory processes I help facilitate.",
+        "experience": "The workshop experience had a significant impact on the way I relate to both my research project and its actors. It embodied a form of mutual learning: listening to other coordinators reflect on the participatory dimensions of their projects—whether they had initiated or contributed to them—allowed me to rethink my own participatory framework. It helped me not only refine the mechanisms I put in place but also find the right words to describe and support them.\n\nOne moment that particularly stayed with me was a presentation by researcher Anders Kristian Munk from the Experimental audience metrics with the Royal Danish Theatre project. What struck me was how he emphasized that every participatory process inevitably encounters a moment of failure—not necessarily a collapse, but a structural moment of tension or wavering. He framed this not as a flaw but as a normal and inherent part of participatory dynamics. That insight was extremely powerful for me.\n\nRealizing that others had experienced—and even theorized—these critical moments gave me tools and language to better understand and support the projects I’m involved in. Ultimately, the shared reflections during the workshop helped me return to my work with new clarity, and a stronger capacity to accompany the participatory processes I help facilitate.",
+        "concept": "Actually, I’ve had a concern from the very beginning with the proposed definition — specifically the part that says “sparked by engaged social sciences.” It puts the emphasis right away on the academic side, as if trajectories of implication always originate from researchers. But in my experience, that’s not the case. These trajectories are often initiated or co-initiated by social actors themselves. So if we want the definition to be relevant to non-academic partners, we need to acknowledge from the start that they’re not just participants — they’re initiators too.\n\nAnd we also have to consider that so-called “engaged actors” might actually be researchers in other disciplines, or students, or people who occupy ambiguous positions. That’s why I think it’s important to recognize what I’d call border people — individuals who move between worlds, between the academic and the non-academic, or across disciplines and roles. This is inspired by a concept from a sociologist — I believe his name is Simmel — who used the term marginal man. I prefer border person, or boundary actor. These people are not just at the boundary — sometimes they are the boundary.\n\nThey often hold multiple roles and embody diverse, heterodox practices. And recognizing, welcoming, and supporting these kinds of figures is crucial for participatory processes to succeed. If neither side — academic or non-academic — includes or values these boundary figures, then it becomes much harder to build meaningful collaboration. You end up with silos, and no bridges between them."
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=YtZkeY22YYM",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:11:46",
+            "1:19:59"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:26:35",
+            "1:30:51"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "from-digital-inclusion-to-it-appropriation",
+        "title": "From digital Inclusion to IT appropriation",
+        "year": "",
+        "project_leaders": "",
+        "research_center": ""
+      },
+      "texts": {},
+      "presentationURL": "?",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:42:1",
+            "1:45:3"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:53:29",
+            "1:56:3"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:23:25",
+            "2:26:0"
+          ]
+        }
+      ]
+    }
+  ]
+}

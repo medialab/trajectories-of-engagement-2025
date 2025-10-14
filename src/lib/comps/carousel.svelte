@@ -1,77 +1,24 @@
 <script lang="ts">
 
     let props = $props();
+    let isLoaded: boolean = $state(false);
 
-    import schema_original from '$lib/assets/posters/schema_original.png';
-    import schema_original_1 from '$lib/assets/posters/schema_original-1.png';
-    import schema_original_2 from '$lib/assets/posters/schema_original-2.png';
-    import schema_original_3 from '$lib/assets/posters/schema_original-3.png';
-    import schema_original_4 from '$lib/assets/posters/schema_original-4.png';
-    import schema_original_5 from '$lib/assets/posters/schema_original-5.png';
-    import schema_original_6 from '$lib/assets/posters/schema_original-6.png';
-    import schema_original_7 from '$lib/assets/posters/schema_original-7.png';
-    import schema_original_8 from '$lib/assets/posters/schema_original-8.png';
-    import schema_original_9 from '$lib/assets/posters/schema_original-9.png';
-    import schema_original_10 from '$lib/assets/posters/schema_original-10.png';
-    import schema_original_11 from '$lib/assets/posters/schema_original-11.png';
-    import schema_original_12 from '$lib/assets/posters/schema_original-12.png';
-    import schema_original_13 from '$lib/assets/posters/schema_original-13.png';
-    import schema_original_14 from '$lib/assets/posters/schema_original-14.png';
-    import schema_original_15 from '$lib/assets/posters/schema_original-15.png';
-    import schema_original_16 from '$lib/assets/posters/schema_original-16.png';
-    import schema_original_17 from '$lib/assets/posters/schema_original-17.png';
-    import schema_original_18 from '$lib/assets/posters/schema_original-18.png';
+    // Auto-import poster images; exclude schema sequence
+    const posterModules = import.meta.glob('/src/lib/assets/posters/*.png', { eager: true, import: 'default' }) as Record<string, string>;
 
-    const posters = [
-        schema_original,
-        schema_original_1,
-        schema_original_2,
-        schema_original_3,
-        schema_original_4,
-        schema_original_5,
-        schema_original_6,
-        schema_original_7,
-        schema_original_8,
-        schema_original_9,
-        schema_original_10,
-        schema_original_11,
-        schema_original_12,
-        schema_original_13,
-        schema_original_14,
-        schema_original_15,
-        schema_original_16,
-        schema_original_17,
-        schema_original_18,
-        schema_original,
-        schema_original_1,
-        schema_original_2,
-        schema_original_3,
-        schema_original_4,
-        schema_original_5,
-        schema_original_6,
-        schema_original_7,
-        schema_original_8,
-        schema_original_9,
-        schema_original_10,
-        schema_original_11,
-        schema_original_12,
-        schema_original_13,
-        schema_original_14,
-        schema_original_15,
-        schema_original_16,
-        schema_original_17,
-        schema_original_18
-    ];
+    const postersSorted = Object.entries(posterModules)
+        .filter(([path]) => !/schema_original/.test(path))
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([, url]) => url);
+
+    const posters = [...postersSorted, ...postersSorted]; //double it for in-view effect
 
 	import {  T } from '@threlte/core'
 	import { useTexture } from '@threlte/extras'
     import { onMount, onDestroy } from 'svelte'
-    import { interactivity, useCursor } from '@threlte/extras'
-    
+    import { interactivity, useCursor, HTML as HTMl } from '@threlte/extras'
     import type { Mesh as ThreeMesh } from 'three'
-    
-import { browser } from '$app/environment'; 
-	import { GodRaysCombineShader } from 'three/examples/jsm/Addons.js';
+    import { browser } from '$app/environment'; 
 
     // Removed LocomotiveScroll; we drive scroll from wheel/touch directly
 	let scrollY = $state(0);
@@ -79,6 +26,8 @@ import { browser } from '$app/environment';
 	// User-controlled deformation multiplier (1 = default strength)
 	let deformationStrength = $state(2);
     let cursorTag: HTMLElement;
+    let projects = props.projects as any[];
+    console.log(projects);
 
 	$effect(() => {
 		if ((props as any)?.deformationStrength !== undefined) {
@@ -95,6 +44,8 @@ import { browser } from '$app/environment';
     const middleZ = startZ + Math.floor(posters.length / 2) * spacing;
 
     let meshes: ThreeMesh[] = [];
+    // Per-mesh randomized deformation parameters
+    const meshRand = new WeakMap<ThreeMesh, { curlScale: number; thresholdShift: number; edgePower: number; dirScale: number; windScale: number }>();
     // Per-card hover scale offsets and targets (smoothly animated)
     let hoverToScale = $state<number[]>(Array(posters.length).fill(0));
     let targetScaleByIndex = $state<number[]>(Array(posters.length).fill(0));
@@ -139,8 +90,10 @@ import { browser } from '$app/environment';
 		const windStrength = Math.max(-1, Math.min(1, scrollDelta * 0.01));
 
 		for (const mesh of meshes) {
-			const position = mesh?.geometry?.attributes?.position;
+            const position = mesh?.geometry?.attributes?.position;
 			if (!position) continue;
+
+            const r = meshRand.get(mesh) ?? { curlScale: 1, thresholdShift: 0, edgePower: 1, dirScale: 1, windScale: 1 };
 
 			// Cache baseline Z positions for this mesh to avoid cumulative deformation
 			let baseZ = originalZByMesh.get(mesh);
@@ -157,9 +110,9 @@ import { browser } from '$app/environment';
 			const halfW = width / 2;
 			const halfH = height / 2;
 
-			// Rounded falloff from inner region to edges using max-norm (square radius)
-			// threshold defines the inner area with no curl; lower => wider curl area
-			const threshold = 0.35; // 0..1
+            // Rounded falloff from inner region to edges using max-norm (square radius)
+            // threshold defines the inner area with no curl; lower => wider curl area
+            const threshold = 0.35 + r.thresholdShift; // 0..1 with per-mesh shift
 
 			const vertexCount = position.count;
 			for (let i = 0; i < vertexCount; i++) {
@@ -172,16 +125,17 @@ import { browser } from '$app/environment';
 				const m = Math.max(ax, ay); // 0 at center .. 1 at edges/corners
 				let t = (m - threshold) / Math.max(1e-6, 1 - threshold);
 				t = Math.min(1, Math.max(0, t));
-				let s = t * t * (3 - 2 * t); // smoothstep
-				s = s * s; // emphasize rounding
-				const maxCurl = 0.45; // softer amplitude
-				zOffset = s * maxCurl * windStrength * Math.max(0, deformationStrength);
+                let s = t * t * (3 - 2 * t); // smoothstep
+                s = Math.pow(s, 1 + Math.max(0, r.edgePower)); // per-mesh rounding power
+                const maxCurl = 0.45; // base amplitude
+                zOffset = s * maxCurl * r.curlScale * (windStrength * r.windScale) * Math.max(0, deformationStrength);
 				// Smoothly vary curl direction across X (gentler near center)
 				const nxEdge = x / Math.max(1e-6, halfW); // -1 .. 1
 				const sign = nxEdge >= 0 ? -1 : 1; // right negative, left positive
 				const a = Math.min(1, Math.abs(nxEdge));
 				const eased = a * a * (3 - 2 * a); // smoothstep
-				const dir = sign * eased;
+                let dir = sign * eased * r.dirScale;
+                dir = Math.max(-1, Math.min(1, dir));
 				zOffset *= dir;
 
 				position.setZ(i, baseZ[i] + zOffset);
@@ -213,6 +167,7 @@ import { browser } from '$app/environment';
                 });
             }
         };
+
         document.addEventListener('mousemove', moveHandler, { passive: true });
 
         const onWheel = (e: WheelEvent) => {
@@ -238,6 +193,10 @@ import { browser } from '$app/environment';
         window.addEventListener('touchstart', onTouchStart, { passive: true });
         window.addEventListener('touchmove', onTouchMove, { passive: false });
 
+        setTimeout(() => {
+            isLoaded = true;
+        }, 1000);
+
         onDestroy(() => {
             window.removeEventListener('wheel', onWheel as any);
             window.removeEventListener('touchstart', onTouchStart as any);
@@ -252,6 +211,7 @@ import { browser } from '$app/environment';
 <T.Group
 rotation={[0.3, -0.5, 0]}
 >
+
     {#each posters as poster, index}
         {@const texture = useTexture(poster).then(texture => texture)}
             {#await texture then map}
@@ -260,12 +220,24 @@ rotation={[0.3, -0.5, 0]}
                         scale={[1 + hoverToScale[index], 1 + hoverToScale[index], 1]}
                         rotation={[0, 0, 0]}
                         oncreate={(value) => {
-                            if (value && !meshes.includes(value)) meshes.push(value);
+                            if (value && !meshes.includes(value)) {
+                                meshes.push(value);
+                                // assign per-mesh randomized params once
+                                const rand = (min: number, max: number) => Math.random() * (max - min) + min;
+                                meshRand.set(value as any, {
+                                    curlScale: rand(0.8, 1.2),
+                                    thresholdShift: rand(-0.08, 0.08),
+                                    edgePower: rand(0, 1.5),
+                                    dirScale: rand(0.8, 1.2),
+                                    windScale: rand(0.8, 1.2)
+                                });
+                            }
                         }}
                         onpointerenter={(e: any) => {
                                 e.stopPropagation();
                                 setHoverTarget(index, 0.2);
                                 onPointerEnter();
+                                props.onHoverPoster?.();
                             }}
                             onpointerleave={(e: any) => {
                                 e.stopPropagation();
@@ -283,8 +255,8 @@ rotation={[0.3, -0.5, 0]}
                             />
                     </T.Mesh>
             {/await}
-            
     {/each}
+
 </T.Group>
 
 <T.OrthographicCamera
@@ -293,7 +265,8 @@ rotation={[0.3, -0.5, 0]}
     zoom={40}
     makeDefault
     far={10000}
-    near={0.01}
+    near={0.001}
+    fov={10}
 >
 </T.OrthographicCamera>
 

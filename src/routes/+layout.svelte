@@ -9,6 +9,8 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
 </svelte:head>
 
+<svelte:options runes={true} />
+
 {@render children?.()}
 
 <style>
@@ -18,14 +20,20 @@
 		box-sizing: border-box;
 	}
 
+	:root {
+		--primary-color: #CEFFBF;
+		--primary-light: #F5F5F5;
+		--primary-dark: #111111;
+	}
+
 	html, body, :global(body) {
 		font-family: 'Inter', sans-serif;
-		font-weight: 400;
-		background-color: #F5F5F5;
+		font-weight: 300;
+		background-color: var(--primary-light);
 	}
 
 	:global(::selection) {
-		background-color: #000;
+		background-color: var(--primary-dark);
 		color: #fff;
 	}
 
@@ -33,10 +41,6 @@
 		font-size: 48px;
 		font-weight: 600;	
 		line-height: 1.1;
-	}
-
-	:global(p) {
-		font-weight: 300;
 	}
 
 	:global(.s) {
@@ -50,7 +54,7 @@
 	}
 
 	:global(.l) {
-		font-size: 24px;
+		font-size: 26px;
 	}
 	
 	:global(.xl) {
@@ -80,7 +84,19 @@
 	:global(.align_center) {
 		align-items: center;
 	}
-	
-	
+
+	:global(button, a) {
+		background-color: unset;
+		border: unset;
+		color: unset;
+		font-weight: unset;
+		font-size: unset;
+		font-family: unset;
+		font-style: unset;
+		font-variant: unset;
+		font-optical-sizing: unset;
+		font-kerning: unset;
+		font-feature-settings: unset;
+	}
 
 </style>

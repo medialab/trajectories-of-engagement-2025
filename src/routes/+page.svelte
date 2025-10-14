@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { PageProps } from './$types';
     import Button from '$lib/comps/btn.svelte';
     import Header from '$lib/comps/hdr.svelte';
     import BezierCanvas from '$lib/comps/cnvs.svelte';
@@ -8,7 +9,10 @@
     import { Canvas } from '@threlte/core';
     import { NoToneMapping } from 'three';
 
-    let containerEl: HTMLElement;
+    let containerEl: HTMLElement | undefined = $state(undefined);
+    let bezRef: any;
+
+    let { data }: PageProps = $props();
 
 </script>
 
@@ -17,12 +21,11 @@
 <div class="hero_container vertical_flex">
     <div class="vertical_flex">
         <h1>
-            Trajectories
-    of engagement
+            Trajectories of engagement
         </h1>
         <p>Trajectories of engagement are the paths through which researchers and external actors meet, collaborate, and co-create knowledge—across physical and digital settings—to address public issues</p>
     </div>
-    <Button label="Access the archive ↓" href="#archive" />
+    <Button label="Access the archive ↓" href="/archive" />
 </div>
 
 <div class="tag_container align_right vertical_flex ">
@@ -34,21 +37,23 @@
 <div class="carousel_container" bind:this={containerEl} data-scroll-container >
     <div>
         <Canvas toneMapping={NoToneMapping}>
-            <Carousel containerEl={containerEl}/>
+            <Carousel containerEl={containerEl} onHoverPoster={() => bezRef?.triggerRegeneration?.()} projects={data.projects}/>
         </Canvas>
     </div>
 </div>
 
-<BezierCanvas />
-
-
-
+<BezierCanvas bind:this={bezRef} />
 
 <style>
 
 
     h1 {
-    text-transform: uppercase;
+        text-transform: uppercase;
+        background-color: var(--primary-light);
+    }
+
+    p {
+        background-color: var(--primary-light);
     }
 
  .hero_container {

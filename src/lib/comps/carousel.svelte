@@ -64,34 +64,67 @@
     ];
 
 	import {  T } from '@threlte/core'
-    import { fade } from 'svelte/transition'
-	import { useTexture, HTML } from '@threlte/extras'
+	import { useTexture } from '@threlte/extras'
     import { onMount, onDestroy } from 'svelte'
     import { interactivity, useCursor } from '@threlte/extras'
     
     import type { Mesh as ThreeMesh } from 'three'
     
-    import { browser } from '$app/environment'; 
-	import { div } from 'three/tsl';
+import { browser } from '$app/environment'; 
+	import { GodRaysCombineShader } from 'three/examples/jsm/Addons.js';
 
-	let loco: LocomotiveScroll;
+    // Removed LocomotiveScroll; we drive scroll from wheel/touch directly
 	let scrollY = $state(0);
     let scrollFactor = (0.01);
 	// User-controlled deformation multiplier (1 = default strength)
 	let deformationStrength = $state(2);
+    let cursorTag: HTMLElement;
+
 	$effect(() => {
 		if ((props as any)?.deformationStrength !== undefined) {
 			deformationStrength = (props as any).deformationStrength as number;
 		}
 	});
-    const { onPointerEnter, onPointerLeave } = useCursor()
 
-    const spacing = 7;
+	// Use Threlte's cursor handlers (must be created during init, not in event callbacks)
+	const { onPointerEnter, onPointerLeave } = useCursor();
+
+    let spacing = (7);
     const startZ = 5;
     const groupTotalLength = posters.length * spacing;
     const middleZ = startZ + Math.floor(posters.length / 2) * spacing;
+
     let meshes: ThreeMesh[] = [];
-    let lastScrollY = 0;
+    // Per-card hover scale offsets and targets (smoothly animated)
+    let hoverToScale = $state<number[]>(Array(posters.length).fill(0));
+    let targetScaleByIndex = $state<number[]>(Array(posters.length).fill(0));
+    let hoverAnimFrame: number | null = null;
+
+    function animateHoverScales() {
+        hoverAnimFrame = null;
+        let needsAnotherFrame = false;
+        for (let i = 0; i < hoverToScale.length; i++) {
+            const current = hoverToScale[i];
+            const target = targetScaleByIndex[i];
+            const delta = target - current;
+            if (Math.abs(delta) > 0.001) {
+                // simple ease
+                hoverToScale[i] = current + delta * 0.2;
+                needsAnotherFrame = true;
+            } else if (current !== target) {
+                hoverToScale[i] = target;
+            }
+        }
+        if (needsAnotherFrame) {
+            hoverAnimFrame = requestAnimationFrame(animateHoverScales);
+        }
+    }
+
+    function setHoverTarget(index: number, value: number) {
+        targetScaleByIndex[index] = value;
+        if (hoverAnimFrame === null) hoverAnimFrame = requestAnimationFrame(animateHoverScales);
+    }
+
 	const originalZByMesh = new WeakMap<ThreeMesh, Float32Array>();
 
     function cardBoundTeleport(zValue: number): number {
@@ -157,38 +190,62 @@
 			mesh.geometry.computeVertexNormals?.();
 		}
     }
-    
 
-    interactivity();
+    interactivity(
+        {target: props.containerEl}
+    );
 
-	onMount(async () => {
-		if (!browser) return;
+    onMount(() => {
+        if (!browser) return;
 
-        const { default: LocomotiveScroll } = await import('locomotive-scroll');
+        let lastX = 0;
+        let lastY = 0;
+        let rafId: number | null = null;
+        const moveHandler = (e: MouseEvent) => {
+            lastX = e.clientX;
+            lastY = e.clientY;
+            if (rafId === null) {
+                rafId = requestAnimationFrame(() => {
+                    rafId = null;
+                    if (cursorTag) {
+                        cursorTag.style.transform = `translate(${lastX}px, ${lastY}px)`;
+                    }
+                });
+            }
+        };
+        document.addEventListener('mousemove', moveHandler, { passive: true });
 
-        loco = new LocomotiveScroll({
-            el: props.containerEl,
-            smooth: true,
-            direction: 'vertical',
-            multiplier: 2,
-            lerp: 0.6
-        });
-
-        loco.on('scroll', (args: any) => {
-            const y = args?.scroll?.y ?? 0;
-            const delta = y - lastScrollY;
-            lastScrollY = y;
-            scrollY = y * scrollFactor;
+        const onWheel = (e: WheelEvent) => {
+            e.preventDefault();
+            const delta = e.deltaY;
+            const prev = scrollY;
+            scrollY = prev + delta * scrollFactor;
             deformMeshes(delta);
+        };
+
+        let touchY = 0;
+        const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0]?.clientY ?? 0; };
+        const onTouchMove = (e: TouchEvent) => {
+            const yNow = e.touches[0]?.clientY ?? 0;
+            const dy = touchY - yNow;
+            const prev = scrollY;
+            scrollY = prev + dy * scrollFactor;
+            deformMeshes(dy);
+            touchY = yNow;
+        };
+
+        window.addEventListener('wheel', onWheel, { passive: false });
+        window.addEventListener('touchstart', onTouchStart, { passive: true });
+        window.addEventListener('touchmove', onTouchMove, { passive: false });
+
+        onDestroy(() => {
+            window.removeEventListener('wheel', onWheel as any);
+            window.removeEventListener('touchstart', onTouchStart as any);
+            window.removeEventListener('touchmove', onTouchMove as any);
         });
-
-        loco.scrollTo(1000, { duration: 1000});
-
     });
 
-    onDestroy(() => {
-        loco?.destroy();
-    });
+    // cursor move handler is removed in onMount cleanup above
 </script>
 
 
@@ -199,17 +256,21 @@ rotation={[0.3, -0.5, 0]}
         {@const texture = useTexture(poster).then(texture => texture)}
             {#await texture then map}
                     <T.Mesh
-                        position={[0, 0, cardBoundTeleport(startZ + (index * spacing) + scrollY)]} rotation={[0, 0, 0]}
+                        position={[0, 0, cardBoundTeleport(startZ + (index * spacing) + scrollY)]}
+                        scale={[1 + hoverToScale[index], 1 + hoverToScale[index], 1]}
+                        rotation={[0, 0, 0]}
                         oncreate={(value) => {
                             if (value && !meshes.includes(value)) meshes.push(value);
                         }}
-                        onpointerenter={() => {
-                                console.log('Hover enter - poster index:', index);
-                                onPointerEnter()
+                        onpointerenter={(e: any) => {
+                                e.stopPropagation();
+                                setHoverTarget(index, 0.2);
+                                onPointerEnter();
                             }}
-                            onpointerleave={() => {
-                                console.log('Hover leave - poster index:', index);
-                                onPointerLeave()
+                            onpointerleave={(e: any) => {
+                                e.stopPropagation();
+                                setHoverTarget(index, 0);
+                                onPointerLeave();
                             }}  
                         interactive={true}
                         castShadow={true}
@@ -238,8 +299,28 @@ rotation={[0.3, -0.5, 0]}
 
 <T.AmbientLight intensity={1000} color="white" />
 
+    <div id="cursorTrack" bind:this={cursorTag}>
+        Tada!
+    </div>
 
 <style>
+
+    #cursorTrack {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-9999px, -9999px);
+        pointer-events: none;
+        z-index: 50;
+        width: auto;
+        height: auto;
+        padding: 2px 6px;
+        background: rgba(255, 0, 0, 0.85);
+        color: #fff;
+        font-size: 12px;
+        border-radius: 4px;
+        white-space: nowrap;
+    }
 
     
 

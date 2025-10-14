@@ -1,6 +1,8 @@
 <script lang="ts">
     import Button from '$lib/comps/btn.svelte';
     import Header from '$lib/comps/hdr.svelte';
+    import BezierCanvas from '$lib/comps/cnvs.svelte';
+
     import Info from '$lib/comps/info.svelte';
     import Carousel from '$lib/comps/carousel.svelte';
     import { Canvas } from '@threlte/core';
@@ -29,7 +31,7 @@
     <Info label="Ind: EHESS / OpenEdition" />
 </div>
 
-<div class="carousel_container" >
+<div class="carousel_container" bind:this={containerEl} data-scroll-container >
     <div>
         <Canvas toneMapping={NoToneMapping}>
             <Carousel containerEl={containerEl}/>
@@ -37,29 +39,17 @@
     </div>
 </div>
 
-<div class="fake_scroller" bind:this={containerEl} data-scroll-container>
-</div>
+<BezierCanvas />
 
 
 
 
 <style>
-    .fake_scroller {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100000vh;
-        overflow: hidden;
-        place-items: center;
-        z-index: 2;
-        pointer-events: none;
-    }
 
- h1 {
+
+    h1 {
     text-transform: uppercase;
- }
+    }
 
  .hero_container {
     left: 20px;
@@ -67,6 +57,7 @@
     width: 60ch;
     row-gap: 20px;
     position: fixed;
+    z-index: 5;
  }
 
  .tag_container {
@@ -81,15 +72,18 @@
         top: 0;
         left: 0;
         width: 100vw;
-        height: 100vh;
+        height: 100000vh;
         overflow: hidden;
-        place-items: center;
+        place-items: start;
         z-index: 1;
+        pointer-events: all;
     }
 
     .carousel_container div {
-        position: relative;
-        width: 100%;
-        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
     }
 </style>

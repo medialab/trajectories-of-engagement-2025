@@ -3,6 +3,9 @@
     import Button from '$lib/comps/btn.svelte';
     import Header from '$lib/comps/hdr.svelte';
     import BezierCanvas from '$lib/comps/cnvs.svelte';
+    import { currentTag, currentAuthor, currentResearchCenter } from '$lib/utils';
+    import { slide } from 'svelte/transition';
+    import {cubicOut} from 'svelte/easing';
 
     import Info from '$lib/comps/info.svelte';
     import Carousel from '$lib/comps/carousel.svelte';
@@ -27,12 +30,14 @@
     </div>
     <Button label="Access the archive ↓" href="/archive" />
 </div>
-
-<div class="tag_container align_right vertical_flex ">
-    <Info label="Tag: #COESO" />
-    <Info label="Aut: Mirella Campioli" />
-    <Info label="Ind: EHESS / OpenEdition" />
+{#if $currentTag}
+<div class="tag_container align_right vertical_flex " transition:slide={{duration: 1000, easing: cubicOut, axis: 'x'}}>
+    <Info label="Leader: {$currentAuthor ?? 'hover something'}" />
+    <Info label="Research center: {$currentResearchCenter ?? 'hover something'}" />
+    <Info label="Title: #{$currentTag ?? 'hover something'}" />
 </div>
+{/if}
+
 
 <div class="carousel_container" bind:this={containerEl} data-scroll-container >
     <div>

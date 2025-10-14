@@ -3,22 +3,14 @@
     let props = $props();
     let isLoaded: boolean = $state(false);
 
-    // Auto-import poster images; exclude schema sequence
-    const posterModules = import.meta.glob('/src/lib/assets/posters/*.png', { eager: true, import: 'default' }) as Record<string, string>;
-
-    const postersSorted = Object.entries(posterModules)
-        .filter(([path]) => !/schema_original/.test(path))
-        .sort((a, b) => a[0].localeCompare(b[0]))
-        .map(([, url]) => url);
-
-    const posters = [...postersSorted, ...postersSorted]; //double it for in-view effect
-
 	import {  T } from '@threlte/core'
 	import { useTexture } from '@threlte/extras'
     import { onMount, onDestroy } from 'svelte'
     import { interactivity, useCursor, HTML as HTMl } from '@threlte/extras'
     import type { Mesh as ThreeMesh } from 'three'
     import { browser } from '$app/environment'; 
+    import { currentTag, currentAuthor, currentResearchCenter } from '$lib/utils';
+    import { goto } from '$app/navigation'
 
     // Removed LocomotiveScroll; we drive scroll from wheel/touch directly
 	let scrollY = $state(0);
@@ -36,19 +28,28 @@
 	});
 
 	// Use Threlte's cursor handlers (must be created during init, not in event callbacks)
-	const { onPointerEnter, onPointerLeave } = useCursor();
+	const { onPointerEnter: cursorEnter, onPointerLeave } = useCursor();
+
+    const handlePointerEnter = (d: any) => {
+        
+        cursorEnter();
+        console.log(d);
+        $currentTag = d.id;
+        $currentAuthor = d.project_leaders;
+        $currentResearchCenter = d.research_center;
+    }
 
     let spacing = (7);
     const startZ = 5;
-    const groupTotalLength = posters.length * spacing;
-    const middleZ = startZ + Math.floor(posters.length / 2) * spacing;
+    const groupTotalLength = props.projects.length * spacing;
+    const middleZ = startZ + Math.floor(props.projects.length / 2) * spacing;
 
     let meshes: ThreeMesh[] = [];
     // Per-mesh randomized deformation parameters
     const meshRand = new WeakMap<ThreeMesh, { curlScale: number; thresholdShift: number; edgePower: number; dirScale: number; windScale: number }>();
     // Per-card hover scale offsets and targets (smoothly animated)
-    let hoverToScale = $state<number[]>(Array(posters.length).fill(0));
-    let targetScaleByIndex = $state<number[]>(Array(posters.length).fill(0));
+    let hoverToScale = $state<number[]>(Array(props.projects.length).fill(0));
+    let targetScaleByIndex = $state<number[]>(Array(props.projects.length).fill(0));
     let hoverAnimFrame: number | null = null;
 
     function animateHoverScales() {
@@ -212,7 +213,8 @@
 rotation={[0.3, -0.5, 0]}
 >
 
-    {#each posters as poster, index}
+    {#each props.projects as project, index}
+        {@const poster = `/src/lib/assets/posters/${project.metadata.id}.png`}
         {@const texture = useTexture(poster).then(texture => texture)}
             {#await texture then map}
                     <T.Mesh
@@ -236,14 +238,18 @@ rotation={[0.3, -0.5, 0]}
                         onpointerenter={(e: any) => {
                                 e.stopPropagation();
                                 setHoverTarget(index, 0.2);
-                                onPointerEnter();
+                                handlePointerEnter(project.metadata);
                                 props.onHoverPoster?.();
                             }}
                             onpointerleave={(e: any) => {
                                 e.stopPropagation();
                                 setHoverTarget(index, 0);
                                 onPointerLeave();
-                            }}  
+                            }} 
+                        onclick={(e: any) => {
+                            e.stopPropagation();
+                            goto(`/projects/${project.metadata.id}`);
+                        }}
                         interactive={true}
                         castShadow={true}
                         receiveShadow={true}

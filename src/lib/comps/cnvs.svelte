@@ -118,11 +118,12 @@
     regenerate();
 
     const onResize = () => {
-      const r = svgEl.getBoundingClientRect();
-      width = r.width || width;
-      height = r.height || height;
-      regenerate();
-    };
+      if (!svgEl) return;
+        const r = svgEl.getBoundingClientRect();
+        width = r.width || width;
+        height = r.height || height;
+        regenerate();
+      };
     window.addEventListener('resize', onResize);
     onDestroy(() => window.removeEventListener('resize', onResize));
   });
@@ -178,6 +179,10 @@
     shape-rendering: geometricPrecision;
     background-color: transparent;
     position: absolute;
-    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -5;
   }
 </style>

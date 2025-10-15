@@ -18,6 +18,7 @@
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
+		-webkit-tap-highlight-color: transparent;
 	}
 
 	:root {
@@ -30,6 +31,7 @@
 		font-family: 'Inter', sans-serif;
 		font-weight: 300;
 		background-color: var(--primary-light);
+		
 	}
 
 	:global(::selection) {
@@ -41,6 +43,11 @@
 		font-size: 48px;
 		font-weight: 600;	
 		line-height: 1.1;
+		letter-spacing: -0.05em;
+	}
+
+	:global(p) {
+		letter-spacing: -0.05em;
 	}
 
 	:global(.s) {

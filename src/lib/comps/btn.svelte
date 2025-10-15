@@ -1,20 +1,33 @@
-<script>
+<script lang="ts">
     import { goto } from "$app/navigation";
     let props = $props();
+
+    const intDecide = (o: any) => {
+        if (o === "back") {
+            history.back();
+        } else if (o || o.trim() !== '' || o !== '#' || o.trim() !== null || o.trim() !== undefined) {
+            goto(o);
+        } else {
+            return;
+        }
+    }
 </script>
 
-<a
-data-sveltekit-reload
-class="generic_btn" onclick={() => goto(props?.href)} style={props?.img ? 'background-color: white' : ''}>
-    {#if props?.label}
-        <p class="m">
-            {props.label}
-        </p>
-    {/if}
-    {#if props?.img}
-        <img src="{props?.img}" alt="{props?.imgAlt}" />
-    {/if}
-</a>
+<button
+    type="button"
+    data-sveltekit-reload
+    class="generic_btn" onclick={() => intDecide(props?.href)} style={props?.img ? 'background-color: white' : ''}
+    onkeydown={(e) => e.key === 'Enter' && intDecide(props?.href)}
+    >
+        {#if props?.label}
+            <p class="m">
+                {props.label}
+            </p>
+        {/if}
+        {#if props?.img}
+            <img src="{props?.img}" alt="{props?.imgAlt}" />
+        {/if}
+</button>
 
 <style>
     .generic_btn {

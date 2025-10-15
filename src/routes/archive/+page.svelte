@@ -48,7 +48,8 @@
 <Header />
 
 <div class="title_container">
-  <Button label="ARCHIVE OF PROJECTS" href="/archive" />
+  <!-- <Button label="ARCHIVE OF PROJECTS" href="/archive" /> -->
+   <h1 style="text-transform: uppercase;">Trajectories of engagement</h1>
 </div>
 
 <div class="t_container">

@@ -31,11 +31,11 @@
     <Button label="Access the archive ↓" href="/archive" />
 </div>
 {#if $currentTag}
-<div class="tag_container align_right vertical_flex " transition:slide={{duration: 1000, easing: cubicOut, axis: 'x'}}>
-    <Info label="Leader: {$currentAuthor ?? 'hover something'}" />
-    <Info label="Research center: {$currentResearchCenter ?? 'hover something'}" />
-    <Info label="Title: #{$currentTag ?? 'hover something'}" />
-</div>
+    <div class="tag_container align_right vertical_flex ">
+        <Info label="Leader: {$currentAuthor ?? 'hover something'}" />
+        <Info label="Research center: {$currentResearchCenter ?? 'hover something'}" />
+        <Info label="Title: #{$currentTag ?? 'hover something'}" />
+    </div>
 {/if}
 
 

@@ -21,13 +21,7 @@
     <div class="vertical_flex" style="row-gap: 30px;">
         <div class="vertical_flex">
             <h1 id="pr_title">{data.project.metadata.title}</h1>
-            <div class="horizontal_flex">
-                <p>{data.project.metadata.year}</p>
-                <p>|</p>
-                <p>{data.project.metadata.project_leaders}</p>
-                <p>|</p>
-                <p>{data.project.metadata.research_center}</p>
-            </div>   
+            <p>{data.project.metadata?.year} | {data.project.metadata?.project_leaders} | {data.project.metadata?.research_center}</p>  
         </div>
         <div class="vertical_flex">
             <Accordion text={data.project.texts?.presentation} title="Presentation" />
@@ -96,5 +90,28 @@
         position: absolute;
         top: 0;
         right: 0;
+    }
+
+    @media (max-width: 768px) {
+        .project_page_container {
+            width: 100%;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            margin: 80px 0px;
+            padding: 0px 20px;
+            row-gap: 20px;
+            overflow: scroll;
+            background-color: transparent;
+        }
+
+        .media_cont {
+            width: 100% !important;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            position: static;
+        }
     }
 </style>

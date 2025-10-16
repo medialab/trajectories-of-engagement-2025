@@ -36,5 +36,11 @@
         margin-bottom: 20px;
         background-color: var(--primary-light);
     }
+
+    @media (max-width: 768px) {
+        .accordion_header, .accordion_header > :global(button) {
+            width: 100%;
+        }
+    }
 </style>
 

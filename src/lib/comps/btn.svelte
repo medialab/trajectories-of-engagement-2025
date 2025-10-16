@@ -1,10 +1,14 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import { menuOpen } from "$lib/utils";
+
     let props = $props();
 
     const intDecide = (o: any) => {
         if (o === "back") {
             history.back();
+        } else if (o === "burger_menu") {
+            $menuOpen = !$menuOpen;
         } else if (o || o.trim() !== '' || o !== '#' || o.trim() !== null || o.trim() !== undefined) {
             goto(o);
         } else {
@@ -42,6 +46,7 @@
         cursor: pointer;
         border: 2px solid var(--primary-dark);
         font-weight: 500;
+        align-items: center;
     }
 
     .generic_btn:hover {

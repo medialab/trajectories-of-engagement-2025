@@ -9,17 +9,18 @@
     import { interactivity, useCursor, HTML as HTMl } from '@threlte/extras'
     import type { Mesh as ThreeMesh } from 'three'
     import { browser } from '$app/environment'; 
-    import { currentTag, currentAuthor, currentResearchCenter } from '$lib/utils';
+    import { currentTag, currentAuthor, currentResearchCenter, carouselConfig } from '$lib/utils';
     import { goto } from '$app/navigation'
+    import { isMobile } from '$lib/utils';
 
     // Removed LocomotiveScroll; we drive scroll from wheel/touch directly
 	let scrollY = $state(0);
-    let scrollFactor = (0.01);
-	// User-controlled deformation multiplier (1 = default strength)
+    let scrollFactor = (carouselConfig.scrollFactor);
+
 	let deformationStrength = $state(2);
     let cursorTag: HTMLElement;
-    let projects = props.projects as any[];
-    console.log(projects);
+
+    let isMobileFlag = $derived.by(() => isMobile());
 
 	$effect(() => {
 		if ((props as any)?.deformationStrength !== undefined) {
@@ -27,11 +28,10 @@
 		}
 	});
 
-	// Use Threlte's cursor handlers (must be created during init, not in event callbacks)
 	const { onPointerEnter: cursorEnter, onPointerLeave } = useCursor();
 
     const handlePointerEnter = (d: any) => {
-        
+        if (isMobileFlag) return;
         cursorEnter();
         console.log(d);
         $currentTag = d.id;
@@ -39,8 +39,8 @@
         $currentResearchCenter = d.research_center;
     }
 
-    let spacing = (7);
-    const startZ = 5;
+    let spacing = (carouselConfig.spacing);
+    const startZ = carouselConfig.startZ;
     const groupTotalLength = props.projects.length * spacing;
     const middleZ = startZ + Math.floor(props.projects.length / 2) * spacing;
 
@@ -61,7 +61,7 @@
             const delta = target - current;
             if (Math.abs(delta) > 0.001) {
                 // simple ease
-                hoverToScale[i] = current + delta * 0.2;
+                hoverToScale[i] = current + delta * carouselConfig.hover.ease;
                 needsAnotherFrame = true;
             } else if (current !== target) {
                 hoverToScale[i] = target;
@@ -88,7 +88,7 @@
 
 
     function deformMeshes(scrollDelta: number) {
-		const windStrength = Math.max(-1, Math.min(1, scrollDelta * 0.01));
+        const windStrength = Math.max(-1, Math.min(1, scrollDelta * carouselConfig.wind.deltaMultiplier));
 
 		for (const mesh of meshes) {
             const position = mesh?.geometry?.attributes?.position;
@@ -113,7 +113,7 @@
 
             // Rounded falloff from inner region to edges using max-norm (square radius)
             // threshold defines the inner area with no curl; lower => wider curl area
-            const threshold = 0.35 + r.thresholdShift; // 0..1 with per-mesh shift
+            const threshold = carouselConfig.wind.thresholdBase + r.thresholdShift; // 0..1 with per-mesh shift
 
 			const vertexCount = position.count;
 			for (let i = 0; i < vertexCount; i++) {
@@ -128,7 +128,7 @@
 				t = Math.min(1, Math.max(0, t));
                 let s = t * t * (3 - 2 * t); // smoothstep
                 s = Math.pow(s, 1 + Math.max(0, r.edgePower)); // per-mesh rounding power
-                const maxCurl = 0.45; // base amplitude
+                const maxCurl = carouselConfig.wind.maxCurl; // base amplitude
                 zOffset = s * maxCurl * r.curlScale * (windStrength * r.windScale) * Math.max(0, deformationStrength);
 				// Smoothly vary curl direction across X (gentler near center)
 				const nxEdge = x / Math.max(1e-6, halfW); // -1 .. 1
@@ -156,6 +156,7 @@
         let lastX = 0;
         let lastY = 0;
         let rafId: number | null = null;
+        
         const moveHandler = (e: MouseEvent) => {
             lastX = e.clientX;
             lastY = e.clientY;
@@ -171,12 +172,27 @@
 
         document.addEventListener('mousemove', moveHandler, { passive: true });
 
+        // Accumulate deltas and apply once per frame
+        let pendingDelta = 0;
+        let scrollRAF: number | null = null;
+        const scheduleApply = () => {
+            if (scrollRAF !== null) return;
+            scrollRAF = requestAnimationFrame(() => {
+                scrollRAF = null;
+                if (pendingDelta !== 0) {
+                    const prev = scrollY;
+                    scrollY = prev + pendingDelta * scrollFactor;
+                    deformMeshes(pendingDelta);
+                    pendingDelta = 0;
+                }
+            });
+        };
+
         const onWheel = (e: WheelEvent) => {
             e.preventDefault();
-            const delta = e.deltaY;
-            const prev = scrollY;
-            scrollY = prev + delta * scrollFactor;
-            deformMeshes(delta);
+            const m = isMobileFlag ? carouselConfig.multipliers.wheelMobile : carouselConfig.multipliers.wheelDesktop;
+            pendingDelta += e.deltaY * m;
+            scheduleApply();
         };
 
         let touchY = 0;
@@ -184,24 +200,25 @@
         const onTouchMove = (e: TouchEvent) => {
             const yNow = e.touches[0]?.clientY ?? 0;
             const dy = touchY - yNow;
-            const prev = scrollY;
-            scrollY = prev + dy * scrollFactor;
-            deformMeshes(dy);
+            const m = isMobileFlag ? carouselConfig.multipliers.touchMobile : carouselConfig.multipliers.touchDesktop;
+            pendingDelta += dy * m;
+            scheduleApply();
             touchY = yNow;
         };
 
-        window.addEventListener('wheel', onWheel, { passive: false });
-        window.addEventListener('touchstart', onTouchStart, { passive: true });
-        window.addEventListener('touchmove', onTouchMove, { passive: false });
+        const target = props.containerEl ?? window;
+        target.addEventListener('wheel', onWheel, { passive: false });
+        target.addEventListener('touchstart', onTouchStart, { passive: true });
+        target.addEventListener('touchmove', onTouchMove, { passive: true });
 
         setTimeout(() => {
             isLoaded = true;
         }, 1000);
 
         onDestroy(() => {
-            window.removeEventListener('wheel', onWheel as any);
-            window.removeEventListener('touchstart', onTouchStart as any);
-            window.removeEventListener('touchmove', onTouchMove as any);
+            target.removeEventListener('wheel', onWheel as any);
+            target.removeEventListener('touchstart', onTouchStart as any);
+            target.removeEventListener('touchmove', onTouchMove as any);
         });
     });
 
@@ -213,7 +230,7 @@
 rotation={[0.3, -0.5, 0]}
 >
 
-    {#each props.projects as project, index}
+        {#each props.projects as project, index}
         {@const poster = `/src/lib/assets/posters/${project.metadata.id}.png`}
         {@const texture = useTexture(poster).then(texture => texture)}
             {#await texture then map}
@@ -227,17 +244,17 @@ rotation={[0.3, -0.5, 0]}
                                 // assign per-mesh randomized params once
                                 const rand = (min: number, max: number) => Math.random() * (max - min) + min;
                                 meshRand.set(value as any, {
-                                    curlScale: rand(0.8, 1.2),
-                                    thresholdShift: rand(-0.08, 0.08),
-                                    edgePower: rand(0, 1.5),
-                                    dirScale: rand(0.8, 1.2),
-                                    windScale: rand(0.8, 1.2)
+                                    curlScale: rand(carouselConfig.randomness.curlScale[0], carouselConfig.randomness.curlScale[1]),
+                                    thresholdShift: rand(carouselConfig.randomness.thresholdShift[0], carouselConfig.randomness.thresholdShift[1]),
+                                    edgePower: rand(carouselConfig.randomness.edgePower[0], carouselConfig.randomness.edgePower[1]),
+                                    dirScale: rand(carouselConfig.randomness.dirScale[0], carouselConfig.randomness.dirScale[1]),
+                                    windScale: rand(carouselConfig.randomness.windScale[0], carouselConfig.randomness.windScale[1])
                                 });
                             }
                         }}
                         onpointerenter={(e: any) => {
                                 e.stopPropagation();
-                                setHoverTarget(index, 0.2);
+                                setHoverTarget(index, carouselConfig.hover.scale);
                                 handlePointerEnter(project.metadata);
                                 props.onHoverPoster?.();
                             }}
@@ -254,7 +271,14 @@ rotation={[0.3, -0.5, 0]}
                         castShadow={true}
                         receiveShadow={true}
                         >
-                            <T.BoxGeometry args={[12, 12*1.3, 0.1, 24, 32, 2]} />
+                            <T.BoxGeometry args={[
+                                carouselConfig.card.width,
+                                carouselConfig.card.width * carouselConfig.card.aspectRatio,
+                                carouselConfig.card.depth,
+                                carouselConfig.card.segments.width,
+                                carouselConfig.card.segments.height,
+                                carouselConfig.card.segments.depth
+                            ]} />
                             <T.MeshBasicMaterial 
                                 map={map}
                                 toneMapped={false}

@@ -27,7 +27,7 @@
 		--primary-dark: #111111;
 	}
 
-	html, body, :global(body) {
+	:global(html), :global(body) {
 		font-family: 'Inter', sans-serif;
 		font-weight: 300;
 		background-color: var(--primary-light);
@@ -74,6 +74,16 @@
 		row-gap: 10px;
 	}
 
+	:global(.narrow) {
+		row-gap: 5px;
+		column-gap: 5px;
+	}
+
+	:global(.wide) {
+		row-gap: 20px;
+		column-gap: 20px;
+	}
+
 	:global(.horizontal_flex) {
 		display: flex;
 		flex-direction: row;
@@ -104,6 +114,21 @@
 		font-optical-sizing: unset;
 		font-kerning: unset;
 		font-feature-settings: unset;
+	}
+
+	@media (max-width: 768px) {
+		:global(h1) {
+			font-size: 32px;
+		}
+
+		:global(.l) {
+			font-size: 16px;
+		}
+
+		:global(body) {
+			max-width: 100vw !important;
+			overflow-x: hidden !important;
+		}
 	}
 
 </style>

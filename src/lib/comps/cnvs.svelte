@@ -178,11 +178,24 @@
     display: block;
     shape-rendering: geometricPrecision;
     background-color: transparent;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: -5;
+    touch-action: none;
+    overscroll-behavior: contain;
+    overflow: hidden;
+    -webkit-overflow-scrolling: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    -ms-touch-action: none;
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 </style>

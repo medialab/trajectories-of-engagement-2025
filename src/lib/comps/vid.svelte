@@ -98,4 +98,12 @@
         margin: 0;
         font-weight: 500;
     }
+
+    @media (max-width: 768px) {
+        .vid_cont {
+            width: 100% !important;
+            height: auto !important;
+            position: static !important;
+        }
+    }
 </style>

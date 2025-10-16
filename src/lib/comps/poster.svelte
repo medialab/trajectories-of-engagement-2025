@@ -38,4 +38,12 @@ import testImg from '$lib/assets/posters/coeso.png';
         object-fit: cover;
     }
 
+    @media (max-width: 768px) {
+        .post_cont {
+            width: 100% !important;
+            height: auto !important;
+            position: static !important;
+        }
+    }
+
 </style>

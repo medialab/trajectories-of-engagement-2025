@@ -11,24 +11,41 @@
     import Carousel from '$lib/comps/carousel.svelte';
     import { Canvas } from '@threlte/core';
     import { NoToneMapping } from 'three';
+    import { isMobile } from '$lib/utils';
+    import { onMount } from 'svelte';
+	import { afterNavigate } from '$app/navigation';
 
     let containerEl: HTMLElement | undefined = $state(undefined);
     let bezRef: any;
 
     let { data }: PageProps = $props();
 
+    let isMobileFlag = $derived.by(() => isMobile());
 </script>
 
-<Header />
+{#if !isMobileFlag}
+    <Header />
+{/if}
+
 
 <div class="hero_container vertical_flex">
     <div class="vertical_flex">
         <h1>
             Trajectories of engagement
         </h1>
-        <p>Trajectories of engagement are the paths through which researchers and external actors meet, collaborate, and co-create knowledge—across physical and digital settings—to address public issues</p>
+        <p class="l">Trajectories of engagement are the paths through which researchers and external actors meet, collaborate, and co-create knowledge—across physical and digital settings—to address public issues</p>
     </div>
-    <Button label="Access the archive ↓" href="/archive" />
+
+    {#if isMobileFlag}
+    <div class="vertical_flex narrow">
+        <Button label="Access the archive ↓" href="/archive" />
+        <Button label="About the project" href="/about" />
+    </div>
+        
+    {:else}
+        <Button label="Access the archive ↓" href="/archive" />
+    {/if}
+
 </div>
 {#if $currentTag}
     <div class="tag_container align_right vertical_flex ">
@@ -39,7 +56,7 @@
 {/if}
 
 
-<div class="carousel_container" bind:this={containerEl} data-scroll-container >
+<div class="carousel_container" bind:this={containerEl}  >
     <div>
         <Canvas toneMapping={NoToneMapping}>
             <Carousel containerEl={containerEl} onHoverPoster={() => bezRef?.triggerRegeneration?.()} projects={data.projects}/>
@@ -82,18 +99,36 @@
         top: 0;
         left: 0;
         width: 100vw;
-        height: 100000vh;
+        height: 100vh;
         overflow: hidden;
         place-items: start;
         z-index: 1;
         pointer-events: all;
+        touch-action: none;
+        overscroll-behavior: contain;
     }
 
     .carousel_container div {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
+    }
+
+    @media (max-width: 768px) {
+        .hero_container {
+            top: 40px;
+            width: 90%;
+        }
+
+        .carousel_container {
+            margin-top: 220px;
+            overflow: hidden !important;
+        }
+
+        .carousel_container > * {
+            position: relative !important;
+        }
     }
 </style>

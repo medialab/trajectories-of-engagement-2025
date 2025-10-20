@@ -24,7 +24,7 @@
 
 <style>
     .accordion_header, .accordion_header > :global(button) {
-        width: 50%;
+        width: 100%;
     }
     
     .vertical_flex {

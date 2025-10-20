@@ -23,9 +23,9 @@
     let isMobileFlag = $derived.by(() => isMobile());
 </script>
 
-{#if !isMobileFlag}
-    <Header />
-{/if}
+
+<Header />
+
 
 
 <div class="hero_container vertical_flex">
@@ -36,16 +36,7 @@
         <p class="l">Trajectories of engagement are the paths through which researchers and external actors meet, collaborate, and co-create knowledge—across physical and digital settings—to address public issues</p>
     </div>
 
-    {#if isMobileFlag}
-    <div class="vertical_flex narrow">
-        <Button label="Access the archive ↓" href="/archive" />
-        <Button label="About the project" href="/about" />
-    </div>
-        
-    {:else}
-        <Button label="Access the archive ↓" href="/archive" />
-    {/if}
-
+    <Button label="Access the archive ↓" href="/archive" />
 </div>
 {#if $currentTag}
     <div class="tag_container align_right vertical_flex ">
@@ -118,7 +109,7 @@
 
     @media (max-width: 768px) {
         .hero_container {
-            top: 40px;
+            top: 80px;
             width: 90%;
         }
 

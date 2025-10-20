@@ -4,23 +4,30 @@
 
     let props = $props();
 
-    const intDecide = (o: any) => {
+    const intDecide = (o: unknown) => {
         if (o === "back") {
             history.back();
-        } else if (o === "burger_menu") {
-            $menuOpen = !$menuOpen;
-        } else if (o || o.trim() !== '' || o !== '#' || o.trim() !== null || o.trim() !== undefined) {
-            goto(o);
-        } else {
             return;
         }
+        if (o === "burger_menu") {
+            $menuOpen = !$menuOpen;
+            return;
+        }
+        if (typeof o === 'string') {
+            const href = o.trim();
+            if (href !== '' && href !== '#') {
+                goto(href);
+            }
+        }
     }
+
 </script>
 
 <button
     type="button"
     data-sveltekit-reload
-    class="generic_btn" onclick={() => intDecide(props?.href)} style={props?.img ? 'background-color: white' : ''}
+    class="generic_btn"
+    class:disabled={props?.disabled === true} onclick={() => intDecide(props?.href)} style={props?.img ? 'background-color: white' : ''}
     onkeydown={(e) => e.key === 'Enter' && intDecide(props?.href)}
     >
         {#if props?.label}
@@ -47,6 +54,7 @@
         border: 2px solid var(--primary-dark);
         font-weight: 500;
         align-items: center;
+        pointer-events: all !important;
     }
 
     .generic_btn:hover {
@@ -57,6 +65,10 @@
     .generic_btn:active {
         background-color: var(--primary-dark);
         color: var(--primary-color);
+    }
+
+    .disabled {
+        opacity: 0.3;
     }
 
     img {

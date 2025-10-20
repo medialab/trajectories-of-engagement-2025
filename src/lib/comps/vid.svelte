@@ -1,46 +1,94 @@
 <script lang="ts">
-    import Youtube from "svelte-youtube-embed";
+    // @ts-ignore
+    import {Youtube} from 'svelte-youtube-embed';
+    import { fade } from "svelte/transition";
+    import { cubicOut } from "svelte/easing";
+	import { onMount } from 'svelte';
 
     let props = $props();
 
+    // Bindable playback state exposed to parents and wired to <Youtube>
+    let play = $state(false);
+    let isPlaying = $state(false);
+    let currentTime = $state(0);
+    let currentTimeIndex = $state(0);
+
     let videoUrl = props.src || 'https://youtu.be/YtZkeY22YYM?si=gb_z72JozL30jxy_';
     let isYouTube = videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be');
+    let timestamps: number[] = $state([]);
 
-    let youtubeId = $derived((videoUrl: string) => {
+    $inspect(timestamps);
+
+    let youtubeId = $derived(new Promise((resolve) => {
         if (videoUrl.includes('youtu.be/')) {
             // Handle youtu.be/VIDEO_ID format
-            return videoUrl.split('youtu.be/')[1].split('?')[0];
+            resolve(videoUrl.split('youtu.be/')[1].split('?')[0]);
         } else if (videoUrl.includes('youtube.com/watch?v=')) {
             // Handle youtube.com/watch?v=VIDEO_ID format
-            return videoUrl.split('v=')[1].split('&')[0];
+            resolve(videoUrl.split('v=')[1].split('&')[0]);
+        } else {
+            resolve('');
         }
-        return '';
-    });
+    }));
+
+    const calculateSegments = () => {
+        props.excerpts.forEach((excerpt: any) => {
+            excerpt.timecodes.forEach((timecode: string) => {
+                const [minutes, seconds] = timecode.split(':').map(Number);
+                timestamps.push(minutes * 60 + seconds);
+            });
+        });
+    }
+
+    const goToNextSegment = () => {
+        currentTimeIndex = (currentTimeIndex + 1) % timestamps.length;
+        currentTime = timestamps[currentTimeIndex];
+        console.log("currentTime:", currentTime);
+        console.log("currentTimeIndex:", currentTimeIndex);
+        if (play === true) return;
+        play = true;
+    }
+
+    onMount(() => {
+        calculateSegments();
+    })
 </script>
 
-<div class="vid_cont vertical_flex">
-    <!--<button class="play_pause horizontal_flex" onclick={() => isPlaying = !isPlaying}>
-        <p>PLAY</p>
-        <p>/</p>
-        <p>PAUSE</p>
-    </button>-->
-    <button class="next_vid horizontal_flex">
-        <p>NEXT SEGMENT →</p>
-    </button>
-    
-    {#if isYouTube}
-            <Youtube id={youtubeId(videoUrl)} thumbnail={undefined} animations={false} --title-font-family='Inter' --title-font-size='14px' --title-font-weight='500' --title-color='var(--primary-color)' --title-text-transform='uppercase' --title-letter-spacing='-0.05em'>
-                {#snippet play_button()}
-                    <button class="play_pause horizontal_flex">
-                        <p>PLAY</p>
-                    </button>
-                {/snippet}
-            </Youtube>
-    {/if}
-    <footer>
-        <p>{props.title}</p>
-    </footer>
-</div>
+{#await youtubeId}
+    <p>loading...</p>
+{:then videoId}
+        <div class="vid_cont vertical_flex" transition:fade={{duration: 1000, easing: cubicOut, delay: 1000}}>
+            <button class="next_vid horizontal_flex" onclick={() => goToNextSegment()}>
+                <p>NEXT SEGMENT →</p>
+            </button>
+            
+            {#if isYouTube}
+                    <Youtube
+                        id={videoId}
+                        bind:play={play as boolean}
+                        bind:isPlaying={isPlaying as boolean}
+                        startAt={currentTime}
+                        title={props.title}
+                        --title-font-family='Inter'
+                        --title-font-size='16px'
+                        --title-font-weight='500'
+                        --title-color='var(--primary-color)'
+                        --title-text-transform='uppercase'
+                        --title-letter-spacing='-0.05em'
+                    >
+                        {#snippet play_button()}
+                            <button class="play_pause horizontal_flex">
+                                <p>PLAY</p>
+                            </button>
+                        {/snippet}
+                    </Youtube>
+            {/if}
+            <footer>
+                <p>{props.title}</p>
+            </footer>
+        </div>
+{/await}
+
 
 <style>
     .vid_cont {
@@ -50,7 +98,7 @@
       
         border: 2px solid var(--primary-dark);
         background-color: var(--primary-light);
-        z-index: 2;
+        z-index: 1;
         row-gap: 0px;
     }
 
@@ -103,7 +151,7 @@
         .vid_cont {
             width: 100% !important;
             height: auto !important;
-            position: static !important;
+            position: relative !important;
         }
     }
 </style>

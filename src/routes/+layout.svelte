@@ -26,12 +26,11 @@
 		--primary-light: #F5F5F5;
 		--primary-dark: #111111;
 	}
-
+	
 	:global(html), :global(body) {
 		font-family: 'Inter', sans-serif;
 		font-weight: 300;
 		background-color: var(--primary-light);
-		
 	}
 
 	:global(::selection) {

@@ -85,6 +85,7 @@
         </tbody>
     </table>
 </div>
+
 <BezierCanvas />
     
 
@@ -176,21 +177,23 @@
             margin-top: 80px;
             padding: 20px 20px 0px 20px;
         }
-
         .t_header {
           display: none;
         }
 
         .t_container {
-          position: static;
+          position: relative;
           top: unset;
           left: unset;
+          right: unset;
           transform: unset;
           width: 100%;
           height: fit-content;
           background-color: unset;
           margin-top: 0px;
-          padding: 0px 20px 0px 20px;
+          padding: 0px 20px;
+          background-color: var(--primary-light);
+          z-index: 10;
         }
 
         #year, #project_leaders, #research_center, #link {

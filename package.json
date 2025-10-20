@@ -23,7 +23,6 @@
 		"prettier-plugin-svelte": "^3.4.0",
 		"svelte": "^5.39.5",
 		"svelte-check": "^4.3.2",
-		"svelte-youtube-embed": "^0.4.6",
 		"typescript": "^5.9.2",
 		"vite": "^7.1.7",
 		"vite-plugin-mkcert": "^1.17.9"
@@ -32,6 +31,7 @@
 		"@threlte/core": "^8.0.0-next.41",
 		"@threlte/extras": "^9.5.5",
 		"locomotive-scroll": "^4.1.4",
+		"svelte-youtube-embed": "github:TommasoPrinetti/youtube-embed#fix/svelte5-derived-syntax",
 		"three": "^0.180.0"
 	}
 }

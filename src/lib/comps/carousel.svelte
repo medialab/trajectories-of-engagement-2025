@@ -112,7 +112,6 @@
 				windScale: 1
 			};
 
-			// Cache baseline Z positions for this mesh to avoid cumulative deformation
 			let baseZ = originalZByMesh.get(mesh);
 			if (!baseZ || baseZ.length !== position.count) {
 				baseZ = new Float32Array(position.count);
@@ -144,7 +143,7 @@
 				t = Math.min(1, Math.max(0, t));
 				let s = t * t * (3 - 2 * t); // smoothstep
 				s = Math.pow(s, 1 + Math.max(0, r.edgePower)); // per-mesh rounding power
-				const maxCurl = carouselConfig.wind.maxCurl; // base amplitude
+				const maxCurl = carouselConfig.wind.maxCurl;
 				zOffset =
 					s *
 					maxCurl *
@@ -308,7 +307,8 @@
 					}}
 					onclick={(e: any) => {
 						e.stopPropagation();
-						goto(`/projects/${project.metadata.id}`);
+						const basePath = import.meta.env.BASE_URL || '';
+						goto(`${basePath}/projects/${project.metadata.id}`);
 					}}
 					interactive={true}
 					castShadow={true}

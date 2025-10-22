@@ -19,6 +19,10 @@
 	let bezRef: any;
 
 	let { data }: PageProps = $props();
+
+	$effect(() => {
+		console.log(data.posters);
+	});
 </script>
 
 <Header />
@@ -49,18 +53,20 @@
 	</div>
 {/if}
 
-<div class="carousel_container" bind:this={containerEl}>
-	<div>
-		<Canvas toneMapping={NoToneMapping}>
-			<Carousel
-				{containerEl}
-				onHoverPoster={() => bezRef?.triggerRegeneration?.()}
-				projects={data.projects}
-				posters={data.posters}
-			/>
-		</Canvas>
+{#key data.posters}
+	<div class="carousel_container" bind:this={containerEl}>
+		<div>
+			<Canvas toneMapping={NoToneMapping}>
+				<Carousel
+					{containerEl}
+					onHoverPoster={() => bezRef?.triggerRegeneration?.()}
+					projects={data.projects}
+					posters={data.posters}
+				/>
+			</Canvas>
+		</div>
 	</div>
-</div>
+{/key}
 
 <BezierCanvas bind:this={bezRef} />
 

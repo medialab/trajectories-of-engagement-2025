@@ -5,7 +5,7 @@
 	import { T } from '@threlte/core';
 	import { useTexture } from '@threlte/extras';
 	import { onMount, onDestroy } from 'svelte';
-	import { interactivity, useCursor, HTML as HTMl } from '@threlte/extras';
+	import { interactivity, useCursor } from '@threlte/extras';
 	import type { Mesh as ThreeMesh } from 'three';
 	import { browser } from '$app/environment';
 	import { currentTag, currentAuthor, currentResearchCenter, carouselConfig } from '$lib/utils';
@@ -39,12 +39,13 @@
 	};
 
 	let spacing = carouselConfig.spacing;
+	let baseScale = $state(0.9);
 	const startZ = carouselConfig.startZ;
 	const groupTotalLength = props.projects.length * spacing;
 	const middleZ = startZ + Math.floor(props.projects.length / 2) * spacing;
 
 	let meshes: ThreeMesh[] = [];
-	// Per-mesh randomized deformation parameters
+
 	const meshRand = new WeakMap<
 		ThreeMesh,
 		{
@@ -55,7 +56,7 @@
 			windScale: number;
 		}
 	>();
-	// Per-card hover scale offsets and targets (smoothly animated)
+
 	let hoverToScale = $state<number[]>(Array(props.projects.length).fill(0));
 	let targetScaleByIndex = $state<number[]>(Array(props.projects.length).fill(0));
 	let hoverAnimFrame: number | null = null;
@@ -67,8 +68,8 @@
 			const current = hoverToScale[i];
 			const target = targetScaleByIndex[i];
 			const delta = target - current;
+
 			if (Math.abs(delta) > 0.001) {
-				// simple ease
 				hoverToScale[i] = current + delta * carouselConfig.hover.ease;
 				needsAnotherFrame = true;
 			} else if (current !== target) {
@@ -177,26 +178,6 @@
 	onMount(() => {
 		if (!browser) return;
 
-		let lastX = 0;
-		let lastY = 0;
-		let rafId: number | null = null;
-
-		const moveHandler = (e: MouseEvent) => {
-			lastX = e.clientX;
-			lastY = e.clientY;
-			if (rafId === null) {
-				rafId = requestAnimationFrame(() => {
-					rafId = null;
-					if (cursorTag) {
-						cursorTag.style.transform = `translate(${lastX}px, ${lastY}px)`;
-					}
-				});
-			}
-		};
-
-		document.addEventListener('mousemove', moveHandler, { passive: true });
-
-		// Accumulate deltas and apply once per frame
 		let pendingDelta = 0;
 		let scrollRAF: number | null = null;
 		const scheduleApply = () => {
@@ -221,6 +202,40 @@
 			scheduleApply();
 		};
 
+		// Mouse drag state
+		let isDragging = false;
+		let dragStartY = 0;
+
+		const onMouseDown = (e: MouseEvent) => {
+			isDragging = true;
+			dragStartY = e.clientY;
+			// Optional: change cursor to indicate dragging
+			const target = props.containerEl;
+			if (target instanceof HTMLElement) {
+				target.style.cursor = 'grabbing';
+			}
+		};
+
+		const onMouseMove = (e: MouseEvent) => {
+			if (!isDragging) return;
+			const deltaY = dragStartY - e.clientY;
+			const m = isMobileFlag
+				? carouselConfig.multipliers.wheelMobile
+				: carouselConfig.multipliers.wheelDesktop;
+			pendingDelta += deltaY * m;
+			scheduleApply();
+			dragStartY = e.clientY; // Update for continuous dragging
+		};
+
+		const onMouseUp = () => {
+			isDragging = false;
+			// Reset cursor
+			const target = props.containerEl;
+			if (target instanceof HTMLElement) {
+				target.style.cursor = '';
+			}
+		};
+
 		let touchY = 0;
 		const onTouchStart = (e: TouchEvent) => {
 			touchY = e.touches[0]?.clientY ?? 0;
@@ -238,6 +253,11 @@
 
 		const target = props.containerEl ?? window;
 		target.addEventListener('wheel', onWheel, { passive: false });
+		target.addEventListener('mousedown', onMouseDown, { passive: true });
+		target.addEventListener('mousemove', onMouseMove, { passive: true });
+		target.addEventListener('mouseup', onMouseUp, { passive: true });
+		// Also listen for mouseup on window in case mouse leaves the target
+		window.addEventListener('mouseup', onMouseUp, { passive: true });
 		target.addEventListener('touchstart', onTouchStart, { passive: true });
 		target.addEventListener('touchmove', onTouchMove, { passive: true });
 
@@ -247,6 +267,10 @@
 
 		onDestroy(() => {
 			target.removeEventListener('wheel', onWheel as any);
+			target.removeEventListener('mousedown', onMouseDown as any);
+			target.removeEventListener('mousemove', onMouseMove as any);
+			target.removeEventListener('mouseup', onMouseUp as any);
+			window.removeEventListener('mouseup', onMouseUp as any);
 			target.removeEventListener('touchstart', onTouchStart as any);
 			target.removeEventListener('touchmove', onTouchMove as any);
 		});
@@ -263,7 +287,7 @@
 			{#await texture then map}
 				<T.Mesh
 					position={[0, 0, cardBoundTeleport(startZ + index * spacing + scrollY)]}
-					scale={[1 + hoverToScale[index], 1 + hoverToScale[index], 1]}
+					scale={[baseScale + hoverToScale[index], baseScale + hoverToScale[index], baseScale]}
 					rotation={[0, 0, 0]}
 					oncreate={(value) => {
 						if (value && !meshes.includes(value)) {
@@ -307,8 +331,7 @@
 					}}
 					onclick={(e: any) => {
 						e.stopPropagation();
-						const basePath = import.meta.env.BASE_URL || '';
-						goto(`${basePath}/projects/${project.metadata.id}`);
+						goto(`/projects/${project.metadata.id}`);
 					}}
 					interactive={true}
 					castShadow={true}
@@ -342,26 +365,3 @@
 ></T.OrthographicCamera>
 
 <T.AmbientLight intensity={1000} color="white" />
-
-<div id="cursorTrack" bind:this={cursorTag}>Tada!</div>
-
-<style>
-	#cursorTrack {
-		position: fixed;
-		top: 0;
-		left: 0;
-		transform: translate(-9999px, -9999px);
-		pointer-events: none;
-		z-index: 50;
-		width: auto;
-		height: auto;
-		padding: 2px 6px;
-		background: rgba(255, 0, 0, 0.85);
-		color: #fff;
-		font-size: 12px;
-		border-radius: 4px;
-		white-space: nowrap;
-	}
-
-	/* removed unused selectors */
-</style>

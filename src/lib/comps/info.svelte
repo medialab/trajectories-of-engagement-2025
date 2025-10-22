@@ -25,5 +25,6 @@
 		height: fit-content;
 		border: 2px solid var(--primary-dark);
 		white-space: nowrap;
+		z-index: 20;
 	}
 </style>

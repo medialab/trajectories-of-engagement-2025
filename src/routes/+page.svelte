@@ -11,10 +11,6 @@
 	import Carousel from '$lib/comps/carousel.svelte';
 	import { Canvas } from '@threlte/core';
 	import { NoToneMapping } from 'three';
-	import { isMobile } from '$lib/utils';
-	import { onMount } from 'svelte';
-	import { afterNavigate } from '$app/navigation';
-
 	let containerEl: HTMLElement | undefined = $state(undefined);
 	let bezRef: any;
 
@@ -30,7 +26,7 @@
 <div class="hero_container vertical_flex">
 	<div class="vertical_flex">
 		<h1>Trajectories of engagement</h1>
-		<p class="l">
+		<p class="m">
 			Trajectories of engagement are the paths through which researchers and external actors meet,
 			collaborate, and co-create knowledge—across physical and digital settings—to address public
 			issues
@@ -54,7 +50,7 @@
 {/if}
 
 {#key data.posters}
-	<div class="carousel_container" bind:this={containerEl}>
+	<div class="carousel_container" bind:this={containerEl} draggable="true">
 		<div>
 			<Canvas toneMapping={NoToneMapping}>
 				<Carousel
@@ -83,7 +79,7 @@
 	.hero_container {
 		left: 20px;
 		top: 20px;
-		width: 60ch;
+		width: 50ch;
 		row-gap: 20px;
 		position: fixed;
 		z-index: 5;
@@ -93,6 +89,7 @@
 		position: fixed;
 		right: 20px;
 		bottom: 20px;
+		z-index: 10;
 	}
 
 	.carousel_container {
@@ -108,6 +105,9 @@
 		pointer-events: all;
 		touch-action: none;
 		overscroll-behavior: contain;
+		user-select: none;
+		-webkit-user-select: none;
+		cursor: grab;
 	}
 
 	.carousel_container div {
@@ -116,6 +116,14 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
+		user-select: none;
+		/* Add these to prevent image dragging */
+		-webkit-user-drag: none;
+		-khtml-user-drag: none;
+		-moz-user-drag: none;
+		-o-user-drag: none;
+		user-drag: none;
+		cursor: grab;
 	}
 
 	@media (max-width: 768px) {

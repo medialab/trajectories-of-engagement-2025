@@ -10,6 +10,8 @@
 	import { browser } from '$app/environment';
 	import { currentTag, currentAuthor, currentResearchCenter, carouselConfig } from '$lib/utils';
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
+
 	import { isMobile } from '$lib/utils';
 
 	// Removed LocomotiveScroll; we drive scroll from wheel/touch directly
@@ -331,9 +333,8 @@
 					}}
 					onclick={(e: any) => {
 						e.stopPropagation();
-						const basePath = import.meta.env.BASE_URL || '/';
-						const cleanBase = basePath === '/' ? '' : basePath;
-						goto(`${cleanBase}/projects/${project.metadata.id}`);
+						const resolvedPath = resolve(`/projects/${project.metadata.id}`);
+						goto(resolvedPath);
 					}}
 					href={`/projects/${project.metadata.id}`}
 					interactive={true}

@@ -33,6 +33,11 @@ jobs:
       - name: Build site
         run: npm run build
 
+      - name: Celebrate successful build with rockets
+        if: ${{ success() }}
+        run: |
+          echo "🚀🚀🚀 The build was successful! 🚀🚀🚀"
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

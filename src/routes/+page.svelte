@@ -35,6 +35,7 @@
 
 	<Button label="Access the archive ↓" href="/archive" />
 </div>
+
 {#if $currentTag}
 	<div class="tag_container align_right vertical_flex">
 		{#if $currentAuthor}

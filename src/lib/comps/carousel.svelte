@@ -336,7 +336,6 @@
 						const resolvedPath = resolve(`/projects/${project.metadata.id}`);
 						goto(resolvedPath);
 					}}
-					href={`/projects/${project.metadata.id}`}
 					interactive={true}
 					castShadow={true}
 					receiveShadow={true}

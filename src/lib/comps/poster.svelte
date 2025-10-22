@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
-	import { base } from '$app/paths';
 
 	let props = $props();
 

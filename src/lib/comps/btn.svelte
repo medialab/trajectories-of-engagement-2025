@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { menuOpen } from '$lib/utils';
+	import { resolve } from '$app/paths';
+	import type { RouteId } from '$app/types';
 
 	let props = $props();
 
 	const intDecide = (o: unknown) => {
+		console.log(o);
+
 		if (o === 'back') {
 			history.back();
 			return;
@@ -12,15 +16,10 @@
 		if (o === 'burger_menu') {
 			$menuOpen = !$menuOpen;
 			return;
-		}
-		if (typeof o === 'string') {
-			const href = o.trim();
-			if (href !== '' && href !== '#') {
-				// If href starts with /, prepend base path
-				const basePath = import.meta.env.BASE_URL || '';
-				const fullPath = href.startsWith('/') ? `${basePath}${href}` : href;
-				goto(fullPath);
-			}
+		} else if (typeof o === 'string') {
+			// @ts-ignore
+			const resolvedPath = resolve(`${o}`);
+			goto(resolvedPath);
 		}
 	};
 </script>
@@ -32,13 +31,13 @@
 	class:disabled={props?.disabled === true}
 	onclick={() => intDecide(props?.href)}
 	style={props?.img ? 'background-color: white' : ''}
-	onkeydown={(e) => e.key === 'Enter' && intDecide(props?.href)}
 >
 	{#if props?.label}
 		<p class="m">
 			{props.label}
 		</p>
 	{/if}
+
 	{#if props?.img}
 		<img src={props?.img} alt={props?.imgAlt} />
 	{/if}

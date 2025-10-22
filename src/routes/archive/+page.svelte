@@ -6,6 +6,7 @@
 	import BezierCanvas from '$lib/comps/cnvs.svelte';
 	import { goto } from '$app/navigation';
 	import { isMobile } from '$lib/utils';
+	import { resolve } from '$app/paths';
 
 	let { data }: PageProps = $props();
 
@@ -53,7 +54,6 @@
 <Header />
 
 <div class="title_container">
-	<!-- <Button label="ARCHIVE OF PROJECTS" href="/archive" /> -->
 	{#if !isMobileFlag}
 		<h1 style="text-transform: uppercase;">Trajectories of engagement</h1>
 	{:else}
@@ -99,9 +99,10 @@
 			{#each sortedProjects() as project, index}
 				<tr
 					id="row"
-					onclick={() => {
-						const basePath = import.meta.env.BASE_URL || '';
-						goto(`${basePath}/projects/${project.metadata.id}`);
+					onclick={(e: any) => {
+						e.stopPropagation();
+						const resolvedPath = resolve(`/projects/${project.metadata.id}`);
+						goto(resolvedPath);
 					}}
 				>
 					<th scope="row" class="t_num">({index + 1})</th>

@@ -331,7 +331,8 @@
 					}}
 					onclick={(e: any) => {
 						e.stopPropagation();
-						goto(`projects/${project.metadata.id}`);
+						const basePath = import.meta.env.BASE_URL || '';
+						goto(`${basePath}projects/${project.metadata.id}`);
 					}}
 					interactive={true}
 					castShadow={true}

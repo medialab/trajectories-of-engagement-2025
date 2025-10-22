@@ -27,6 +27,11 @@
 	let isIntroTweening = $state(false);
 	let introTweenRAF: number | null = null;
 
+	// Smoothed wind velocity for visible curl/lerp, esp. on mobile
+	let windVelocity = 0; // not reactive on purpose
+	const windDamping = (carouselConfig.wind as any)?.damping ?? 0.92;
+	const windEpsilon = 0.0005;
+
 	$effect(() => {
 		if ((props as any)?.deformationStrength !== undefined) {
 			deformationStrength = (props as any).deformationStrength as number;
@@ -251,11 +256,19 @@
 			if (scrollRAF !== null) return;
 			scrollRAF = requestAnimationFrame(() => {
 				scrollRAF = null;
+				const prev = scrollY;
 				if (pendingDelta !== 0) {
-					const prev = scrollY;
 					scrollY = prev + pendingDelta * scrollFactor;
-					deformMeshes(pendingDelta);
+					windVelocity += pendingDelta; // accumulate instantaneous input into velocity
 					pendingDelta = 0;
+				}
+
+				// drive deformation from smoothed velocity; keep animating while velocity remains
+				if (Math.abs(windVelocity) > windEpsilon) {
+					deformMeshes(windVelocity);
+					windVelocity *= windDamping;
+					// continue animation until velocity decays
+					if (scrollRAF === null) scheduleApply();
 				}
 			});
 		};
@@ -306,6 +319,7 @@
 
 		let touchY = 0;
 		const onTouchStart = (e: TouchEvent) => {
+			cancelIntroTween();
 			touchY = e.touches[0]?.clientY ?? 0;
 		};
 		const onTouchMove = (e: TouchEvent) => {
@@ -320,14 +334,18 @@
 		};
 
 		const target = props.containerEl ?? window;
+		// Disable native gesture handling to reduce jank on mobile
+		if (target instanceof HTMLElement) {
+			target.style.touchAction = 'none';
+		}
 		target.addEventListener('wheel', onWheel, { passive: false });
 		target.addEventListener('mousedown', onMouseDown, { passive: true });
 		target.addEventListener('mousemove', onMouseMove, { passive: true });
 		target.addEventListener('mouseup', onMouseUp, { passive: true });
 		// Also listen for mouseup on window in case mouse leaves the target
 		window.addEventListener('mouseup', onMouseUp, { passive: true });
-		target.addEventListener('touchstart', onTouchStart, { passive: true });
-		target.addEventListener('touchmove', onTouchMove, { passive: true });
+		target.addEventListener('touchstart', onTouchStart, { passive: false });
+		target.addEventListener('touchmove', onTouchMove, { passive: false });
 
 		setTimeout(() => {
 			isLoaded = true;

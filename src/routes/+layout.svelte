@@ -1,3 +1,5 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
 
@@ -5,11 +7,37 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
-</svelte:head>
+	<title>Trajectories of Engagement 2025</title>
+	<meta
+		name="description"
+		content="A research showcase exploring engagement across culture, media and technology."
+	/>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<svelte:options runes={true} />
+	<link rel="icon" href={favicon} />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+	<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+	/>
+
+	<meta name="theme-color" content="#111111" />
+
+	<meta property="og:title" content="Trajectories of Engagement 2025" />
+	<meta
+		property="og:description"
+		content="A research showcase exploring engagement across culture, media and technology."
+	/>
+	<meta property="og:type" content="website" />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Trajectories of Engagement 2025" />
+	<meta
+		name="twitter:description"
+		content="A research showcase exploring engagement across culture, media and technology."
+	/>
+</svelte:head>
 
 {@render children?.()}
 
@@ -22,12 +50,13 @@
 	}
 
 	:root {
-		--primary-color: #CEFFBF;
-		--primary-light: #F5F5F5;
+		--primary-color: #ceffbf;
+		--primary-light: #f5f5f5;
 		--primary-dark: #111111;
 	}
-	
-	:global(html), :global(body) {
+
+	:global(html),
+	:global(body) {
 		font-family: 'Inter', sans-serif;
 		font-weight: 300;
 		background-color: var(--primary-light);
@@ -40,7 +69,7 @@
 
 	:global(h1) {
 		font-size: 48px;
-		font-weight: 600;	
+		font-weight: 600;
 		line-height: 1.1;
 		letter-spacing: -0.05em;
 	}
@@ -51,22 +80,20 @@
 
 	:global(.s) {
 		font-size: 14px;
-			
 	}
 
 	:global(.m) {
 		font-size: 16px;
-		
 	}
 
 	:global(.l) {
 		font-size: 26px;
 	}
-	
+
 	:global(.xl) {
-		font-size: 32px;	
+		font-size: 32px;
 	}
-	
+
 	:global(.vertical_flex) {
 		display: flex;
 		flex-direction: column;
@@ -129,5 +156,4 @@
 			overflow-x: hidden !important;
 		}
 	}
-
 </style>

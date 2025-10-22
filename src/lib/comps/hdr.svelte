@@ -6,7 +6,6 @@
 	import { isMobile } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { menuOpen } from '$lib/utils';
-	import { backIn } from 'svelte/easing';
 	import { slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { beforeNavigate } from '$app/navigation';

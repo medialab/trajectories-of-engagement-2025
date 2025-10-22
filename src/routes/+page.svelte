@@ -156,7 +156,7 @@
 
 	.loader_screen {
 		width: 100vw;
-		height: 100vh;
+		height: 100%;
 		background-color: var(--primary-light);
 		position: fixed;
 		top: 0;

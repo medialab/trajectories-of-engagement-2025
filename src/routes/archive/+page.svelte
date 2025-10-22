@@ -63,7 +63,7 @@
 {#if isPageLoaded}
 	<div
 		class="title_container"
-		transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}
+		transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 100 }}
 	>
 		{#if !isMobileFlag}
 			<h1 style="text-transform: uppercase;">Trajectories of engagement</h1>
@@ -73,7 +73,7 @@
 	</div>
 
 	<div class="t_container">
-		<table class="archive_table" transition:fade={{ duration: 1000, easing: cubicOut, delay: 990 }}>
+		<table class="archive_table" transition:fade={{ duration: 1000, easing: cubicOut, delay: 200 }}>
 			<thead class="t_header">
 				<tr>
 					<th scope="col" style="width: 5%;"

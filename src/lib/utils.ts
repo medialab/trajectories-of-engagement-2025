@@ -26,7 +26,7 @@ export const carouselConfig = {
 		wheelDesktop: 1,
 		wheelMobile: 5,
 		touchDesktop: 1,
-		touchMobile: 1.5
+		touchMobile: 5
 	},
 
 	// Hover interaction
@@ -66,7 +66,7 @@ export const carouselConfig = {
 	// Wind/deformation parameters
 	wind: {
 		// Map wheel/touch delta to wind strength and clamp internally to [-1, 1]
-		deltaMultiplier: 0.01,
+		deltaMultiplier: 0.012,
 		// Base curl amplitude near edges before per-mesh scaling
 		maxCurl: 0.45,
 		// Base threshold for inner flat region (0..1), lower => wider curl area

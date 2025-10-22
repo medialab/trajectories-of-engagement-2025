@@ -17,6 +17,8 @@ export const load: PageLoad = async ({ params }) => {
 	error(404, 'Not found');
 };
 
+// This is used to prerender the project pages, basically traversing the datasource it's able to understand the possible slugs
+
 export const entries: EntryGenerator = async () => {
 	const data = await import('$lib/datasource.json');
 	const projects = (data as any).default?.projects ?? (data as any).projects ?? [];

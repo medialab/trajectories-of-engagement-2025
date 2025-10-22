@@ -19,8 +19,6 @@
 	let bezRef: any;
 
 	let { data }: PageProps = $props();
-
-	let isMobileFlag = $derived.by(() => isMobile());
 </script>
 
 <Header />
@@ -58,6 +56,7 @@
 				{containerEl}
 				onHoverPoster={() => bezRef?.triggerRegeneration?.()}
 				projects={data.projects}
+				posters={data.posters}
 			/>
 		</Canvas>
 	</div>

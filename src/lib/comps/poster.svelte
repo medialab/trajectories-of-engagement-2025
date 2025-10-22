@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import { base } from '$app/paths';
 
 	let props = $props();
 
@@ -12,27 +13,17 @@
 
 	// Preload all poster assets and expose their built URLs
 	const originals = import.meta.glob('/src/lib/assets/posters/*.png', {
-		as: 'url',
+		query: '?url',
 		eager: true
 	}) as Record<string, string>;
+
 	const annotated = import.meta.glob('/src/lib/assets/posters/*_annotated.png', {
-		as: 'url',
+		query: '?url',
 		eager: true
 	}) as Record<string, string>;
-
-	let imgSrc: string = $state('');
-	let annotatedImgSrc: string = $state('');
-
-	$effect(() => {
-		if (!props.id) return;
-		const originalKey = `/src/lib/assets/posters/${props.id}.png`;
-		const annotatedKey = `/src/lib/assets/posters/${props.id}_annotated.png`;
-		imgSrc = originals[originalKey] ?? '';
-		annotatedImgSrc = annotated[annotatedKey] ?? '';
-	});
 </script>
 
-{#if imgSrc !== '' && annotatedImgSrc !== ''}
+{#if props.originalPoster !== '' && props.annotatedPoster !== ''}
 	<div
 		class="post_cont vertical_flex"
 		transition:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}
@@ -55,10 +46,15 @@
 			<p class="s head_text">Annotated</p>
 		</div>
 		<div class="post_img">
-			<img class="base_img" src={imgSrc} alt={props.id} style="opacity: {1 - mixOpacity};" />
+			<img
+				class="base_img"
+				src={props.originalPoster}
+				alt={props.id}
+				style="opacity: {1 - mixOpacity};"
+			/>
 			<img
 				class="blend_img"
-				src={annotatedImgSrc}
+				src={props.annotatedPoster}
 				alt="{props.id}_annotated"
 				style="opacity: {mixOpacity};"
 			/>

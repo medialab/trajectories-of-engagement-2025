@@ -63,7 +63,11 @@
 				excerpts={data.project.excerpts}
 				src={data.project.presentationURL}
 			/>
-			<Poster id={data.project.metadata.id} />
+			<Poster
+				id={data.project.metadata.id}
+				originalPoster={data.originalPoster}
+				annotatedPoster={data.annotatedPoster}
+			/>
 		</div>
 	{/if}
 </div>

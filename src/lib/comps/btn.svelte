@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { menuOpen } from '$lib/utils';
 	import { resolve } from '$app/paths';
-	import type { RouteId } from '$app/types';
 
 	let props = $props();
 

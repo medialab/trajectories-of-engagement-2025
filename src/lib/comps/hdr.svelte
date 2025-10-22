@@ -39,11 +39,13 @@
 {#if $menuOpen}
 	<div
 		class="burger_menu vertical_flex"
-		transition:slide={{ duration: 550, axis: 'y', easing: cubicOut }}
+		in:slide={{ duration: 550, axis: 'y', easing: cubicOut }}
+		out:slide={{ duration: 550, axis: 'y', easing: cubicOut, delay: 300 }}
 	>
 		<div
 			class="horizontal_flex lang_switch"
-			transition:slide={{ duration: 550, axis: 'y', easing: cubicOut, delay: 300 }}
+			in:slide={{ duration: 550, axis: 'y', easing: cubicOut, delay: 300 }}
+			out:slide={{ duration: 550, axis: 'y', easing: cubicOut }}
 		>
 			<Button label="FR" />
 			<Button label="/" />
@@ -51,7 +53,8 @@
 		</div>
 		<div
 			class="vertical_flex clickables"
-			transition:slide={{ duration: 550, axis: 'y', easing: cubicOut, delay: 300 }}
+			in:slide={{ duration: 550, axis: 'y', easing: cubicOut, delay: 300 }}
+			out:slide={{ duration: 550, axis: 'y', easing: cubicOut }}
 		>
 			<Button label="ABOUT" href="/about" />
 			<Button label="ARCHIVE" href="/archive" />
@@ -60,7 +63,8 @@
 
 		<div
 			class="lang_switch bottom_text"
-			transition:slide={{ duration: 550, axis: 'y', easing: cubicOut, delay: 300 }}
+			in:slide={{ duration: 550, axis: 'y', easing: cubicOut, delay: 300 }}
+			out:slide={{ duration: 550, axis: 'y', easing: cubicOut }}
 		>
 			<p class="s">
 				This project was brought to life by the combined efforts of medialab sciencespo and

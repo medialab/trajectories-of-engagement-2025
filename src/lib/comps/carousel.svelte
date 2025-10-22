@@ -5,6 +5,7 @@
 	import { T } from '@threlte/core';
 	import { useTexture } from '@threlte/extras';
 	import { onMount, onDestroy } from 'svelte';
+	import { cubicOut } from 'svelte/easing';
 	import { interactivity, useCursor } from '@threlte/extras';
 	import type { Mesh as ThreeMesh } from 'three';
 	import { browser } from '$app/environment';
@@ -12,16 +13,19 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 
-	import { isMobile } from '$lib/utils';
+	import { isMobile, isTextureReady } from '$lib/utils';
 
 	// Removed LocomotiveScroll; we drive scroll from wheel/touch directly
 	let scrollY = $state(0);
 	let scrollFactor = carouselConfig.scrollFactor;
 
 	let deformationStrength = $state(2);
-	let cursorTag: HTMLElement;
 
 	let isMobileFlag = $derived.by(() => isMobile());
+
+	// Intro tween to simulate initial card movement once textures are ready
+	let isIntroTweening = $state(false);
+	let introTweenRAF: number | null = null;
 
 	$effect(() => {
 		if ((props as any)?.deformationStrength !== undefined) {
@@ -42,6 +46,15 @@
 
 	let spacing = carouselConfig.spacing;
 	let baseScale = $state(0.9);
+
+	$effect(() => {
+		if (isMobileFlag) {
+			baseScale = 0.7;
+		} else {
+			baseScale = 0.9;
+		}
+	});
+
 	const startZ = carouselConfig.startZ;
 	const groupTotalLength = props.projects.length * spacing;
 	const middleZ = startZ + Math.floor(props.projects.length / 2) * spacing;
@@ -56,6 +69,10 @@
 			edgePower: number;
 			dirScale: number;
 			windScale: number;
+			// additional per-mesh variance
+			oscAmp: number; // 0..~0.2
+			oscFreq: number; // small frequency factor applied to scrollY
+			oscPhase: number; // 0..2PI
 		}
 	>();
 
@@ -112,7 +129,10 @@
 				thresholdShift: 0,
 				edgePower: 1,
 				dirScale: 1,
-				windScale: 1
+				windScale: 1,
+				oscAmp: 0.1,
+				oscFreq: 0.008,
+				oscPhase: 0
 			};
 
 			let baseZ = originalZByMesh.get(mesh);
@@ -162,11 +182,49 @@
 				dir = Math.max(-1, Math.min(1, dir));
 				zOffset *= dir;
 
+				// Per-mesh oscillation tied to scrollY to diversify motion curves
+				const osc = 1 + r.oscAmp * Math.sin(scrollY * r.oscFreq + r.oscPhase);
+				zOffset *= osc;
+
 				position.setZ(i, baseZ[i] + zOffset);
 			}
 			position.needsUpdate = true;
 			mesh.geometry.computeVertexNormals?.();
 		}
+	}
+
+	function easeOutCubic(t: number): number {
+		return cubicOut(t);
+	}
+
+	function cancelIntroTween() {
+		isIntroTweening = false;
+		if (introTweenRAF !== null) cancelAnimationFrame(introTweenRAF);
+		introTweenRAF = null;
+	}
+
+	function startIntroTween() {
+		isIntroTweening = true;
+		const from = -100;
+		const to = 0;
+		const duration = 2500;
+		const start = performance.now();
+		let prev = (scrollY = from);
+		const step = (now: number) => {
+			const t = Math.min(1, (now - start) / duration);
+			const eased = easeOutCubic(t);
+			const next = from + (to - from) * eased;
+			const pendingDeltaEquivalent = (next - prev) / Math.max(1e-6, scrollFactor);
+			scrollY = next;
+			deformMeshes(pendingDeltaEquivalent);
+			prev = next;
+			if (t < 1 && isIntroTweening) {
+				introTweenRAF = requestAnimationFrame(step);
+			} else {
+				scrollY = to;
+			}
+		};
+		introTweenRAF = requestAnimationFrame(step);
 	}
 
 	function getPoster(id: string) {
@@ -176,6 +234,13 @@
 	}
 
 	interactivity({ target: props.containerEl });
+
+	$effect(() => {
+		console.log('isTextureReady', $isTextureReady);
+		if ($isTextureReady) {
+			startIntroTween();
+		}
+	});
 
 	onMount(() => {
 		if (!browser) return;
@@ -196,6 +261,7 @@
 		};
 
 		const onWheel = (e: WheelEvent) => {
+			cancelIntroTween();
 			e.preventDefault();
 			const m = isMobileFlag
 				? carouselConfig.multipliers.wheelMobile
@@ -277,8 +343,6 @@
 			target.removeEventListener('touchmove', onTouchMove as any);
 		});
 	});
-
-	// cursor move handler is removed in onMount cleanup above
 </script>
 
 <T.Group rotation={[0.3, -0.5, 0]}>
@@ -287,6 +351,7 @@
 		{#if poster}
 			{@const texture = useTexture(poster as string).then((texture) => texture)}
 			{#await texture then map}
+				{($isTextureReady = true)}
 				<T.Mesh
 					position={[0, 0, cardBoundTeleport(startZ + index * spacing + scrollY)]}
 					scale={[baseScale + hoverToScale[index], baseScale + hoverToScale[index], baseScale]}
@@ -294,7 +359,6 @@
 					oncreate={(value) => {
 						if (value && !meshes.includes(value)) {
 							meshes.push(value);
-							// assign per-mesh randomized params once
 							const rand = (min: number, max: number) => Math.random() * (max - min) + min;
 							meshRand.set(value as any, {
 								curlScale: rand(
@@ -316,23 +380,29 @@
 								windScale: rand(
 									carouselConfig.randomness.windScale[0],
 									carouselConfig.randomness.windScale[1]
-								)
+								),
+								oscAmp: rand(0.05, 0.18),
+								oscFreq: rand(0.004, 0.012),
+								oscPhase: rand(0, Math.PI * 2)
 							});
 						}
 					}}
 					onpointerenter={(e: any) => {
+						if (!$isTextureReady) return;
 						e.stopPropagation();
 						setHoverTarget(index, carouselConfig.hover.scale);
 						handlePointerEnter(project.metadata);
 						props.onHoverPoster?.();
 					}}
 					onpointerleave={(e: any) => {
+						if (!$isTextureReady) return;
 						e.stopPropagation();
 						setHoverTarget(index, 0);
 						onPointerLeave();
 					}}
 					onclick={(e: any) => {
 						e.stopPropagation();
+						if (!$isTextureReady) return;
 						const resolvedPath = resolve(`/projects/${project.metadata.id}`);
 						goto(resolvedPath);
 					}}

@@ -1,18 +1,25 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 
-	import Button from '$lib/comps/btn.svelte';
 	import Header from '$lib/comps/hdr.svelte';
 	import BezierCanvas from '$lib/comps/cnvs.svelte';
 	import { goto } from '$app/navigation';
 	import { isMobile } from '$lib/utils';
 	import { resolve } from '$app/paths';
+	import { afterNavigate } from '$app/navigation';
+	import { fade, slide } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
 
 	let { data }: PageProps = $props();
 
 	let isMobileFlag = $state(isMobile());
 
 	let sortedBy = $state('year');
+	let isPageLoaded = $state(false);
+
+	afterNavigate(() => {
+		isPageLoaded = true;
+	});
 
 	function getKeyValue(project: any, key: string): string | number {
 		switch (key) {
@@ -53,77 +60,88 @@
 
 <Header />
 
-<div class="title_container">
-	{#if !isMobileFlag}
-		<h1 style="text-transform: uppercase;">Trajectories of engagement</h1>
-	{:else}
-		<h1>ARCHIVE</h1>
-	{/if}
-</div>
+{#if isPageLoaded}
+	<div
+		class="title_container"
+		transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}
+	>
+		{#if !isMobileFlag}
+			<h1 style="text-transform: uppercase;">Trajectories of engagement</h1>
+		{:else}
+			<h1>ARCHIVE</h1>
+		{/if}
+	</div>
 
-<div class="t_container">
-	<table class="archive_table">
-		<thead class="t_header">
-			<tr>
-				<th scope="col" style="width: 5%;"
-					><button>(N) {sortedBy === 'index' ? '↑' : ''}</button></th
-				>
-				<th scope="col" style="width: 10%;" id="year"
-					><button onclick={() => (sortedBy = 'year')}
-						>Dates {sortedBy === 'year' ? '↑' : ''}</button
-					></th
-				>
-				<th scope="col" style="width: 30%;" id="title"
-					><button onclick={() => (sortedBy = 'title')}
-						>Title {sortedBy === 'title' ? '↑' : ''}</button
-					></th
-				>
-				<th scope="col" style="width: 15%;" id="project_leaders"
-					><button onclick={() => (sortedBy = 'project_leaders')}
-						>Author {sortedBy === 'project_leaders' ? '↑' : ''}</button
-					></th
-				>
-				<th scope="col" style="width: 25%;" id="research_center"
-					><button onclick={() => (sortedBy = 'research_center')}
-						>University {sortedBy === 'research_center' ? '↑' : ''}</button
-					></th
-				>
-				<th scope="col" style="width: 15%;" id="link"
-					><button onclick={() => (sortedBy = 'presentationURL')}
-						>Link {sortedBy === 'presentationURL' ? '↑' : ''}</button
-					></th
-				>
-			</tr>
-		</thead>
-		<tbody class="t_body">
-			{#each sortedProjects() as project, index}
-				<tr
-					id="row"
-					onclick={(e: any) => {
-						e.stopPropagation();
-						const resolvedPath = resolve(`/projects/${project.metadata.id}`);
-						goto(resolvedPath);
-					}}
-				>
-					<th scope="row" class="t_num">({index + 1})</th>
-					<td id="year">{project.metadata.year?.trim() ? project.metadata.year : '2020-2023'}</td>
-					<td id="title">{project.metadata.title?.trim() ? project.metadata.title : ''}</td>
-					<td id="project_leaders"
-						>{project.metadata.project_leaders?.trim()
-							? project.metadata.project_leaders
-							: 'Donato Ricci'}</td
+	<div class="t_container">
+		<table class="archive_table" transition:fade={{ duration: 1000, easing: cubicOut, delay: 990 }}>
+			<thead class="t_header">
+				<tr>
+					<th scope="col" style="width: 5%;"
+						><button>(N) {sortedBy === 'index' ? '↑' : ''}</button></th
 					>
-					<td id="research_center"
-						>{project.metadata.research_center?.trim()
-							? project.metadata.research_center
-							: 'Medialab Sciences Po'}</td
+					<th scope="col" style="width: 10%;" id="year"
+						><button onclick={() => (sortedBy = 'year')}
+							>Dates {sortedBy === 'year' ? '↑' : ''}</button
+						></th
 					>
-					<td id="link">{project.presentationURL?.trim() ? project.presentationURL : 'ytb.com'}</td>
+					<th scope="col" style="width: 30%;" id="title"
+						><button onclick={() => (sortedBy = 'title')}
+							>Title {sortedBy === 'title' ? '↑' : ''}</button
+						></th
+					>
+					<th scope="col" style="width: 15%;" id="project_leaders"
+						><button onclick={() => (sortedBy = 'project_leaders')}
+							>Author {sortedBy === 'project_leaders' ? '↑' : ''}</button
+						></th
+					>
+					<th scope="col" style="width: 25%;" id="research_center"
+						><button onclick={() => (sortedBy = 'research_center')}
+							>University {sortedBy === 'research_center' ? '↑' : ''}</button
+						></th
+					>
+					<th scope="col" style="width: 15%;" id="link"
+						><button onclick={() => (sortedBy = 'presentationURL')}
+							>Link {sortedBy === 'presentationURL' ? '↑' : ''}</button
+						></th
+					>
 				</tr>
-			{/each}
-		</tbody>
-	</table>
-</div>
+			</thead>
+			<tbody class="t_body">
+				{#each sortedProjects() as project, index}
+					{#if isPageLoaded}
+						<tr
+							id="row"
+							onclick={(e: any) => {
+								e.stopPropagation();
+								const resolvedPath = resolve(`/projects/${project.metadata.id}`);
+								goto(resolvedPath);
+							}}
+						>
+							<th scope="row" class="t_num">({index + 1})</th>
+							<td id="year"
+								>{project.metadata.year?.trim() ? project.metadata.year : '2020-2023'}</td
+							>
+							<td id="title">{project.metadata.title?.trim() ? project.metadata.title : ''}</td>
+							<td id="project_leaders"
+								>{project.metadata.project_leaders?.trim()
+									? project.metadata.project_leaders
+									: 'Donato Ricci'}</td
+							>
+							<td id="research_center"
+								>{project.metadata.research_center?.trim()
+									? project.metadata.research_center
+									: 'Medialab Sciences Po'}</td
+							>
+							<td id="link"
+								>{project.presentationURL?.trim() ? project.presentationURL : 'ytb.com'}</td
+							>
+						</tr>
+					{/if}
+				{/each}
+			</tbody>
+		</table>
+	</div>
+{/if}
 
 <BezierCanvas />
 

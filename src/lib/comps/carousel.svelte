@@ -331,9 +331,11 @@
 					}}
 					onclick={(e: any) => {
 						e.stopPropagation();
-						const basePath = import.meta.env.BASE_URL || '';
-						goto(`${basePath}projects/${project.metadata.id}`);
+						const basePath = import.meta.env.BASE_URL || '/';
+						const cleanBase = basePath === '/' ? '' : basePath;
+						goto(`${cleanBase}/projects/${project.metadata.id}`);
 					}}
+					href={`/projects/${project.metadata.id}`}
 					interactive={true}
 					castShadow={true}
 					receiveShadow={true}

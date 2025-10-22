@@ -331,7 +331,7 @@
 					}}
 					onclick={(e: any) => {
 						e.stopPropagation();
-						goto(`/projects/${project.metadata.id}`);
+						goto(`projects/${project.metadata.id}`);
 					}}
 					interactive={true}
 					castShadow={true}

@@ -3,6 +3,7 @@
 A research showcase exploring how researchers and external actors meet, collaborate and co‑create knowledge across physical and digital settings to address public issues. The site presents a curated set of projects from the humanities and social sciences, highlighting their participatory “trajectories of engagement,” the socio‑technical choices involved, and reflections from practitioners.
 
 > A living observatory of participatory research practices across HSS projects.
+> 
 🌐 **Website**: [https://medialab.github.io/trajectories-of-engagement-2025/](https://medialab.github.io/trajectories-of-engagement-2025/)
 
 <details>

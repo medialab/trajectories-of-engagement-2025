@@ -66,9 +66,9 @@ export const carouselConfig = {
 	// Wind/deformation parameters
 	wind: {
 		// Map wheel/touch delta to wind strength and clamp internally to [-1, 1]
-		deltaMultiplier: 0.012,
+		deltaMultiplier: 0.006,
 		// Base curl amplitude near edges before per-mesh scaling
-		maxCurl: 0.45,
+		maxCurl: 2,
 		// Base threshold for inner flat region (0..1), lower => wider curl area
 		thresholdBase: 0.35
 	},

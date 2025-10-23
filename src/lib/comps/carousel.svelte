@@ -120,24 +120,15 @@
 	}
 
 	function deformMeshes(scrollDelta: number) {
-		const windStrength = Math.max(
-			-1,
-			Math.min(1, scrollDelta * carouselConfig.wind.deltaMultiplier)
-		);
+		const s = Math.max(-1, Math.min(1, scrollDelta * carouselConfig.wind.deltaMultiplier));
+		const windStrength = Math.sign(s) * cubicOut(Math.abs(s));
 
 		for (const mesh of meshes) {
 			const position = mesh?.geometry?.attributes?.position;
 			if (!position) continue;
 
 			const r = meshRand.get(mesh) ?? {
-				curlScale: 1,
-				thresholdShift: 0,
-				edgePower: 1,
-				dirScale: 1,
-				windScale: 1,
-				oscAmp: 0.1,
-				oscFreq: 0.008,
-				oscPhase: 0
+				windScale: 1
 			};
 
 			let baseZ = originalZByMesh.get(mesh);
@@ -147,51 +138,31 @@
 				originalZByMesh.set(mesh, baseZ);
 			}
 
-			// Read plane size from geometry parameters (fallback to 1x1 if unavailable)
+			// Geometry parameters to normalize coordinates
 			const geomParams = (mesh.geometry as any)?.parameters ?? {};
 			const width = typeof geomParams.width === 'number' ? geomParams.width : 1;
 			const height = typeof geomParams.height === 'number' ? geomParams.height : 1;
 			const halfW = width / 2;
 			const halfH = height / 2;
 
-			// Rounded falloff from inner region to edges using max-norm (square radius)
-			// threshold defines the inner area with no curl; lower => wider curl area
-			const threshold = carouselConfig.wind.thresholdBase + r.thresholdShift; // 0..1 with per-mesh shift
+			// Bottom-edge bend with half-parabola vertical falloff
+			const maxBend = carouselConfig.wind.maxCurl * Math.max(0, deformationStrength);
+			const verticalCurvePower = 2.0; // 1.5..3.0: higher -> more concentrated near bottom
 
 			const vertexCount = position.count;
 			for (let i = 0; i < vertexCount; i++) {
 				const x = position.getX(i);
 				const y = position.getY(i);
 
-				let zOffset = 0;
-				const ax = Math.abs(x) / Math.max(1e-6, halfW);
-				const ay = Math.abs(y) / Math.max(1e-6, halfH);
-				const m = Math.max(ax, ay); // 0 at center .. 1 at edges/corners
-				let t = (m - threshold) / Math.max(1e-6, 1 - threshold);
-				t = Math.min(1, Math.max(0, t));
-				let s = t * t * (3 - 2 * t); // smoothstep
-				s = Math.pow(s, 1 + Math.max(0, r.edgePower)); // per-mesh rounding power
-				const maxCurl = carouselConfig.wind.maxCurl;
-				zOffset =
-					s *
-					maxCurl *
-					r.curlScale *
-					(windStrength * r.windScale) *
-					Math.max(0, deformationStrength);
-				// Smoothly vary curl direction across X (gentler near center)
-				const nxEdge = x / Math.max(1e-6, halfW); // -1 .. 1
-				const sign = nxEdge >= 0 ? -1 : 1; // right negative, left positive
-				const a = Math.min(1, Math.abs(nxEdge));
-				const eased = a * a * (3 - 2 * a); // smoothstep
-				let dir = sign * eased * r.dirScale;
-				dir = Math.max(-1, Math.min(1, dir));
-				zOffset *= dir;
+				const nx = x / Math.max(1e-6, halfW); // -1..1, corners have |nx| ~ 1
+				const ny = y / Math.max(1e-6, halfH); // -1 bottom .. 1 top
 
-				// Per-mesh oscillation tied to scrollY to diversify motion curves
-				const osc = 1 + r.oscAmp * Math.sin(scrollY * r.oscFreq + r.oscPhase);
-				zOffset *= osc;
+				// Vertical half-parabola: uniform across X
+				const t = Math.min(1, Math.max(0, (ny + 1) * 0.5)); // bottom=0 .. top=1
+				const weight = Math.pow(1 - t, verticalCurvePower);
 
-				position.setZ(i, baseZ[i] + zOffset);
+				const bend = weight * maxBend * r.windScale * windStrength;
+				position.setZ(i, baseZ[i] + bend);
 			}
 			position.needsUpdate = true;
 			mesh.geometry.computeVertexNormals?.();
@@ -252,6 +223,7 @@
 
 		let pendingDelta = 0;
 		let scrollRAF: number | null = null;
+
 		const scheduleApply = () => {
 			if (scrollRAF !== null) return;
 			scrollRAF = requestAnimationFrame(() => {
@@ -259,15 +231,12 @@
 				const prev = scrollY;
 				if (pendingDelta !== 0) {
 					scrollY = prev + pendingDelta * scrollFactor;
-					windVelocity += pendingDelta; // accumulate instantaneous input into velocity
+					windVelocity += pendingDelta;
 					pendingDelta = 0;
 				}
-
-				// drive deformation from smoothed velocity; keep animating while velocity remains
 				if (Math.abs(windVelocity) > windEpsilon) {
 					deformMeshes(windVelocity);
 					windVelocity *= windDamping;
-					// continue animation until velocity decays
 					if (scrollRAF === null) scheduleApply();
 				}
 			});

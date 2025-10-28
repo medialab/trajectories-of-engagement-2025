@@ -16,7 +16,7 @@
 			onclick={() => (isOpen = !isOpen)}
 			onkeydown={(e) => e.key === 'Enter' && (isOpen = !isOpen)}
 		>
-			<Button label="{title} {isOpen ? '↑' : '↓'}" href="" />
+			<Button label="{title} {isOpen ? '↑' : '↓'}"/>
 		</div>
 		{#if isOpen}
 			<p transition:slide={{ duration: 650, easing: cubicOut, axis: 'y' }}>{text}</p>

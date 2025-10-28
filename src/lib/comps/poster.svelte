@@ -1,11 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import { cubicOut } from 'svelte/easing';
+	import { cubicOut, quartInOut, } from 'svelte/easing';
+	import { Tween } from 'svelte/motion';
+	import { afterNavigate } from '$app/navigation';
 
 	let props = $props();
 
-	let mixValue = $state(0);
+	let initialSlide = new Tween(20, { duration: 2000, easing: quartInOut });
+
+	let mixValue = $state(100);
+
+	let maxValue = $state(100);
+	let minValue = $state(0);
 
 	// Keep opacity derived from slider value
 	const mixOpacity = $derived(mixValue / 100);
@@ -20,31 +27,62 @@
 		query: '?url',
 		eager: true
 	}) as Record<string, string>;
+
+	function slideAnimation() {
+		initialSlide.set(100);
+		setTimeout(() => {
+			initialSlide.set(10);
+		}, 2000);
+	}
+
+	async function downloadPoster(annotatedURl: string, originalURl: string, title: string) {
+		let sourceURl: string;
+
+		if (mixValue < 50) {
+			sourceURl = originalURl;
+		} else {
+			sourceURl = annotatedURl;
+		}
+		console.log(sourceURl, title);
+		const response = await fetch(sourceURl);
+		const blob = await response.blob();
+		const url = URL.createObjectURL(blob);
+		const link = document.createElement('a');
+		link.href = url;
+		link.download = `${title}.png`;
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+		URL.revokeObjectURL(url);
+	}
+
+	afterNavigate(() => {
+		setTimeout(() => {
+			slideAnimation();
+		}, 100);
+	});
+
+	$effect(() => {
+		mixValue = initialSlide.current;
+	});
 </script>
 
 {#if props.originalPoster !== '' && props.annotatedPoster !== ''}
-	<div
-		class="post_cont vertical_flex"
-		transition:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}
-	>
-		<div class="post_head horizontal_flex">
-			<p class="s head_text">Original</p>
-
-			<input
-				class="mix_slider"
-				type="range"
-				id="volume"
-				name="fading"
-				min="0"
-				max="110"
-				bind:value={mixValue}
-				step="any"
-			/>
-			<label for="fading" style="display: none">Fade</label>
-
-			<p class="s head_text">Annotated</p>
-		</div>
 		<div class="post_img">
+			<p class="mix_value" style="left: {Math.max(5, Math.min(95, Math.round(mixValue)))}%;">{Math.round(mixValue)}%</p>
+			<div class="slid_cont horizontal_flex">
+				
+				<input
+					class="mix_slider"
+					type="range"
+					name="fading"
+					min={minValue}
+					max={maxValue}
+					bind:value={mixValue}
+					step="any"
+				/>
+				<label for="fading" style="display: none">Fade</label>
+			</div>
 			<img
 				class="base_img"
 				src={props.originalPoster}
@@ -57,90 +95,102 @@
 				alt="{props.id}_annotated"
 				style="opacity: {mixOpacity};"
 			/>
+			<button class="download_btn" onclick={() => downloadPoster(props.annotatedPoster, props.originalPoster, props.id.trim())} aria-label="Download poster">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+			</button>
 			<div class="bg_back"></div>
 		</div>
-	</div>
 {/if}
 
 <style>
-	.post_cont {
-		height: 100%;
-		width: 538px;
-		row-gap: 0px;
-		z-index: 1;
-		flex: 1;
-		mix-blend-mode: color-burn;
-		pointer-events: none;
+
+	.mix_value {
+		position: absolute;
+		z-index: 20;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		padding: 2px 5px;
+		background-color: var(--primary-color);
+		border: 2px solid black;
+		transform-origin: center;
 	}
 
-	.post_head {
-		height: 40px;
+	.slid_cont {
+		height: 100%;
 		width: 100%;
-		position: relative;
-		background-color: var(--primary-color);
-		z-index: 2;
+		position: absolute;
+		background-color: transparent;
+		z-index: 10;
 		border: 2px solid black;
 		justify-content: space-between;
 		align-items: center;
-		padding: 5px 10px;
+		padding: 0px;
 		pointer-events: all !important;
 		mix-blend-mode: normal;
 	}
 
 	.mix_slider {
-		width: 100%;
+		width: 110%;
 		-webkit-appearance: none;
 		appearance: none;
 		height: 8px;
 		outline: none;
 		border-radius: 5px;
-		border: 2px solid black;
+		border: 0px solid black;
 		pointer-events: all;
-		accent-color: green;
+		background-color: transparent;
+		cursor: grab;
 	}
 
 	.mix_slider::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
-		width: 9px;
-		height: 20px;
-		background: var(--primary-light);
+		width: 10px;
+		height: 2000px;
+		background: var(--primary-color);
 		cursor: pointer;
 		border-radius: 5px;
 		border: 2px solid black;
+	}
+
+	.mix_slider::-webkit-slider-thumb:focus {
+		cursor: grabbing;
 	}
 
 	.mix_slider::-webkit-slider-track {
 		width: 100%;
 		height: 4px;
 		border-radius: 2px;
-		border: 2px solid black;
-	}
-
-	.head_text {
-		text-transform: uppercase;
-		font-weight: 500;
+		border: 1px solid black;
 	}
 
 	.post_img {
-		height: 770px;
-		width: 100%;
+		width: fit-content;
+		height: fit-content;
 		border-radius: 0px;
 		pointer-events: none;
 		position: relative;
 		overflow: hidden;
-		border: 2px solid black;
+		border: 0.5px solid black;
+		aspect-ratio: 0.69;
+
+		mix-blend-mode: color-burn;
 	}
 
 	.post_img > img {
-		height: fit-content;
-		width: 100%;
+		height: 100%;
+		width: auto;
 		object-fit: contain;
 		object-position: top;
 		position: absolute;
 		top: 0;
 		left: 0;
 		z-index: 2;
+	}
+
+	.base_img {
+		position: relative !important;
 	}
 
 	.bg_back {
@@ -153,19 +203,33 @@
 		z-index: 0;
 	}
 
+	.download_btn {
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 12;
+		padding: 5px;
+		background-color: var(--primary-color);
+		border: 2px solid var(--primary-dark);
+		pointer-events: all;
+		border-radius: 0px 0px 0px 5px;
+	}
+
+	.download_btn:hover {
+		filter: brightness(0.9);
+	}
+
+	.download_btn svg {
+		width: 25px;
+		height: 22px;
+		fill: var(--primary-dark);
+	}
+
 	@media (max-width: 768px) {
-		.post_cont {
-			width: 100% !important;
-			height: auto !important;
-			position: relative !important;
+
+		.mix_value {
+			width: fit-content;
 		}
 
-		.post_img > :nth-child(1) {
-			position: relative;
-		}
-
-		.post_img {
-			height: fit-content;
-		}
 	}
 </style>

@@ -1,7 +1,7 @@
 <script lang="ts">
     // @ts-ignore
     import {Youtube} from 'svelte-youtube-embed';
-    import { fade } from "svelte/transition";
+    import { fade, slide } from "svelte/transition";
     import { cubicOut } from "svelte/easing";
 	import { onMount } from 'svelte';
 
@@ -32,6 +32,7 @@
     }));
 
     const calculateSegments = () => {
+        if (!props.excerpts) return;
         props.excerpts.forEach((excerpt: any) => {
             excerpt.timecodes.forEach((timecode: string) => {
                 const [minutes, seconds] = timecode.split(':').map(Number);
@@ -43,8 +44,13 @@
     const goToNextSegment = () => {
         currentTimeIndex = (currentTimeIndex + 1) % timestamps.length;
         currentTime = timestamps[currentTimeIndex];
-        console.log("currentTime:", currentTime);
-        console.log("currentTimeIndex:", currentTimeIndex);
+        if (play === true) return;
+        play = true;
+    }
+
+    const goToPreviousSegment = () => {
+        currentTimeIndex = (currentTimeIndex - 1) % timestamps.length;
+        currentTime = timestamps[currentTimeIndex];
         if (play === true) return;
         play = true;
     }
@@ -57,10 +63,15 @@
 {#await youtubeId}
     <p>loading...</p>
 {:then videoId}
-        <div class="vid_cont vertical_flex" transition:fade={{duration: 1000, easing: cubicOut, delay: 1000}}>
-            <button class="next_vid horizontal_flex" onclick={() => goToNextSegment()}>
-                <p>NEXT SEGMENT →</p>
-            </button>
+        <div class="vid_cont vertical_flex">
+            {#if props.excerpts && isPlaying === true}
+                <button class="next_vid horizontal_flex" onclick={() => goToNextSegment()} transition:slide={{duration: 1000, easing: cubicOut, axis: 'y'}}>
+                    <p class="s">NEXT SEGMENT →</p>
+                </button>
+                <button class="prev_vid horizontal_flex" onclick={() => goToNextSegment()} transition:slide={{duration: 1000, easing: cubicOut, axis: 'y'}}>
+                    <p class="s">PREVIOUS SEGMENT ←</p>
+                </button>
+            {/if}
             
             {#if isYouTube}
                     <Youtube
@@ -83,29 +94,31 @@
                         {/snippet}
                     </Youtube>
             {/if}
-            <footer>
-                <p>{props.title}</p>
-            </footer>
+
+            {#if props.title}
+                <footer>
+                    <p>{props.title}</p>
+                </footer>
+            {/if}
         </div>
 {/await}
 
 
 <style>
     .vid_cont {
-        height: 350px;
+        height: fit-content;
         position: relative;
-        width: 555px;
-      
+        width: 100%;
         border: 2px solid var(--primary-dark);
         background-color: var(--primary-light);
         z-index: 1;
         row-gap: 0px;
+        aspect-ratio: 16/9;
     }
 
     :global(.you__tube) {
         height: fit-content;
     }
-
 
     footer {
         background-color: var(--primary-color);
@@ -139,6 +152,11 @@
     .next_vid {
         top: -2px;
         right: -2px;
+    }
+
+    .prev_vid {
+        top: -2px;
+        left: -2px;
     }
 
     p {

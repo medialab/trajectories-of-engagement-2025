@@ -11,6 +11,8 @@
 	import { menuOpen } from '$lib/utils';
 	import { onMount } from 'svelte';
 
+	const mainYtb = 'https://www.youtube.com/watch?v=BLa_1fw-pQA';
+
 	let { data }: PageProps = $props();
 	let scrollContainer: HTMLElement | null = null;
 
@@ -53,15 +55,18 @@
 		<div class="vertical_flex" style="background-color: var(--primary-light">
 			<Accordion text={data.project.texts?.experience} title="Experience" />
 			<Accordion text={data.project.texts?.concept} title="Concept" />
+			<Vid
+				title={data.project.metadata.title}
+				src={data.project.presentationURL}
+			/>
 		</div>
 	</div>
 
 	{#if data}
 		<div class="media_cont" transition:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}>
 			<Vid
-				title={data.project.metadata.title}
 				excerpts={data.project.excerpts}
-				src={data.project.presentationURL}
+				src={mainYtb}
 			/>
 			<Poster
 				id={data.project.metadata.id}
@@ -101,7 +106,7 @@
 		display: grid;
 		grid-template-columns: repeat(20, 1fr);
 		grid-column-gap: 10px;
-		margin: 80px 20px;
+		margin: 80px 20px 0px 20px;
 		overflow: hidden;
 		background-color: transparent;
 		max-width: 1600px;
@@ -122,22 +127,37 @@
 	}
 
 	.media_cont {
-		grid-column: 14 / 22;
-		width: 590px;
-		height: 950px;
+		grid-column: 12 / 22;
 		position: relative;
+		display: flex;
+		flex-direction: column;
+		height: fit-content;
+		align-items: flex-end;
 	}
 
 	:global(.media_cont > :nth-child(1)) {
 		position: absolute;
 		bottom: 0;
 		left: 0;
+		mix-blend-mode: color-burn;
+		max-width: 90%;
+		transform: translateY(50%);
+	}
+
+	:global(.media_cont > :nth-child(1):hover) {
+		z-index: 10;
+		mix-blend-mode: normal;
+	}
+
+	:global(.media_cont > :nth-child(2):hover) {
+		z-index: 10;
+		mix-blend-mode: normal;
 	}
 
 	:global(.media_cont > :nth-child(2)) {
-		position: absolute;
-		top: 0;
-		right: 0;
+		position: relative;
+		max-height: 90%;
+		max-width: 90%;
 	}
 
 	@media (max-width: 768px) {
@@ -156,10 +176,15 @@
 		.media_cont {
 			width: 100% !important;
 			height: fit-content;
-			display: flex;
-			flex-direction: column;
 			row-gap: 20px;
 			position: static;
+			justify-content: flex-start;
+			margin-bottom: 50px;
+		}
+
+		:global(.media_cont > :nth-child(1)), :global(.media_cont > :nth-child(2)) {
+			max-width: 100%;
+			transform: unset;
 		}
 
 		.return_btn_container {

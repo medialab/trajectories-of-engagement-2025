@@ -5,19 +5,21 @@
 
 	let props = $props();
 
-	const intDecide = (o: unknown) => {
-		console.log(o);
+	const intDecide = (ref: string) => {
 
-		if (o === 'back') {
+		if (ref === 'back') {
 			history.back();
 			return;
 		}
-		if (o === 'burger_menu') {
+		if (ref === 'burger_menu') {
 			$menuOpen = !$menuOpen;
 			return;
-		} else if (typeof o === 'string') {
+		if (ref === '' || ref === undefined) {
+			return;
+		}
+		} else if (typeof ref === 'string') {
 			// @ts-ignore
-			const resolvedPath = resolve(`${o}`);
+			const resolvedPath = resolve(`${ref}`);
 			goto(resolvedPath);
 		}
 	};

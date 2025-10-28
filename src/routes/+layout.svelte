@@ -47,6 +47,7 @@
 		padding: 0;
 		box-sizing: border-box;
 		-webkit-tap-highlight-color: transparent;
+		border-style:none;
 	}
 
 	:root {
@@ -60,6 +61,8 @@
 		font-family: 'Inter', sans-serif;
 		font-weight: 300;
 		background-color: var(--primary-light);
+		height: 100%;
+		width: 100%;
 	}
 
 	:global(::selection) {

@@ -30,8 +30,8 @@
 		content="A research showcase exploring engagement across culture, media and technology."
 	/>
 	<meta property="og:type" content="website" />
-	<meta property="og:image" content="https://github.com/medialab/trajectories-of-engagement-2025/blob/0aa1ea759a3ad925ca650164984cc5e54dbf55c2/static/Thumb.jpg" />
-	<meta name="twitter:image" content="https://github.com/medialab/trajectories-of-engagement-2025/blob/0aa1ea759a3ad925ca650164984cc5e54dbf55c2/static/Thumb.jpg" />
+	<meta property="og:image" content="https://raw.githubusercontent.com/medialab/trajectories-of-engagement-2025/0aa1ea759a3ad925ca650164984cc5e54dbf55c2/static/Thumb.jpg" />
+	<meta name="twitter:image" content="https://raw.githubusercontent.com/medialab/trajectories-of-engagement-2025/0aa1ea759a3ad925ca650164984cc5e54dbf55c2/static/Thumb.jpg" />
 	<meta property="og:url" content="https://medialab.github.io/trajectories-of-engagement-2025/" />
 	<meta property="og:site_name" content="Trajectories of Engagement 2025" />
 

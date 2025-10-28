@@ -38,13 +38,13 @@
 {#if $menuOpen}
 	<div
 		class="burger_menu vertical_flex"
-		in:slide={{ duration: 550, axis: 'y', easing: cubicOut }}
-		out:slide={{ duration: 550, axis: 'y', easing: cubicOut, delay: 300 }}
+		in:slide={{ duration: 750, axis: 'y', easing: cubicOut }}
+		out:slide={{ duration: 750, axis: 'y', easing: cubicOut, delay: 300 }}
 	>
 		<div
 			class="horizontal_flex lang_switch"
-			in:slide={{ duration: 550, axis: 'y', easing: cubicOut, delay: 300 }}
-			out:slide={{ duration: 550, axis: 'y', easing: cubicOut }}
+			in:slide={{ duration: 750, axis: 'y', easing: cubicOut, delay: 300 }}
+			out:slide={{ duration: 750, axis: 'y', easing: cubicOut }}
 		>
 			<Button label="FR" />
 			<Button label="/" />
@@ -52,8 +52,8 @@
 		</div>
 		<div
 			class="vertical_flex clickables"
-			in:slide={{ duration: 550, axis: 'y', easing: cubicOut, delay: 300 }}
-			out:slide={{ duration: 550, axis: 'y', easing: cubicOut }}
+			in:slide={{ duration: 750, axis: 'y', easing: cubicOut, delay: 300 }}
+			out:slide={{ duration: 750, axis: 'y', easing: cubicOut }}
 		>
 			<Button label="ABOUT" href="/about" />
 			<Button label="ARCHIVE" href="/archive" />
@@ -62,8 +62,8 @@
 
 		<div
 			class="lang_switch bottom_text"
-			in:slide={{ duration: 550, axis: 'y', easing: cubicOut, delay: 300 }}
-			out:slide={{ duration: 550, axis: 'y', easing: cubicOut }}
+			in:slide={{ duration: 750, axis: 'y', easing: cubicOut, delay: 300 }}
+			out:slide={{ duration: 750, axis: 'y', easing: cubicOut }}
 		>
 			<p class="s">
 				This project was brought to life by the combined efforts of medialab sciencespo and
@@ -75,16 +75,13 @@
 
 <style>
 	header {
-		position: fixed;
-		left: 50%;
-		right: 50%;
-		top: 0px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: fit-content;
 		column-gap: 5px;
 		z-index: 40;
-		place-self: center;
-		max-width: 1600px;
-		width: 100%;
-		display: flex;
+		
 		justify-content: flex-end;
 		padding: 20px;
 		pointer-events: none;
@@ -117,6 +114,7 @@
 			align-items: center;
 			border-bottom: 1px solid var(--primary-dark);
 			z-index: 45;
+			background-color: white;
 		}
 
 		:global(header > button, .burger_menu > div > button, .burger_menu > div > button) {
@@ -132,6 +130,7 @@
 		.burger_menu {
 			position: fixed;
 			top: 0;
+			left: 0;
 			padding-top: 50px;
 			display: flex;
 			align-items: flex-start;
@@ -162,12 +161,6 @@
 			bottom: 0px;
 			top: unset !important;
 			padding-bottom: 20px;
-		}
-	}
-
-	@media (min-width: 1780px) {
-		header {
-			padding: 20px 0px;
 		}
 	}
 </style>

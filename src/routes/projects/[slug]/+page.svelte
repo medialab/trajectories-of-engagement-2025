@@ -28,13 +28,15 @@
 	});
 </script>
 
-<Header />
 
-<div class="return_btn_container">
-	<Button label="← GO BACK" href="back" />
-</div>
 
 <div class="project_page_container" style="overflow: {$menuOpen ? 'hidden' : 'scroll'}">
+	<Header />
+
+	<div class="return_btn_container">
+		<Button label="← GO BACK" href="back" />
+	</div>
+
 	<div class="vertical_flex" style="row-gap: 30px;">
 		<div class="vertical_flex" style="background-color: var(--primary-light)">
 			<h1 id="pr_title">{data.project.metadata.title}</h1>
@@ -81,14 +83,11 @@
 
 <style>
 	.return_btn_container {
-		position: fixed;
-		width: 100%;
+		position: absolute;
+		width: fit-content;
 		padding: 20px;
-		left: 50%;
-		right: 50%;
-		top: 0px;
-		transform: translate(-50%, 0%);
-		max-width: 1600px;
+		left: 0;
+		top: 0;
 		z-index: 41;
 		pointer-events: none;
 	}
@@ -106,13 +105,14 @@
 		display: grid;
 		grid-template-columns: repeat(20, 1fr);
 		grid-column-gap: 10px;
-		margin: 80px 20px 0px 20px;
+		margin: 0px 20px 0px 20px;
+		padding-top: 80px;
 		overflow: hidden;
 		background-color: transparent;
 		max-width: 1600px;
 		place-self: center;
 		align-self: center;
-		z-index: 5;
+		z-index: 15;
 	}
 
 	.project_page_container > :first-child {
@@ -166,8 +166,8 @@
 			height: fit-content;
 			display: flex;
 			flex-direction: column;
-			margin: 80px 0px;
-			padding: 0px 20px;
+			margin: 0px;
+			padding: 80px 20px;
 			row-gap: 20px;
 			overflow: scroll;
 			background-color: transparent;

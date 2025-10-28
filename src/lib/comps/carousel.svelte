@@ -2,7 +2,7 @@
 	let props = $props();
 	let isLoaded: boolean = $state(false);
 
-	import { T } from '@threlte/core';
+	import { T, useThrelte } from '@threlte/core';
 	import { useTexture } from '@threlte/extras';
 	import { onMount, onDestroy } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
@@ -14,6 +14,8 @@
 	import { resolve } from '$app/paths';
 
 	import { isMobile, isTextureReady } from '$lib/utils';
+
+	const { invalidate } = useThrelte();
 
 	// Removed LocomotiveScroll; we drive scroll from wheel/touch directly
 	let scrollY = $state(0);
@@ -28,7 +30,7 @@
 	let introTweenRAF: number | null = null;
 
 	// Smoothed wind velocity for visible curl/lerp, esp. on mobile
-	let windVelocity = 0; // not reactive on purpose
+	let windVelocity = $state(0); // not reactive on purpose
 	const windDamping = (carouselConfig.wind as any)?.damping ?? 0.92;
 	const windEpsilon = 0.0005;
 
@@ -167,6 +169,7 @@
 			position.needsUpdate = true;
 			mesh.geometry.computeVertexNormals?.();
 		}
+		invalidate();
 	}
 
 	function easeOutCubic(t: number): number {
@@ -226,6 +229,7 @@
 
 		const scheduleApply = () => {
 			if (scrollRAF !== null) return;
+
 			scrollRAF = requestAnimationFrame(() => {
 				scrollRAF = null;
 				const prev = scrollY;
@@ -291,6 +295,7 @@
 			cancelIntroTween();
 			touchY = e.touches[0]?.clientY ?? 0;
 		};
+
 		const onTouchMove = (e: TouchEvent) => {
 			const yNow = e.touches[0]?.clientY ?? 0;
 			const dy = touchY - yNow;

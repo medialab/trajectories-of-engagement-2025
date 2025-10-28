@@ -198,4 +198,12 @@
 			position: relative !important;
 		}
 	}
+
+	@media (min-width: 1780px) {
+		.hero_container {
+			width: 60ch;
+		}
+
+	}
+
 </style>

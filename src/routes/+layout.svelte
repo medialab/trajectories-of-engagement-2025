@@ -159,4 +159,10 @@
 			overflow-x: hidden !important;
 		}
 	}
+
+	@media (min-width: 1780px) {
+		:global(h1) {
+			font-size: 64px;
+		}
+	}
 </style>

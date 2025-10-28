@@ -205,14 +205,14 @@
 
 	.download_btn {
 		position: absolute;
-		top: 0;
+		bottom: 0;
 		right: 0;
 		z-index: 12;
 		padding: 5px;
 		background-color: var(--primary-color);
 		border: 2px solid var(--primary-dark);
 		pointer-events: all;
-		border-radius: 0px 0px 0px 5px;
+		border-radius: 5px 0px 0px 0px;
 	}
 
 	.download_btn:hover {

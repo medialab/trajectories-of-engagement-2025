@@ -16,6 +16,23 @@
 	let { data }: PageProps = $props();
 	let scrollContainer: HTMLElement | null = null;
 
+	// Open Graph/Twitter card data
+	const BASE = 'https://medialab.github.io/trajectories-of-engagement-2025';
+	const pageUrl = `${BASE}/projects/${data.project.metadata.id}/`;
+	const ogTitle = `${data.project.metadata.title} – Trajectories of Engagement 2025`;
+	const ogDescription =
+		data.project.texts?.presentation ||
+		[data.project.metadata?.project_leaders, data.project.metadata?.research_center]
+			.filter(Boolean)
+			.join(' | ') ||
+		'A research showcase exploring engagement across culture, media and technology.';
+	const imagePath = (data.annotatedPoster || data.originalPoster) as string | undefined;
+	const ogImage = imagePath
+		? imagePath.startsWith('http')
+			? imagePath
+			: `${BASE}${imagePath.startsWith('/') ? imagePath : '/' + imagePath}`
+		: undefined;
+
 	$effect(() => {
 		console.log('effectFired');
 		console.log($menuOpen);
@@ -27,6 +44,21 @@
 		scrollContainer = document.documentElement;
 	});
 </script>
+
+<svelte:head>
+	<title>{ogTitle}</title>
+	<meta name="description" content={ogDescription} />
+	<meta property="og:title" content={ogTitle} />
+	<meta property="og:description" content={ogDescription} />
+	<meta property="og:type" content="article" />
+	{#if ogImage}<meta property="og:image" content={ogImage} />{/if}
+	<meta property="og:url" content={pageUrl} />
+	<meta property="og:site_name" content="Trajectories of Engagement 2025" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={ogTitle} />
+	<meta name="twitter:description" content={ogDescription} />
+	{#if ogImage}<meta name="twitter:image" content={ogImage} />{/if}
+</svelte:head>
 
 
 

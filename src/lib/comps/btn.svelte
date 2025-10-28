@@ -5,6 +5,8 @@
 
 	let props = $props();
 
+	const isScheme = (s: string) => /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(s);
+
 	const intDecide = (ref: string) => {
 
 		if (ref === 'back') {
@@ -14,15 +16,20 @@
 		if (ref === 'burger_menu') {
 			$menuOpen = !$menuOpen;
 			return;
-		if (ref === '' || ref === undefined) {
+		}
+
+		if (isScheme(ref)) {
+			if (/^https?:\/\//i.test(ref)) {
+				window.open(ref, '_blank');
+			} else {
+				window.location.href = ref;
+			}
 			return;
 		}
-		} else if (typeof ref === 'string') {
 			// @ts-ignore
 			const resolvedPath = resolve(`${ref}`);
 			goto(resolvedPath);
-		}
-	};
+		};
 </script>
 
 <button

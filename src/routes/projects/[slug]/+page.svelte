@@ -60,8 +60,6 @@
 	{#if ogImage}<meta name="twitter:image" content={ogImage} />{/if}
 </svelte:head>
 
-
-
 <div class="project_page_container" style="overflow: {$menuOpen ? 'hidden' : 'scroll'}">
 	<Header />
 
@@ -69,7 +67,7 @@
 		<Button label="← GO BACK" href="back" />
 	</div>
 
-	<div class="vertical_flex" style="row-gap: 30px;">
+	<div class="vertical_flex info_container" style="row-gap: 30px;">
 		<div class="vertical_flex" style="background-color: var(--primary-light)">
 			<h1 id="pr_title">{data.project.metadata.title}</h1>
 			{#if data.project.metadata?.year || data.project.metadata?.project_leaders || data.project.metadata?.research_center}
@@ -89,19 +87,13 @@
 		<div class="vertical_flex" style="background-color: var(--primary-light">
 			<Accordion text={data.project.texts?.experience} title="Experience" />
 			<Accordion text={data.project.texts?.concept} title="Concept" />
-			<Vid
-				title={data.project.metadata.title}
-				src={data.project.presentationURL}
-			/>
+			<Vid title={data.project.metadata.title} src={data.project.presentationURL} />
 		</div>
 	</div>
 
 	{#if data}
 		<div class="media_cont" transition:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}>
-			<Vid
-				excerpts={data.project.excerpts}
-				src={mainYtb}
-			/>
+			<Vid excerpts={data.project.excerpts} src={mainYtb} />
 			<Poster
 				id={data.project.metadata.id}
 				originalPoster={data.originalPoster}
@@ -147,15 +139,15 @@
 		z-index: 15;
 	}
 
-	.project_page_container > :first-child {
+	.project_page_container > :first-child > * {
+		background-color: var(--primary-light);
+	}
+
+	.info_container {
 		grid-column: 1 / 9;
 		width: 100%;
 		height: fit-content;
 		overflow: scroll;
-	}
-
-	.project_page_container > :first-child > * {
-		background-color: var(--primary-light);
 	}
 
 	.media_cont {
@@ -214,7 +206,8 @@
 			margin-bottom: 50px;
 		}
 
-		:global(.media_cont > :nth-child(1)), :global(.media_cont > :nth-child(2)) {
+		:global(.media_cont > :nth-child(1)),
+		:global(.media_cont > :nth-child(2)) {
 			max-width: 100%;
 			transform: unset;
 		}

@@ -13,6 +13,8 @@
 	import { resolve } from '$app/paths';
 	import { Tween } from 'svelte/motion';
 	import Lenis from 'lenis';
+	// @ts-ignore - types provided via ambient module until package is installed
+	import Tempus from 'tempus';
 
 	import { isMobile, isTextureReady } from '$lib/utils';
 
@@ -188,6 +190,7 @@
 	});
 
 	let lenis: Lenis | null = null;
+	let unsubscribeLenis: (() => void) | null = null;
 
 	let pendingDelta = $state(0);
 	let scrollRAF: number | null = $state(null);
@@ -215,7 +218,7 @@
 		if (!browser) return;
 
 		lenis = new Lenis({
-			autoRaf: true,
+			autoRaf: false,
 			smoothWheel: true,
 			infinite: true,
 			orientation: 'vertical',
@@ -225,6 +228,14 @@
 			touchMultiplier: 7
 		});
 
+		unsubscribeLenis =
+			Tempus.add(
+				(time: number) => {
+					lenis?.raf(time);
+				},
+				{ priority: -1 }
+			) ?? null;
+
 		lenis.on('scroll', (e) => {
 			pendingDelta += e.velocity;
 		});
@@ -232,6 +243,7 @@
 
 	onDestroy(() => {
 		if (lenis) lenis.destroy();
+		if (unsubscribeLenis) unsubscribeLenis();
 		if (scrollRAF !== null) cancelAnimationFrame(scrollRAF);
 		if (hoverAnimFrame !== null) cancelAnimationFrame(hoverAnimFrame);
 	});

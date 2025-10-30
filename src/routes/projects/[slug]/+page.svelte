@@ -109,7 +109,7 @@
 	.return_btn_container {
 		position: absolute;
 		width: fit-content;
-		padding: 20px;
+		padding: 20px 0px;
 		left: 0;
 		top: 0;
 		z-index: 41;

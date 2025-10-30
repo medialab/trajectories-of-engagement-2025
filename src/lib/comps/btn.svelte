@@ -8,6 +8,7 @@
 	const isScheme = (s: string) => /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(s);
 
 	const intDecide = (ref: string) => {
+		if (!ref) return;
 
 		if (ref === 'back') {
 			history.back();
@@ -26,10 +27,10 @@
 			}
 			return;
 		}
-			// @ts-ignore
-			const resolvedPath = resolve(`${ref}`);
-			goto(resolvedPath);
-		};
+		// @ts-ignore
+		const resolvedPath = resolve(`${ref}`);
+		goto(resolvedPath);
+	};
 </script>
 
 <button

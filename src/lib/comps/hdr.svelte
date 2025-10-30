@@ -81,9 +81,9 @@
 		width: fit-content;
 		column-gap: 5px;
 		z-index: 40;
-		
+
 		justify-content: flex-end;
-		padding: 20px;
+		padding: 20px 0px;
 		pointer-events: none;
 	}
 

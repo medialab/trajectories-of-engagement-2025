@@ -1,6 +1,5 @@
 <script lang="ts">
 	let props = $props();
-	let isLoaded: boolean = $state(false);
 
 	import { T, useThrelte } from '@threlte/core';
 	import { useTexture } from '@threlte/extras';
@@ -12,22 +11,24 @@
 	import { currentTag, currentAuthor, currentResearchCenter, carouselConfig } from '$lib/utils';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { Tween } from 'svelte/motion';
+	import Lenis from 'lenis';
 
 	import { isMobile, isTextureReady } from '$lib/utils';
 
 	const { invalidate } = useThrelte();
 
 	// Removed LocomotiveScroll; we drive scroll from wheel/touch directly
+
 	let scrollY = $state(0);
+
 	let scrollFactor = carouselConfig.scrollFactor;
 
 	let deformationStrength = $state(2);
 
 	let isMobileFlag = $derived.by(() => isMobile());
 
-	// Intro tween to simulate initial card movement once textures are ready
 	let isIntroTweening = $state(false);
-	let introTweenRAF: number | null = null;
 
 	// Smoothed wind velocity for visible curl/lerp, esp. on mobile
 	let windVelocity = $state(0); // not reactive on purpose
@@ -172,40 +173,6 @@
 		invalidate();
 	}
 
-	function easeOutCubic(t: number): number {
-		return cubicOut(t);
-	}
-
-	function cancelIntroTween() {
-		isIntroTweening = false;
-		if (introTweenRAF !== null) cancelAnimationFrame(introTweenRAF);
-		introTweenRAF = null;
-	}
-
-	function startIntroTween() {
-		isIntroTweening = true;
-		const from = -100;
-		const to = 0;
-		const duration = 2500;
-		const start = performance.now();
-		let prev = (scrollY = from);
-		const step = (now: number) => {
-			const t = Math.min(1, (now - start) / duration);
-			const eased = easeOutCubic(t);
-			const next = from + (to - from) * eased;
-			const pendingDeltaEquivalent = (next - prev) / Math.max(1e-6, scrollFactor);
-			scrollY = next;
-			deformMeshes(pendingDeltaEquivalent);
-			prev = next;
-			if (t < 1 && isIntroTweening) {
-				introTweenRAF = requestAnimationFrame(step);
-			} else {
-				scrollY = to;
-			}
-		};
-		introTweenRAF = requestAnimationFrame(step);
-	}
-
 	function getPoster(id: string) {
 		if (!props.posters || !id) return undefined;
 		const projectPoster = props.posters[`/src/lib/assets/posters/${id}.png`];
@@ -215,125 +182,58 @@
 	interactivity({ target: props.containerEl });
 
 	$effect(() => {
-		console.log('isTextureReady', $isTextureReady);
-		if ($isTextureReady) {
-			startIntroTween();
+		if ($isTextureReady && !isIntroTweening) {
+			scheduleApply();
 		}
 	});
 
-	onMount(() => {
+	let lenis: Lenis | null = null;
+
+	let pendingDelta = $state(0);
+	let scrollRAF: number | null = $state(null);
+
+	const scheduleApply = () => {
+		if (scrollRAF !== null) return;
+
+		scrollRAF = requestAnimationFrame(() => {
+			scrollRAF = null;
+			const prev = scrollY;
+			if (pendingDelta !== 0) {
+				scrollY = prev + pendingDelta * scrollFactor;
+				windVelocity += pendingDelta;
+				pendingDelta = 0;
+			}
+			if (Math.abs(windVelocity) > windEpsilon) {
+				deformMeshes(windVelocity);
+				windVelocity *= windDamping;
+				if (scrollRAF === null) scheduleApply();
+			}
+		});
+	};
+
+	onMount(async () => {
 		if (!browser) return;
 
-		let pendingDelta = 0;
-		let scrollRAF: number | null = null;
-
-		const scheduleApply = () => {
-			if (scrollRAF !== null) return;
-
-			scrollRAF = requestAnimationFrame(() => {
-				scrollRAF = null;
-				const prev = scrollY;
-				if (pendingDelta !== 0) {
-					scrollY = prev + pendingDelta * scrollFactor;
-					windVelocity += pendingDelta;
-					pendingDelta = 0;
-				}
-				if (Math.abs(windVelocity) > windEpsilon) {
-					deformMeshes(windVelocity);
-					windVelocity *= windDamping;
-					if (scrollRAF === null) scheduleApply();
-				}
-			});
-		};
-
-		const onWheel = (e: WheelEvent) => {
-			cancelIntroTween();
-			e.preventDefault();
-			const m = isMobileFlag
-				? carouselConfig.multipliers.wheelMobile
-				: carouselConfig.multipliers.wheelDesktop;
-			pendingDelta += e.deltaY * m;
-			scheduleApply();
-		};
-
-		// Mouse drag state
-		let isDragging = false;
-		let dragStartY = 0;
-
-		const onMouseDown = (e: MouseEvent) => {
-			isDragging = true;
-			dragStartY = e.clientY;
-			// Optional: change cursor to indicate dragging
-			const target = props.containerEl;
-			if (target instanceof HTMLElement) {
-				target.style.cursor = 'grabbing';
-			}
-		};
-
-		const onMouseMove = (e: MouseEvent) => {
-			if (!isDragging) return;
-			const deltaY = dragStartY - e.clientY;
-			const m = isMobileFlag
-				? carouselConfig.multipliers.wheelMobile
-				: carouselConfig.multipliers.wheelDesktop;
-			pendingDelta += deltaY * m;
-			scheduleApply();
-			dragStartY = e.clientY; // Update for continuous dragging
-		};
-
-		const onMouseUp = () => {
-			isDragging = false;
-			// Reset cursor
-			const target = props.containerEl;
-			if (target instanceof HTMLElement) {
-				target.style.cursor = '';
-			}
-		};
-
-		let touchY = 0;
-		const onTouchStart = (e: TouchEvent) => {
-			cancelIntroTween();
-			touchY = e.touches[0]?.clientY ?? 0;
-		};
-
-		const onTouchMove = (e: TouchEvent) => {
-			const yNow = e.touches[0]?.clientY ?? 0;
-			const dy = touchY - yNow;
-			const m = isMobileFlag
-				? carouselConfig.multipliers.touchMobile
-				: carouselConfig.multipliers.touchDesktop;
-			pendingDelta += dy * m;
-			scheduleApply();
-			touchY = yNow;
-		};
-
-		const target = props.containerEl ?? window;
-		// Disable native gesture handling to reduce jank on mobile
-		if (target instanceof HTMLElement) {
-			target.style.touchAction = 'none';
-		}
-		target.addEventListener('wheel', onWheel, { passive: false });
-		target.addEventListener('mousedown', onMouseDown, { passive: true });
-		target.addEventListener('mousemove', onMouseMove, { passive: true });
-		target.addEventListener('mouseup', onMouseUp, { passive: true });
-		// Also listen for mouseup on window in case mouse leaves the target
-		window.addEventListener('mouseup', onMouseUp, { passive: true });
-		target.addEventListener('touchstart', onTouchStart, { passive: false });
-		target.addEventListener('touchmove', onTouchMove, { passive: false });
-
-		setTimeout(() => {
-			isLoaded = true;
-		}, 1000);
-
-		onDestroy(() => {
-			target.removeEventListener('wheel', onWheel as any);
-			target.removeEventListener('mousedown', onMouseDown as any);
-			target.removeEventListener('mousemove', onMouseMove as any);
-			target.removeEventListener('mouseup', onMouseUp as any);
-			window.removeEventListener('mouseup', onMouseUp as any);
-			target.removeEventListener('touchstart', onTouchStart as any);
-			target.removeEventListener('touchmove', onTouchMove as any);
+		lenis = new Lenis({
+			autoRaf: true,
+			smoothWheel: true,
+			infinite: true,
+			orientation: 'vertical',
+			easing: cubicOut,
+			lerp: 0.5,
+			syncTouch: true,
+			touchMultiplier: 7
 		});
+
+		lenis.on('scroll', (e) => {
+			pendingDelta += e.velocity;
+		});
+	});
+
+	onDestroy(() => {
+		if (lenis) lenis.destroy();
+		if (scrollRAF !== null) cancelAnimationFrame(scrollRAF);
+		if (hoverAnimFrame !== null) cancelAnimationFrame(hoverAnimFrame);
 	});
 </script>
 

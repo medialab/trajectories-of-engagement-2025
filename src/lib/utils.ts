@@ -21,14 +21,6 @@ export const carouselConfig = {
 	// Scroll -> movement scaling
 	scrollFactor: 0.01,
 
-	// Input sensitivity multipliers for different devices
-	multipliers: {
-		wheelDesktop: 1,
-		wheelMobile: 5,
-		touchDesktop: 1,
-		touchMobile: 5
-	},
-
 	// Hover interaction
 	hover: {
 		scale: 0.2, // additional scale on hover (uniform on X/Y)

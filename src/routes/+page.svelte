@@ -53,7 +53,10 @@
 			</p>
 		</div>
 
-		<Button label="Access the archive ↓" href="/archive" />
+		<div class="horizontal_flex">
+			<Button label="Access the archive ↓" href="/archive" />
+			<Button label="Get this bezier" onClick={() => bezRef?.downloadSvg()} />
+		</div>
 	</div>
 {/if}
 
@@ -203,7 +206,5 @@
 		.hero_container {
 			width: 60ch;
 		}
-
 	}
-
 </style>

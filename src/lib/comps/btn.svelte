@@ -38,7 +38,13 @@
 	data-sveltekit-reload
 	class="generic_btn"
 	class:disabled={props?.disabled === true}
-	onclick={() => intDecide(props?.href)}
+	onclick={() => {
+		if (props.onClick) {
+			props.onClick();
+			return;
+		}
+		intDecide(props?.href);
+	}}
 	style={props?.img ? 'background-color: white' : ''}
 >
 	{#if props?.label}

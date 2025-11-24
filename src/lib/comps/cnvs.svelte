@@ -90,10 +90,10 @@
 			'#ccff00';
 
 		const svgContent = `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
-  ${paths.map((d) => `<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round" opacity="${opacity}" />`).join('\n  ')}
-  ${markers.map((m) => `<rect x="${m.x - 11}" y="${m.y - 11}" width="22" height="22" fill="${primaryColor}" stroke="${stroke}" stroke-width="${strokeWidth}" opacity="${opacity}" />`).join('\n  ')}
-</svg>`;
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
+        ${paths.map((d) => `<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round" opacity="${opacity}" />`).join('\n  ')}
+        ${markers.map((m) => `<rect x="${m.x - 11}" y="${m.y - 11}" width="22" height="22" fill="${primaryColor}" stroke="${stroke}" stroke-width="${strokeWidth}" opacity="${opacity}" />`).join('\n  ')}
+      </svg>`;
 
 		const blob = new Blob([svgContent], { type: 'image/svg+xml' });
 		const url = URL.createObjectURL(blob);

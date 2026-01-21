@@ -1,429 +1,554 @@
 {
-	"metadata": {
-		"title": "Trajectories of engagement",
-		"meta_authors": [
-			{
-				"firstName": "Marta",
-				"lastName": "Severo",
-				"role": "creator"
-			},
-			{
-				"firstName": "Robin",
-				"lastName": "de Mourat",
-				"role": "creator"
-			},
-			{
-				"firstName": "Donato",
-				"lastName": "Ricci",
-				"role": "creator"
-			},
-			{
-				"firstName": "Élie",
-				"lastName": "Petit",
-				"role": "creator"
-			},
-			{
-				"firstName": "Tommaso",
-				"lastName": "Prinetti",
-				"role": "creator"
-			}
-		]
-	},
-	"intro": {
-		"markdown": "### Abstract\n\nTrajectories of engagement refer to moments in the research process where external actors are involved and co-construct knowledge with the research team. These research paths involving an outside can take various forms of material production based on physical and/or digital environments . Often used in digital data-grounded labs or citizen science projects, trajectories of engagement are shaped in research which aims to address social concerns or public issues.\n\nThis research project aims to explore and describe the different forms that trajectories of engagement can take in the humanities and social sciences, the interactions between internal and external actors that they can generate, and the materiality of the socio-technical choices involved. The expected outputs are to build an observatory and a network of researchers interested in studying these trajectories and a book will be written to present the identified trajectories."
-	},
-	"projects": [
-		{
-			"metadata": {
-				"id": "replay-it-again",
-				"title": "Replay it again",
-				"year": "",
-				"project_leaders": "Baptiste Buob, Jérémy Demesmaeker et Laurence Maillot",
-				"research_center": "Université Paris Nanterre / Dodescaden"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=8139Z4q7kqU",
-			"excerpts": [
-				{
-					"type": "debriefing",
-					"timecodes": ["2:2:48", "2:5:5"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "mmat",
-				"title": "mMAT",
-				"year": "",
-				"project_leaders": "Fredy Vallejos, Alexander Duque Garcia",
-				"research_center": "Universidad de las artes, Équateur"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=1Ngb0a-9vDs",
-			"excerpts": [
-				{
-					"type": "debriefing",
-					"timecodes": ["2:0:10", "2:1:23"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "le-sommet-qui-cache-la-montagne",
-				"title": "Le sommet qui cache la montagne",
-				"year": "",
-				"project_leaders": "Simon Dumas Primbault",
-				"research_center": "EPFL"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=AgbhPAtrzdw",
-			"excerpts": [
-				{
-					"type": "discussion",
-					"timecodes": ["0:20:12", "0:28:39"]
-				},
-				{
-					"type": "debriefing",
-					"timecodes": ["1:59:17", "2:0:10"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "extreme-citizen-science",
-				"title": "Extreme Citizen Science",
-				"year": "",
-				"project_leaders": "Fabien Moustard",
-				"research_center": "UCL"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=tDtcfD6lcC0",
-			"excerpts": [
-				{
-					"type": "discussion",
-					"timecodes": ["0:47:14", "0:54:8"]
-				},
-				{
-					"type": "discussion",
-					"timecodes": ["1:3:12", "1:11:46"]
-				},
-				{
-					"type": "debriefing",
-					"timecodes": ["2:6:54", "2:8:49"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "devenez-mod-rateurs--devenez-mod-ratrices",
-				"title": "Devenez modérateurs, devenez modératrices",
-				"year": "",
-				"project_leaders": "Valentine Crosset",
-				"research_center": "Sciences Po"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=Lghgf-R1Eog",
-			"excerpts": [
-				{
-					"type": "discussion",
-					"timecodes": ["0:39:30", "0:47:14"]
-				},
-				{
-					"type": "discussion",
-					"timecodes": ["0:54:8", "1:3:12"]
-				},
-				{
-					"type": "debriefing",
-					"timecodes": ["2:5:5", "2:6:54"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "controverses-en-action",
-				"title": "Controverses en action",
-				"year": "",
-				"project_leaders": "Thomas Tari",
-				"research_center": "Sciences Po"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=Aa_bCI-A-zM",
-			"excerpts": [
-				{
-					"type": "discussion",
-					"timecodes": ["0:11:56", "0:20:12"]
-				},
-				{
-					"type": "discussion",
-					"timecodes": ["0:28:39", "0:39:30"]
-				},
-				{
-					"type": "debriefing",
-					"timecodes": ["2:1:23", "2:2:48"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "ateliers-de-situation-interculturelle",
-				"title": "Ateliers de situation interculturelle",
-				"year": "",
-				"project_leaders": "Anthony Grégoire, Manon Deschenes",
-				"research_center": "Université de Montréal / Ville de Québec"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=Bujk6_fq2mI",
-			"excerpts": [
-				{
-					"type": "debriefing",
-					"timecodes": ["2:14:30", "2:26:0"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "infrastructuring-care",
-				"title": "Infrastructuring care",
-				"year": "",
-				"project_leaders": "Sol Martinez Demarco",
-				"research_center": "Universität Tübingen"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=TiHWErAiWME",
-			"excerpts": []
-		},
-		{
-			"metadata": {
-				"id": "neurodiversit-s",
-				"title": "Neurodiversités",
-				"year": "",
-				"project_leaders": "Lucas Fritz",
-				"research_center": "Université Paris Nanterre"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=HWzi02PUJaY",
-			"excerpts": [
-				{
-					"type": "debriefing",
-					"timecodes": ["1:58:10", "1:59:17"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "",
-				"title": "Experimental audience metrics with the Royal Danish Theatre",
-				"year": "",
-				"project_leaders": "Anders Kristian Munk",
-				"research_center": "Aalborg University"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=TQOYz_gKopU",
-			"excerpts": [
-				{
-					"type": "discussion",
-					"timecodes": ["1:36:54", "1:42:1"]
-				},
-				{
-					"type": "discussion",
-					"timecodes": ["1:50:7", "1:53:29"]
-				},
-				{
-					"type": "debriefing",
-					"timecodes": ["2:18:28", "2:26:0"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "sur-les--ternit-s-et-la-mort-num-rique",
-				"title": "Sur les éternités et la mort numérique",
-				"year": "",
-				"project_leaders": "Fanny Georges",
-				"research_center": "Université Sorbonne Nouvelle"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=IgtHAmNxUg0",
-			"excerpts": [
-				{
-					"type": "discussion",
-					"timecodes": ["1:31:12", "1:36:54"]
-				},
-				{
-					"type": "discussion",
-					"timecodes": ["1:45:3", "1:50:7"]
-				},
-				{
-					"type": "discussion",
-					"timecodes": ["1:56:3", "1:56:54"]
-				},
-				{
-					"type": "debriefing",
-					"timecodes": ["2:18:28", "2:21:42"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "captoth-que",
-				"title": "Captothèque",
-				"year": "",
-				"project_leaders": "Laurence Allard",
-				"research_center": "Université de Lille"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=ftJXEhYN1rM",
-			"excerpts": []
-		},
-		{
-			"metadata": {
-				"id": "cov-culture",
-				"title": "Cov Culture",
-				"year": "",
-				"project_leaders": "Sarah Montero, Aurélie Chêne Giraux",
-				"research_center": "Université Bordeaux Montaigne / Université Jean Monnet Saint-Etienne"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=CYumZp1I700",
-			"excerpts": [
-				{
-					"type": "debriefing",
-					"timecodes": ["2:10:33", "2:13:14"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "cinemaf",
-				"title": "CINEMAF",
-				"year": "",
-				"project_leaders": "Monica Heintz",
-				"research_center": "Université Paris Nanterre"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=jxTsx--txr0",
-			"excerpts": []
-		},
-		{
-			"metadata": {
-				"id": "generic-visuals-in-the-news",
-				"title": "Generic visuals in the news",
-				"year": "",
-				"project_leaders": "Giorgia Aiello",
-				"research_center": "University of Leeds and University of Bologna"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=VxyKIs_pTdA",
-			"excerpts": [
-				{
-					"type": "debriefing",
-					"timecodes": ["2:13:14", "2:14:30"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "shaping-ia",
-				"title": "Shaping IA",
-				"year": "",
-				"project_leaders": "Pauline Gourlet",
-				"research_center": "Sciences Po"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=6KzRyC90QS8",
-			"excerpts": []
-		},
-		{
-			"metadata": {
-				"id": "a-l-ombre-des-biblioth-ques",
-				"title": "A l'ombre des bibliothèques",
-				"year": "",
-				"project_leaders": "Clément Bert-Erboul",
-				"research_center": "Université Sorbonne Nouvelle"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=yrzADhJAf7Y",
-			"excerpts": [
-				{
-					"type": "debriefing",
-					"timecodes": ["2:21:42", "2:23:25"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "encyclop-die-atimatekw",
-				"title": "Encyclopédie Atimatekw",
-				"year": "",
-				"project_leaders": "Nathalie Casemajor, Thérèse Ottawa",
-				"research_center": "INRS, Canada / Wikimédia Canada"
-			},
-			"texts": {},
-			"presentationURL": "https://www.youtube.com/watch?v=Oeedh9aHrbU",
-			"excerpts": [
-				{
-					"type": "discussion",
-					"timecodes": ["1:19:59", "1:26:35"]
-				},
-				{
-					"type": "discussion",
-					"timecodes": ["1:30:51", "1:31:12"]
-				},
-				{
-					"type": "debriefing",
-					"timecodes": ["2:8:49", "2:10:33"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "coeso",
-				"title": "COESO : Collaborative Engagement on Societal Issues",
-				"year": "2020 - 2023",
-				"project_leaders": "Alessia Smaniotto",
-				"research_center": "EHESS / OpenEdition"
-			},
-			"texts": {
-				"presentation": "The workshop experience had a significant impact on the way I relate to both my research project and its actors. It embodied a form of mutual learning: listening to other coordinators reflect on the participatory dimensions of their projects—whether they had initiated or contributed to them—allowed me to rethink my own participatory framework. It helped me not only refine the mechanisms I put in place but also find the right words to describe and support them.\n\nOne moment that particularly stayed with me was a presentation by researcher Anders Kristian Munk from the Experimental audience metrics with the Royal Danish Theatre project. What struck me was how he emphasized that every participatory process inevitably encounters a moment of failure—not necessarily a collapse, but a structural moment of tension or wavering. He framed this not as a flaw but as a normal and inherent part of participatory dynamics. That insight was extremely powerful for me.\n\nRealizing that others had experienced—and even theorized—these critical moments gave me tools and language to better understand and support the projects I’m involved in. Ultimately, the shared reflections during the workshop helped me return to my work with new clarity, and a stronger capacity to accompany the participatory processes I help facilitate.",
-				"experience": "The workshop experience had a significant impact on the way I relate to both my research project and its actors. It embodied a form of mutual learning: listening to other coordinators reflect on the participatory dimensions of their projects—whether they had initiated or contributed to them—allowed me to rethink my own participatory framework. It helped me not only refine the mechanisms I put in place but also find the right words to describe and support them.\n\nOne moment that particularly stayed with me was a presentation by researcher Anders Kristian Munk from the Experimental audience metrics with the Royal Danish Theatre project. What struck me was how he emphasized that every participatory process inevitably encounters a moment of failure—not necessarily a collapse, but a structural moment of tension or wavering. He framed this not as a flaw but as a normal and inherent part of participatory dynamics. That insight was extremely powerful for me.\n\nRealizing that others had experienced—and even theorized—these critical moments gave me tools and language to better understand and support the projects I’m involved in. Ultimately, the shared reflections during the workshop helped me return to my work with new clarity, and a stronger capacity to accompany the participatory processes I help facilitate.",
-				"concept": "Actually, I’ve had a concern from the very beginning with the proposed definition — specifically the part that says “sparked by engaged social sciences.” It puts the emphasis right away on the academic side, as if trajectories of implication always originate from researchers. But in my experience, that’s not the case. These trajectories are often initiated or co-initiated by social actors themselves. So if we want the definition to be relevant to non-academic partners, we need to acknowledge from the start that they’re not just participants — they’re initiators too.\n\nAnd we also have to consider that so-called “engaged actors” might actually be researchers in other disciplines, or students, or people who occupy ambiguous positions. That’s why I think it’s important to recognize what I’d call border people — individuals who move between worlds, between the academic and the non-academic, or across disciplines and roles. This is inspired by a concept from a sociologist — I believe his name is Simmel — who used the term marginal man. I prefer border person, or boundary actor. These people are not just at the boundary — sometimes they are the boundary.\n\nThey often hold multiple roles and embody diverse, heterodox practices. And recognizing, welcoming, and supporting these kinds of figures is crucial for participatory processes to succeed. If neither side — academic or non-academic — includes or values these boundary figures, then it becomes much harder to build meaningful collaboration. You end up with silos, and no bridges between them."
-			},
-			"presentationURL": "https://www.youtube.com/watch?v=YtZkeY22YYM",
-			"excerpts": [
-				{
-					"type": "discussion",
-					"timecodes": ["1:11:46", "1:19:59"]
-				},
-				{
-					"type": "discussion",
-					"timecodes": ["1:26:35", "1:30:51"]
-				}
-			]
-		},
-		{
-			"metadata": {
-				"id": "from-digital-inclusion-to-it-appropriation",
-				"title": "From digital Inclusion to IT appropriation",
-				"year": "",
-				"project_leaders": "",
-				"research_center": ""
-			},
-			"texts": {},
-			"presentationURL": "?",
-			"excerpts": [
-				{
-					"type": "discussion",
-					"timecodes": ["1:42:1", "1:45:3"]
-				},
-				{
-					"type": "discussion",
-					"timecodes": ["1:53:29", "1:56:3"]
-				},
-				{
-					"type": "debriefing",
-					"timecodes": ["2:23:25", "2:26:0"]
-				}
-			]
-		}
-	]
+  "metadata": {
+    "title": "Trajectories of engagement",
+    "meta_authors": [
+      {
+        "firstName": "Marta",
+        "lastName": "Severo",
+        "role": "creator"
+      },
+      {
+        "firstName": "Robin",
+        "lastName": "de Mourat",
+        "role": "creator"
+      },
+      {
+        "firstName": "Donato",
+        "lastName": "Ricci",
+        "role": "creator"
+      },
+      {
+        "firstName": "Élie",
+        "lastName": "Petit",
+        "role": "creator"
+      },
+      {
+        "firstName": "Tommaso",
+        "lastName": "Prinetti",
+        "role": "creator"
+      }
+    ]
+  },
+  "intro": {
+    "markdown": "## One day, we met.\n\nThe story of this book begins and, in a certain way, culminates on September 15, 2023 during the international meeting “Trajectories of Engagement” (in French, _Trajectoires d’implication_) at the University of Paris Nanterre. That day brought together a group of researchers engaged in more than twenty projects in the humanities and social sciences, showcasing various participatory approaches: action research, co-design, collaborative ethnography, citizen science, and other forms of inquiry that invite, rely on, or negotiate the involvement of actors operating outside of academia. Despite their methodological diversity, a shared concern united these projects: the conditions, modalities, and consequences of research engagement and the material conditions on which it is based.\n\nThe aim of this event was to create a space for critical reflection on how we, as scholars, relate to the people, institutions, and issues that our research concerns. Rather than promoting a single normative model of participation, we examined the trajectories through which engagement unfolds in our projects, including framing, tension, shifting, and friction. The meeting was not only the outcome of a year-long collaboration but also the beginning of a collective inquiry, still ongoing, into the situated, evolving, and sometimes contradictory dynamics of engaged research.\n\nThe initial impulse for this meeting emerged from within different institutional contexts and disciplinary traditions yet was grounded in shared questions and frustrations. Marta Severo’s IUF project, _Data in Action,_ set out to examine participation practices in media labs and digital research environments. Motivated by a sense that digital  \nparticipatory methods were increasingly routinised and instrumentalised, reproduced as default procedures rather than questioned as situated acts, she sought new frameworks for critically rethinking how participation is performed and to what ends.\n\nThis concern resonated with the experiences of Donato Ricci and Robin de Mourat at the médialab of Sciences Po. They had long been experimenting with hybrid research formats and collective inquiry protocols stemming from participatory design research to involve concerned citizens, scholars from distant disciplines, and non-governmental organisations. What began as a potential field site evolved into a site of collaboration, as the distance between the “object of study” and the “partner in inquiry” dissolved into a shared investigation of methods, ethics, and politics. Despite significant institutional differences, including research cultures, disciplinary orientations, and  \nfunding structures, we found ourselves confronting similar challenges: how to articulate our responsibilities as researchers in the face of urgent public problems, how to navigate the fine line between relevance and co-optation, participation and tokenism, and experimentation and institutional constraint.\n\nThe notion of “trajectories of engagement” emerged as a way to name, make sense of, and problematise these questions. As a starting point, we defined trajectories of engagement as the evolving research pathways sparked by engaged social science and shaped by pressing social challenges. They bring different types of actors (notably academic and non-academic ones) into shifting roles, mediated by specific tools, infrastructures, and institutional settings. These trajectories make visible the tensions and power dynamics at the heart of collaborative, situated inquiry. Rather than assuming engagement as a stable category, we focused on the movements, translations, and transformations through which it takes shape over time. Trajectories are not linear paths. Discontinuities, redirections, and unexpected encounters shape them. They unfold through relational configurations involving researchers, publics, institutions, and material devices. Thinking in terms of trajectories allows us to attend not only to the intentions behind engagement but also to its development, transformation, (side) effects, compromises, and unintended or invisible consequences.\n\nBuilding on this idea, we broadened our area of inquiry by reaching out to colleagues in our professional networks and issuing an open call for contributions. Our goal was to expand the conversation beyond our immediate circles and encourage other researchers and practitioners to engage with the concept of trajectories of engagement and, through it, critically explore their own modes of engagement. The result was a heterogeneous but resonant constellation of contributions, shaped by different disciplines and national contexts\n\nThe September 2023 meeting was thus a pivotal moment. It marked the culmination of our initial work cycle, allowing us collectively to test and refine the concept of “trajectories of engagement.” But it also opened a longer process of reflection that continues in and through this book. The current volume is both a snapshot and a stepping stone, a moment of synthesis that is also a point of departure.\n\nThis introductory chapter outlines the project and explains the structure of the book. We begin by situating our inquiry within a broader scientific and political context, marked by a proliferation of calls for participatory, open, and socially relevant research. In the second section, we define the conceptual framework of “trajectories of engagement” and discuss its theoretical inspiration. The third section presents the methodological approach we developed, emphasising the role of visual tools and representations in mapping and interrogating these trajectories. We conclude by presenting the structure of the volume and the perspectives it opens toward a more reflexive, critical, and situated understanding of engagement in the humanities and social sciences.\n\n## Injunction of participation and its critique\n\nThe concept “trajectories of engagement” responds to a broader shift in the political and epistemic landscape of academic research, placing increasing emphasis on participation, collaboration, and social relevance. The September 2023 meeting, which served as both the culmination and the beginning of our collective inquiry, clarified that researchers across disciplines are navigating growing demands to open up their work to “actors from society,” to engage with pressing public issues, to create social and economic value, and to demonstrate the societal impact of their work.\n\nHowever, this movement toward participation is problematic, marked by a tension that runs through the heart of contemporary research practices On the one hand, the growing injunction to participate is institutionalised through funding calls, policy discourse, and academic norms. On the other hand, a rich body of critical scholarship calls into question the normative assumptions, structural constraints, and political blind spots of this injunction.\n\nOver the last two decades, participation has become a central concern in science governance and academic policy. The shift toward participatory research is evident in how project calls are framed, how universities define their missions, and how legitimacy is increasingly tied to societal impact. Participation is no longer one possible approach  \nor method among others to achieve specific academic goals; it is becoming a symbolic and institutional obligation. As Loïc Blondiaux (2022) pointed out, this injunction is often framed in soft, consensual terms. Its language speaks of democracy, empowerment, and inclusion, but managerial reasoning and policy frameworks rarely leave space for genuine negotiation or contestation. Participation is expected to address a range of contemporary crises, including trust in science, political legitimacy, and social fragmentation. Researchers are expected to deliver not only knowledge but also solutions, with publics engaged as validators or co-producers of that knowledge. At the same time, researchers are asked not to take political positions but rather to uphold the neutrality of science.\n\nThis tension is especially evident in fields dealing with high-stakes, high-speed public problems: climate change, artificial intelligence, digital disinformation, and public health emergencies. Faced with these urgencies, participation is often presented as the only viable epistemic model, ensuring transparency, legitimacy, and efficiency. But this framing tends to reduce participatory research to a series of pre-formatted tools, devices, or protocols, often built around digital infrastructures and governed by expectations of responsiveness and neutrality. Olivier Galibert (2013) analysed this trend in the context of online environmental debates, where participation is shaped not only by institutional goals but also by the imaginaries of the digital. Platforms are expected to act as spaces of democratic dialogue. Still, in practice, they often function as normative devices, channelling behaviours and structuring what can be said, by whom, and how. What emerges is a form of “engaging communication” that frames participation as a behavioural script rather than a political act.\n\nIn response to this dominant model, numerous scholars have sought to denaturalise the participatory turn. A central concern is the normativity of the discourse itself. Erik Neveu (2011) identified terms such as “participation,” “engagement,” and “citizenship” as _mots du consensus_, words that circulate with little conceptual precision but immense symbolic weight. Their vagueness is what makes them powerful. They allow institutions to adopt the appearance of openness and democratic accountability while often foreclosing actual contestation.\n\nOne of the most pressing critiques is that of instrumentalisation. When participation becomes a bureaucratic requirement, publics are often reduced to mere resources, providers of (cheap) data, legitimacy, or affective resonance. Their involvement is framed not as a transformative contribution but as a form of input: an unimportant means to an unquestioned end. This view reproduces epistemic asymmetries; academic actors define the terms of participation and publics are invited only to fill in the blanks.\n\nClosely related is the critique of routinisation. As participatory methods become institutionalised, they also become standardised, often through templates and toolkits meant to ensure replicability and impact. What is lost in the process is the specificity, contingency, and experimental nature of truly dialogical research. Blondiaux (2022) warned of technologising participation, of allowing digital tools to become turnkey solutions to complex political and epistemological problems. The tool, in this context, becomes a symbolic validator of engagement, while concealing the power relations it embodies.\n\nFinally, critical scholars have pointed out the structural constraints imposed by funding regimes. Project-based research, with its short cycles and emphasis on deliverables, leaves little room for long-term engagement, trust-building, or iterative learning. The temporalities of funding often clash with those of participatory research, which requires a slower pace, openness, and a willingness to accept failure. Participation, under these funding conditions, risks becoming a performative act, aimed at fulfilling institutional expectations rather than cultivating new forms of knowledge production.\n\nThese critiques are not arguments against participation. Instead, they are calls for deeper reflection on how we conduct participation and for taking seriously the conflicts, compromises, and material constraints that shape it. What is at stake is not whether to participate, but how, with whom, under what conditions, and with what effects.\n\nThis concern is the gravitational centre of our project. We propose to move beyond the static dichotomy between injunction and refusal, between genuine participation and instrumentalisation, by adopting a framework that emphasises the description of trajectories rather than the stabilisation of static models. Instead of defining what participation should be, we investigate why and how a spark generates engagement and how engagement unfolds over time, through a series of shifting configurations, material supports, and institutional framings. In doing so, we align with a reflexive tradition in participatory research, one that does not reject engagement but insists on attending to its frictions, politics, and evolutions (Mouffe, 2013; Severo, 2021; Ricci, 2019). Trajectories of engagement are ways to map, interrogate, and reimagine the participatory practices that define our social research landscape.\n\n## Thinking through trajectories\n\nTo move beyond the rigid dichotomy that pits the injunction to participate against the critiques that denounce its limitations, we propose a shift in perspective. Rather than asking whether research is participatory, we suggest focusing on how engagement arises and unfolds, how it begins, takes shape, changes, hesitates, accelerates, and falters. The concept of “trajectories of engagement” emerges from this need to reframe participation as a dynamic, situated process, shaped by relations, temporalities, and material conditions.\n\nOur choice of the word “trajectory” is not incidental. It is a response to a desire to foreground the temporal dimension of participatory research. Too often, participatory practices are evaluated as snapshots. At a given moment, was the public involved? Were non-academic actors consulted? Did they contribute to the knowledge produced? Such static perspectives fail to account for how engagement begins and evolves, sometimes intensifying, sometimes receding, throughout the life of a research project and the consequences and outcomes it provokes beyond the official end of research funding timelines. By speaking of trajectories, we insist on the sparks of engagement and the processual nature of its unfolding. Over time, engagement undergoes shifting configurations that combine the “inside” (i.e., internal actors) and the “outside” (i.e., external actors).\n\nEqually important is attention to materiality. As a trajectory  \nis constantly drawn into a given ground or milieu, each phase of a participatory process is supported or constrained by specific devices, infrastructures, and institutional frameworks. From collaborative workshops or focus groups to digital platforms, from field notes to shared databases, the material forms through which participation occurs are never neutral. They frame who can speak and how knowledge can be circulated. Following scholars in media and communication studies, such as Jeanneret (2008), we understand materiality not only as the physicality of tools, but as the ensemble of affordances, constraints, and inscriptions that mediate communication and structure possible interactions. In this sense, tracing a trajectory of engagement means also accounting for the mediated and infrastructural conditions that shape the research process.\n\nAnother critical dimension concerns the second term, “engagement.” In French, the term “_implication_” carries a semantic richness that is difficult to translate. In English, we often speak of “engagement” or “involvement,” but these terms do not fully capture the depth and ambiguity of “_implication_.” Etymologically, to be “implicated” is to be entangled, bound up, and possibly complicit. In legal or moral contexts, to be implicated is also to be partially responsible for an act, sometimes a crime. This connotation allows us to resist romanticised visions of participatory research as inherently democratic or virtuous and to foreground the fact that engagement is never innocent and always twofold. The connotation implies positioning, role redistribution, and often the negotiation of power and responsibility. It implies taking risks and also suffering the consequences. It also allows us to restore some symmetry in how we describe the effects of participation in our research, considering the consequences it can have on our own persons and collectives, whether political, interpersonal, or epistemological. We are not outside the phenomena we study; we are implicated in them through our social backgrounds, political motivations, methods, institutional affiliations, and relational commitments. We must respond to and consider the implications for the milieux with which we engage through participation, as well as our own positionality and activity within academia.\n\nWe would have liked, somewhat provocatively, to retain the French “_implication_” even in English-language discussions. Using this term would have allowed us to signal and clarify two ideas: the degree and intensity of involvement that participatory research often entails, not as a mere technique, but as a political choice and a transformation of the researcher’s role and of the knowledge production process and the ethical and political ambiguity of that involvement, as well as the risks, compromises, and frictions that come with being inside a problem rather than observing it from a distance. For the sake of linguistic ease, we kept the term “engagement,” but with it, we mean to convey the intense involvement and the risk-taking inherent in _implication_.\n\nAs stated earlier, we define trajectories of engagement as evolving research pathways sparked by engaged social science and shaped by pressing social challenges that bring different types of actors (even the distinction between “academic” and “non-academic” often proves too binary or imprecise) into shifting roles, mediated by specific tools, infrastructures, and institutional settings.\n\nThis definition underlines that a research project alternates in a non-linear way among moments of “internal” work only involving research professionals operating within academia for a specific funded project, moments inviting “external” actors into participating, co-producing, or reshaping the inquiry, and boundary situations in which motivations, interests, and material configurations of internal and external actors are shared, assembled, and sometimes redefined. External actors can include citizens, artists, associations, institutions, other scholars, and commercial organisations. As often emphasised during the workshop and in the materials collected in this book, avoiding a simplistic view that categorises academic and non-academic actors as internal and external players in the project is essential. Instead, “trajectory” helps capture both the role of actors who act as boundary agents facilitating collaboration and the material boundary situations that enable connections between the “inside” and the “outside” of research environments. Indeed, these human and non-human boundary agents allow the trajectory to exist and evolve. Each phase is anchored in a particular set of material and institutional structures: a grant or other type of funding, a technological platform, a workshop format, a set of ethical constraints, a digital device for collecting, processing, or visualising data, or a public controversy. All these structures condition the roles actors can play, the forms of knowledge that can emerge, and how problems are framed.\n\nWe named the beginning of each trajectory of engagement a “spark.” This spark is the key element that justifies the existence of the participatory research pathway and shapes its configuration over time. However, the spark does not come exclusively from outside (e.g., a pressing social challenge raised by external actors) or, conversely from inside (e.g., a need defined solely by researchers within the framework of engaged social science). A trajectory of engagement means that, from the very beginning, the spark itself, the encounter between internal and external actors, is essential precisely because it generates engagement.\n\nWhat distinguishes our approach is the refusal to see participation as a single moment or a fixed model. Instead, we explore how engagement arises, evolves, and is transformed by and transforms the parties it affects in the process: how it begins, intensifies, stabilises, fragments, vanishes, or ends. This perspective invites attention to the social dynamics, the institutional pressures, and the technological mediations that punctuate the life of a project. It also invites us to consider the temporality of engagement as a non-linear, sometimes discontinuous process, full of redirections, pauses, anomies, improvisations, and failures.\n\nFinally, the notion of trajectory allows us to describe participation realistically, avoiding the pitfall of naturalising it as a normative requirement or a fixed category. We seek to approach participation as an open-ended, generative, materially and socially situated practice. We mean to reflect on how we, as researchers, are drawn into problems; how we construct or inherit the materiality that structures our work; and how we can develop critical, reflexive tools to reimagine the forms that (our) engagement might take.\n\n## A visual approach\n\nOur intention was never to deliver the notion of trajectory of engagement as a finalised, ready-made product. Instead, we sought to test, challenge, and refine it using actual empirical materials and research experiences. The first step in this process was to find a way to materialise these trajectories, making them visible and shareable so they could become objects of discussion and reflection.\n\n“Trajectories of engagement” is not only meaningful from a theoretical standpoint. It also opens interesting paths of inquiry from a methodological perspective. Thinking in terms of trajectory suggests a temporal evolution – a progressive and dynamic unfolding – that resists simple typologies or snapshots. In this way, it is particularly amenable to a visual mode of inquiry grounded on a literal take of “trajectory.” In other words, a visual approach is not just an illustration technique but a way to engage with the temporal, material, and relational dimensions of involvement and implication and to foster discussion and reflection about it. We can express and highlight what is often left implicit and invisible in textual narratives: the uncertain starting point of a spark, the role of boundary situations and genuine encounters, the coexistence of multiple non-linear rhythms, the layering of material devices and tools, and the complex and heterogeneous paths of various actors. In this context, the visual becomes a heuristic tool that does not aim to simplify reality but to apprehend its complexity better by giving form to the entanglements and discontinuities that constitute participatory research.\n\nTo capture the richness and complexity of these trajectories, we developed visual representations as both analytical and reflexive tools. These representations make visible the interplay of diverse elements (i.e., sparks, actors, tools, productions, activities, timeframes) that construct a trajectory of engagement. Far from reducing complexity, these diagrams help us unfold and describe it more closely, allowing a better grasp of variations and singularities.\n\nIf this ambition is theoretically sound, it raises several practical challenges. How do we move from a conceptual intuition to a workable method? How can we translate a research project into a visual trajectory without betraying its complexity or misrepresenting its stakes? How can we ensure that the visual representation is not only analytically rigorous but also faithful to the lived experience of those who carried out the project? Would the researchers involved recognise themselves in this visualisation? Would the diagram be understandable to others outside the project? Rather than treating these questions as obstacles, we turned them into hypotheses to explore. Our objective was not to prove the effectiveness of the method but to test its potential, to experiment with its limits and, if needed, to embrace the possibility of failure. In other words, our goal was to explore whether and how such a visual method could be generative: whether it could reveal hidden dimensions of engagement, whether it could foster reflexivity among those who use it, and whether it could serve as a shared language for discussing the trajectories of participatory research. These were open hypotheses that we tested in a situated and experimental way.\n\nPractically, this visual methodology developed in three main phases, which were not strictly sequential steps. Rather, the process was iterative, non-linear, and shaped by ongoing negotiations between conceptual choices and empirical constraints. In the first phase, we set out to define a visual language capable of generating representations of research trajectories. Doing so required preliminary abstraction. We needed to identify the basic components of a trajectory, assign properties to each, and decide how they should be visually rendered. In the second phase, we conducted, with the support of our research assistant, Alex Pellier, a series of semi-structured interviews with researchers involved in the projects we aimed to represent. These interviews were essential not only for gathering information but also for understanding how the researchers themselves perceived and narrated their trajectories of engagement. We invited them to describe the spark, the evolution of their projects, the actors involved, the forms of production and circulation, and the difficulties they encountered. The idea was to work with them in identifying what mattered in their experience and what should be translated into visual form. In the third phase, we began translating each project into a diagram, using the visual grammar we had defined. However, this process revealed its own limitations. In practice, the grammar had to be adjusted several times. Each project raised specific issues that forced us to rethink some of our assumptions and refine our representational choices. This iterative dynamic was not a flaw but an integral part of the method, allowing us to move between abstraction and situatedness, between general patterns and particular cases.\n\nBefore presenting the grammar in detail, we should clarify participant recruitment for the workshop held on September 15, 2023\\. We used a mixed strategy. On the one hand, we contacted colleagues in different countries with whom we had already collaborated and whose work we knew was animated by similar scientific and ethical concerns regarding participatory and engaged research. On the other hand, we launched an open call on the project website (<https://trajectories.sciencespo.fr/>) and circulated it through major mailing lists in the field. In this way, we identified around twenty research projects. The list of participants fluctuated slightly. Some researchers who initially expressed interest later became unavailable, while others joined for the interview but not the workshop. In this book, we focus on a subset of projects that were both presented and collectively discussed during the event. Within the workshop context, we sought to include both an academic team representative and an external actor on each project to capture multiple viewpoints. This inclusion was possible only for some projects.\n\nWe structured our visual grammar around three main categories of elements: agents, productions, and trajectories. Rather than listing them, we describe here how they operate within the diagrams (see Figure 1).\n\nAgents are the figures through which projects unfold and evolve. We distinguish among three types: (a) academic agents, researchers who typically initiate and coordinate the project, (b) concerned publics, citizens, artists, institutions, or activists who engage with the project in various forms and at different levels, and (c) support agents, technicians, developers, external consultants, investigators, or organisations that contribute to the material, technical, or logistical implementation of the project. Each of these agents plays a different role in shaping the trajectory, and their involvement might vary over time. They can act as internal, external, or boundary actors, alternatively, in different phases.\n\nProductions are the outputs or devices that punctuate the project and often materially mediate the relationships among agents. We differentiate between artefacts (i.e., tools, objects, or platforms that materialise the project), supports (i.e., resources or operations that sustain long-term engagement), and activities (i.e., short, high-intensity events such as workshops, interviews, and exhibitions). \n\nTrajectories are represented by several curved lines running from bottom to top and materialising the path of a specific agent or group of agents within the research process. This choice arose from practical constraints, primarily the need to make the diagrams readable on the poster-size sheets of paper used during the workshop. Trajectories begin on the left with a spark, the initial agent or group of agents who initiated the project. During the discussion workshop, the representation of the spark proved to be one of the most controversial points. In most cases, it was depicted as initiated by the researchers, reflecting a selection bias inherent to our recruitment method. Yet, during the workshop and in subsequent discussions with participants, it became clear that the spark is often collective, multi-situated, and at the boundary between different communities. The role of the researcher is simply to make it exist within an academic setting and to build a situation that allows the trajectory to evolve. It would be particularly interesting, in future developments of this methodology, to explore solutions for representing the complexity and multi-actor nature of the spark or to cope specifically with the challenge of grasping and representing the discontinuity and complexity of the beginning of a trajectory.\n\nAs the trajectory unfolds, the spark links with other agents, represented on the right as participants, which then unfold their own trajectories of engagement, and then passes through various productions and activities. A short horizontal mark indicates when the involvement of a particular agent ends. Some productions or activities might recur, captured in the diagram through iterative elements. Using this method, we generated one diagram per project. These diagrams served as the basis for discussion during the September 15 workshop, marking the culmination of our methodological experiment.\n\nThe workshop was structured around the visual representations we had designed and organised as an invitation to engage with trajectories of engagement through a constrained (and perhaps destabilising) organisation of activities and material formats (de Mourat & Ricci, 2021). Each researcher was asked to present their project using only the diagram as support (no other slides). Videos of the presentation are available on the project website: <https://trajectories.sciencespo.fr/>. We invited participants to tell the story of their project as a trajectory of engagement, using the visual diagram as a narrative anchor, following the affordances of this format for storytelling, and registering any potential critiques or missing points in the diagram. Unsurprisingly, this constraint created a certain tension. Some participants felt limited or frustrated by the format. A few attempted to bypass the rules or “detour” the dispositive. But these reactions were themselves instructive. They revealed the assumptions embedded in our model and its ability (or inability) to accommodate diverse ways of telling.\n\nAfter each presentation, participants formed small groups around the posters to engage in collective discussion and annotation. Each group included other researchers and participants (about five in total). They were invited to annotate the diagrams directly, write comments on sticky notes, or propose modifications. Some groups engaged in the proposed methodology by generously enriching schemas with new agents, unexpected trajectories, or missing graphical conventions. Others engaged with the format in highly creative ways (e.g., drawing entirely new trajectories and pasting them onto the posters).These amended versions are reproduced in the following pages. The purpose of including them in the book is not to provide perfectly legible diagrams but to convey the spirit of the collective work. To this end, we chose not to build a version “2.0” of the diagram that would present an “improved” representation but to consider annotated diagrams as a vibrant and lively testimony of the experience, the situated questions it provoked and the reflections sparked by the generative and heuristic format of discussion we proposed through our graphical infrastructure.\n\nThe workshop concluded with a plenary session, during which each group shared its insights. This final moment was not intended as a validation exercise but as an open space for critique and exploration. We identified both the strengths and limitations of the visual method. We collectively discussed which elements were most useful, which were confusing or overly rigid, and how the grammar could be improved or adapted in future iterations.\n\nAs a further step, we engaged participants in a new phase of discussion that is presented in this book. Thanks to our collaboration with journalist Elie Petit, we recontacted all participants and invited them to respond to two open questions:\n\n_Challenging trajectories of engagement as an experience_\n\nHow did the experience of the workshop transform (or not) your relationship with your research project and its actors? How did it reveal, confirm, or question your way of conducting research, in terms of its structure, content, contributors, partners, and their agency?\n\n_Challenging trajectories of engagement as a concept_\n\nWe define trajectories of engagement as evolving research pathways sparked by engaged social science and shaped by pressing social challenges. They bring different types of actors (notably academic and non-academic ones) into shifting roles, mediated by specific tools, infrastructures, and institutional settings. These trajectories make visible the tensions and power dynamics at the heart of collaborative, situated inquiry. Based on this, we propose a writing game similar to a peer review. How would the concept of trajectory of engagement be challenged in your disciplinary area and milieu? How should it be modified to be welcomed in your own research? How should it be translated to be entirely relevant to your non-academic partners?\n\nParticipants could respond either by email or through an oral exchange with Elie Petit. The responses to these questions are reproduced in the following pages. In several cases, they were written by Elie Petit based on exchanges with the interviewee. Most respondents were the same individuals who took part in the workshop, although in a few cases, other participants provided answers based on collective discussions with project members. The name of the main respondent follows each response. We chose not to synthesise the answers or extract overarching themes. Instead, we let the participants speak for themselves to highlight the plurality of interpretations, resistances, and appropriations of the concept.\n\n## Opening the trajectories\n\nThe workshop discussions, as well as the answers to questions collected in this book, revealed a shared interest among participants in the heuristic potential of “trajectories of engagement.” Many expressed that the theoretical framework provided them with a helpful lens through which to reflect on their own research practices. They appreciated the possibility of representing material aspects beyond mere means or side effects but as constitutive elements of their research trajectories. These aspects, often rendered secondary in textual accounts, became central in the visual approach. The diagrams enabled a form of material literacy, allowing researchers to trace how tools, productions, activities, and devices actively shape research engagement over time.\n\nYet, as anticipated, the workshop and subsequent discussion of this book also raised a set of critiques, tensions, and open questions. Rather than seeing these points as failures of the method, we consider them invitations to deepen our reflexive approach and clarify our own assumptions. We can identify four main types of critiques of our experiment, each of which raises significant methodological and epistemological challenges.\n\nFirst, some participants questioned the vertical orientation of the diagrams. Although this choice was initially based on practical considerations (e.g., poster format, legibility), its implications were not neutral. The verticality tended to suggest a linear, even hierarchical, development from the spark at the bottom to the later agents and activities at the top. This spatial “elevation” metaphor unintentionally reinforced a “top-down” interpretation, potentially obscuring feedback loops, circularities, or regressions that are part of many participatory processes. Moreover, because the spark appeared as a single agent, it reinforced the idea that the trajectory was generated solely by the academic actors. Indeed, the visual representations were unsatisfactory at conveying the complex mixture of actors and motivations that sparked the event.\n\nSecond, the visual grammar, while aiming to simplify without simplism, was seen as insufficiently attentive to interruptions, asymmetries, and invisible forces. Specific project dimensions, such as the impact of funding constraints, institutional agendas, political tensions, and physical and accessibility limitations, were challenging to show in the diagrams. Trajectories appeared as continuous lines, yet many projects experienced breakdowns, pauses, accelerations, and latency. Some participants noted that these ruptures were precisely what shaped their engagement practices and that the diagrams tended to smooth them over.\n\nThird, several participants did not recognise themselves in the diagrams or felt that the representations overemphasised the role of academic researchers. Despite the intention to include various types of agents, the diagrams sometimes reinforced the idea that a project was “led” or “framed” by researchers rather than being co-constructed. This critique highlights the delicate balance between making a structure of engagement visible and acknowledging its distributed and negotiated nature. It also reflects a broader concern with the power asymmetries often present in collaborative research.\n\nFourth, and related to the third, the trajectories often failed to represent boundary situations or actors that, as previously noted, constituted the backbone of successful trajectories. Meetings and dialogues between the “inside” and the “outside” of research projects are enabled by material configurations that allow actors with different interests to work together. Yet structuring the diagram into two areas (inside and outside) tended to undervalue and obscure the role of boundary artefacts, which appeared merely as products or contexts of encounters rather than their very operators, often acting as translators and mediators.\n\nBeyond these critiques, a more profound, structural question emerged: does the act of visually representing trajectories not risk turning them into a model? If so, what are the consequences of such modelling? This issue is particularly sensitive. One of the key critiques of the participatory turn in the social sciences concerns its tendency to normativise and instrumentalise engagement. Participation becomes an injunction, a checkbox, a model to follow. If our diagrams were to be interpreted as prescriptive models of “how participation should happen,” they would reproduce the very problem we intended them to address. At the same time, the use of a shared visual grammar, necessary to allow comparison, inevitably invites pattern recognition and the search for regularities. While our objective was not to produce a model but rather to foster original discussion among the workshop participants, the risk of naturalisation remains and deserves further scrutiny.\n\nFor all these reasons, we did not conceive this work as the conclusion of the project, but as the beginning of a broader, collective reflection. Several participants expressed interest in revising or re-drawing their trajectories after the discussions. However, we chose not to revise the diagrams. \n\nOur decision was based on a fundamental methodological principle. The diagrams were never meant to be realistic or definitive representations of the projects. Instead, they were designed as provocative tools, devices to support reflexivity and reveal the material dimensions of participation. Their value lies not in their accuracy, but in the conversations they generate. Instead of amending the diagrams, we considered it more fruitful to document the reactions and reflections of the participants.\n\nThis decision was also guided by a desire to avoid falling back into a binary logic between injunction and critique, between prescription and rejection. We believe that the notion of trajectory of engagement can serve as a “third path,” a way to think about participatory practices beyond celebration or denunciation. For this path to be meaningful, it must remain open, situated, and hospitable to disagreement. It must not become another ideological stance or elitist alternative that claims epistemic superiority. Our visual methodology is not a solution but an invitation, a device for description, dialogue, reflexivity, and shared learning.\n\n## Bibliography\n\nBlondiaux, L. (2022). Le participatif en actes: Quel avenir pour l’injonction à la participation? _Questions de communication_, 41(1), 73–86.\n\nBlondiaux, L. (2022). Participer par dispositif: Ce que la critique des dispositifs numériques participatifs fait aux sciences sociales. _Questions de communication_, 41(1), 93–112.\n\nde Mourat, R., & Ricci, D. (2021). Mettre en forme l’enquête: Répondre aux invitations de l’écriture numérique. In C. Seurat & T. Tari (Eds.), _Controverses mode d’emploi_ (pp. 277–290). Les Presses  \nde Sciences Po.\n\nGalibert, O. (2013). L’injonction participative au débat environnemental en ligne: Imaginaires d’Internet, démocratie environnementale et communication engageante. _Les Enjeux de l’information et de la communication_, 14(1), 35–49.\n\nIngold, T. (2016). _Lines: A brief history_. Routledge.\n\nJeanneret, Y. (2008). _Penser la trivialité. Volume 1: La vie triviale des êtres culturels_. Hermès-Lavoisier.\n\nMasud, L., Valsecchi, F., Ciuccarelli, P., Ricci, D., & Caviglia, G. (2010). From data to knowledge: Visualisations as transformation processes within the data–information–knowledge continuum. In _14th International Conference on Information Visualisation_ (pp. 445–449). IEEE.\n\nMouffe, C. (2013). _Agonistics: Thinking the world politically_. Verso Books.\n\nMunk, A. K., Madsen, A. K., & Jacomy, M. (2019). Thinking through the databody: Sprints as experimental situations. In _Designs for experimentation and inquiry_ (pp. 110–128). Routledge.\n\nNeveu, E. (2011). Participation, engagement, citoyenneté: Ce que cachent les mots du consensus. In A. Cefaï & I. Joseph (Eds.), L’héritage  \ndu pragmatisme dans les sciences sociales (pp. 155–173). Éditions de l’EHESS.\n\nRicci, D. (2019). Tensing the present: An annotated anthology of design techniques to inquire into public issues. _Diseña_, 14, 68–99.\n\nSevero, M. (2021). _L’impératif participatif_. INA.\n\nTrajectories of engagement / Trajectories of implication\n\nRobin de Mourat, Donato Ricci, Marta Severo"
+  },
+  "projects": [
+    {
+      "metadata": {
+        "id": "replay-it-again",
+        "title": "Replay it Again",
+        "year": "2020-2024",
+        "project_leaders": "Baptiste Buob, Jérémy Demesmaeker, Laurence Maillet ",
+        "research_center": "UMR LESC, HAR, Labex Les passés dans le présent (Université Paris Nanterre, France)"
+      },
+      "texts": {
+        "presentation": "The project is based on a unique collaboration between an anthropologist-filmmaker and two artists, Laurence and Jérémy. Born of a chance encounter, the project fuses anthropology, cinema and performance art, drawing inspiration from the work of Jean Rouch. The aim was to challenge traditional roles by integrating ethnographic research into creative processes, positioning the anthropologist not as an outsider but as a full-fledged player in artistic creation.\n\nAs the project evolved, it expanded to include a variety of partners and institutions. It has benefited from funding and support from regional structures, theatres and the Labex Les passés dans le présent, leading to academic and institutional recognition. The project was part of wider celebrations, notably the centenary of Jean Rouch, with performances at the Bibliothèque nationale de France and the MUCEM in Marseille. In addition, it has participated in interdisciplinary initiatives on re-enactment, bringing together a variety of fields, from biology to anthropology.\n\nPartnerships have also extended internationally, notably with the University of Glasgow, and although the COVID-19 pandemic has slowed some progress, collaboration continues. This constantly evolving relationship among researchers, artists, and institutions illustrates a new approach to the intersection of academic research and artistic practice, blurring the boundaries between roles. Today, all publications and results are produced collegially, testifying to the power of interdisciplinary partnerships and the ongoing transformation of the project.",
+        "experience": "A trajectory of engagement, as I see it, is best understood as a dynamic and evolving path through which different contributors – whether academic or artistic – engage in a collaborative project. This trajectory is shaped by the intersection of diverse professional cultures, roles, and statuses. In our experience, collaboration between researchers and artists is marked by continual negotiation, mutual enrichment, and an ongoing “work in progress,” rather than rigid hierarchies or fixed end points.\n\nIt is not simply a linear sequence but a living canvas where responsibilities, creative authority, and the process of contribution are shared and often renegotiated. Economic and institutional constraints, such as differences in employment status and job security between academics and artists, do introduce tensions. Still, the most productive collaborations are those where these differences are acknowledged and addressed collectively, often through shared decision-making and co-authored outputs.\n\nUltimately, a trajectory of engagement highlights both the tensions and the creative possibilities inherent in interdisciplinary collaboration. It is an ongoing process that enriches both the research and creative dimensions of a project, and it thrives when collective writing, shared authority, and horizontal relationships are prioritised.",
+        "concept": "Engaging with this concept has encouraged us to move beyond hierarchical or siloed ways of working, instead fostering a more horizontal and collective approach. From the outset, we aimed to design collaborations in which financial and organisational asymmetries – for example, the difference between being a salaried researcher and an artist with less job security – do not become sources of conflict or hierarchy.\n\nIn practice, this meant structuring writing and creative work as collective endeavours. Publications and research outputs always reflected the shared nature of the experience rather than imposing unilateral perspectives. By avoiding remuneration when contributing to artistic creations, I could participate without holding authority over the artists or impinging on their limited resources. This contributed to an atmosphere of mutual respect and helped minimise points of friction.\n\nMoreover, being attentive to these differences and striving for collective authorship has enriched our collaborations, making them more resilient and adaptive, and allowing each participant to move between research and artistic domains. We have found that recognising and negotiating tension – rather than ignoring or suppressing it – enables us to build truly creative and durable partnerships. The trajectory of engagement, therefore, has become a way to intentionally foreground both the challenges and the transformative possibilities of interdisciplinary work in our project.\n\nBaptiste Buob"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=8139Z4q7kqU",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:2:48",
+            "2:5:5"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "mmat",
+        "title": "mMAT",
+        "year": "2016-",
+        "project_leaders": "Juanjo Ripalda, Fredy Vallejos",
+        "research_center": "Universidad de las Artes (Ecuador)"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=1Ngb0a-9vDs",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:0:10",
+            "2:1:23"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "le-sommet-qui-cache-la-montagne",
+        "title": "The Peak that Hides the Mountain",
+        "year": "2020-2022",
+        "project_leaders": "Jérôme Baudry, Simon Dumas Primbault, Ion Mihailescu",
+        "research_center": "Laboratory for the History of Science and Technology (École polytechnique fédérale de Lausanne, Switzerland)"
+      },
+      "texts": {
+        "presentation": "At the crossroads of the history of science, educational experimentation, digital humanities, and artistic creation, this project explores the first scientific ascents of Mont Buet, an Alpine peak climbed by Genevan scholars in the late 18th century. By reconstructing the material and experimental contexts of these expeditions – notably those of figures such as Saussure, the Deluc brothers and the Parminter sisters, the first female tourists to ascend Buet in 1786 – the team questions the production and transmission of knowledge in the mountains. Mont Buet thus becomes the site of an experimental history: a contemporary ascent is re-enacted using period instruments, including a replica of the Delucs’ barometer, to combine archives, scientific practices, and public engagement.\n\nDespite an initial refusal of funding, the team set out on an exploratory ascent. A second grant, dedicated to scientific mediation, enabled the project to be expanded to include a multidisciplinary team of artists, researchers, and students. This dynamic led to the creation of the montbuet.net web platform, which enables anyone to recompose an interactive archive along several axes (chronological, thematic, geographical). Two exhibitions in Geneva and Lausanne, several publications, and a forthcoming book enriched with historical texts, illustrations, and commentaries, will extend the dissemination of this research to the general public.\n\nThe initiative is based on numerous partnerships, notably with the Museum of the History of Science in Geneva. It mobilised three artists: a photographer, a draughtswoman, and a musician. It has recently begun engaging local actors, such as the Amis du Vieux Chamonix association, highlighting the importance of oral knowledge and field practices (shepherds and refuge wardens). This realisation has given rise to a shared regret: that these local voices were not integrated earlier. A focus group was organised to evaluate the platform’s use, with a view to a more participatory and inclusive project in the future.",
+        "experience": "Since the Nanterre workshop, I have used the cartography of our project to present it to other audiences, but this did not always prove very effective, as it is not easy to read for people who were not involved in the workshop. It will appear in the _Digital Humanities Quarterly_Dumas Primbault, S., Baudry, J., & Mihailescu, I. (2025). Mediating science in the mountain: Rethinking the historian’s craft through public digital humanities. _Digital Humanities Quarterly_, 19(2). .\n\nI have also freely used the concept (without naming it) to organise a small workshop on open science projects: participants were asked to place objects, spaces, and outputs on a large white sheet of paper, then draw the trajectories of the people involved in the project. Since this type of cartography helped me clarify how our project could have been more inclusive, community-based, or participatory, I hope this methodology will enable similar reflections among colleagues and their open science projects.",
+        "concept": "My perspective on the concept of “trajectory of engagement” is that of a respondent; it is more of an impression. From this perspective, a trajectory of engagement is the path undertaken by an individual within the frame of a project or an inquiry, the ways said individual was involved in said project along this path, how this path intersects with others’, in which places (both physical and metaphorical) said individual was involved, and to what end (a meeting to define the collaboration, the writing of a publication, the shooting of a film, project funding…).\n\nA trajectory of engagement can be seen as the branch of a broader life trajectory; it can be said to have a beginning and an end within this broader trajectory, possibly origins and influences. It can therefore be retraced narratively through semi-structured interviews and visualised on a plane as a “cartography”, or rather as a weaving of all trajectories, places, and objects involved in the project.\n\nSimon Dumas Primbault"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=AgbhPAtrzdw",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "0:20:12",
+            "0:28:39"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "1:59:17",
+            "2:0:10"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "extreme-citizen-science",
+        "title": "Extreme Citizen Science",
+        "year": "2008-",
+        "project_leaders": "Muki Haklay, Fabien Moustard",
+        "research_center": "ExCiteS (University College London, United Kingdom)"
+      },
+      "texts": {
+        "presentation": "Extreme Citizen Science (ExCiteS) began in 2005 in the Congo Basin, when an anthropologist was approached by local hunter-gatherers seeking to document the impact of deforestation on vital food sources, such as caterpillars. This encounter sparked the development of a groundbreaking approach – later termed “Extreme Citizen Science” – which empowers marginalised communities, often far removed from scientific institutions or traditions, to define, gather, and interpret scientific data to address better real-world issues they face.\n\nDesigned for use in low-connectivity environments and with participants unfamiliar with digital tools, the project inverts conventional research dynamics: scientific inquiries originate from local concerns rather than academic hypotheses. Supported by UK national funding and later by the European Research Council (2016-2022), ExCiteS has since expanded to 12 countries across 21 case studies, following a shared methodology. Interdisciplinary teams (comprising anthropologists, geographers and computer scientists) live and work in communities to co-design research processes with local people. Using smartphones adapted with intuitive visual interfaces (such as icons and simple maps), participants gather ongoing data on biodiversity, health, or land rights. In the Brazilian Pantanal, for example, fishers have successfully used this data to defend land claims in court.\n\nAt its core, the initiative is deeply collaborative. Indigenous communities, researchers, NGOs, and international bodies work together in relationships grounded in trust, shared responsibility, and, at times, remuneration, recognising the value of local expertise. By making visible what satellites cannot detect and what short-term researchers might miss, Extreme Citizen Science demonstrates how participatory technology can thrive in extreme conditions. The project is reshaping global conversations about citizen science, demonstrating its relevance to addressing critical issues such as biodiversity conservation, territorial sovereignty, food security, and pandemic preparedness.",
+        "experience": "The workshop experience significantly enriched our understanding of what is going on in participatory research and citizen science, revealing the broad spectrum of approaches and configurations that such practices can adopt. Some initiatives are highly localised and context-specific, while others are more easily replicable across disciplines and geographies. What became particularly clear is the growing emphasis on inclusivity, specifically the need to reach social groups that might not otherwise engage with science. This confirmed an ongoing trend in participatory research and citizen science towards practices that foreground participant agency and challenge the traditional expert.\n\nHowever, the workshop also revealed important limitations in how agency is granted. In participatory research, the extent to which participants influence research processes often depends on funding availability and researchers’ willingness to dedicate time to sustained engagement. In citizen science, agency is increasingly mediated by the technologies used, many of which, despite being framed as open or participatory, impose rigid structures that limit how participants can contribute. The workshop helped me reflect on our own research, especially on the importance of co-designing tools and workflows that respect the autonomy of non-professional scientists. It also challenged me to think more critically about the infrastructures (technical, institutional, and epistemological) that structure participation, often in ways that remain invisible or unquestioned. As a result, I am now more attentive to how design decisions, funding models, and institutional constraints shape the possibilities for engagement.",
+        "concept": "The proposed definition of “trajectories of engagement” resonates with many dynamics I observe in citizen science and participatory research, particularly the co-evolution of roles and the interplay between social challenges, tools, and institutions. However, in our disciplinary context of citizen science, this concept must contend with the dominant presence of top-down platforms (e.g. iNaturalist, eBird) that structure participation according to pre-defined scientific priorities. In these systems, non-academic actors are often reduced to data providers, with limited influence over which questions are asked, which technologies are used, or how results are interpreted.\n\nA trajectory of engagement that emerges from bottom-up initiatives (where non-professional scientists initiate, shape, and govern the research process) poses a direct challenge to this model. In such cases, trajectories are shaped not only by social challenges but also by the desire for technological autonomy and epistemic justice. To be meaningful in this context, the concept should explicitly account for how the power of participants is embedded in digital tools and infrastructures. This requires rethinking engagement as something not only mediated by institutions but also by code, interface design, and data ownership.\n\nFor non-academic partners, the concept should be translated into the language of everyday digital culture. Trajectories must align with familiar, intuitive forms (such as social media platforms) which offer users agency, creativity, and visibility. If scientific research is to attract and retain diverse publics, it must acknowledge and incorporate the digital norms and expectations shaped by broader dominant cultural trends influencing people’s everyday behaviours. This also implies reimagining funding and development strategies so that truly inclusive, user-driven technologies can emerge as legitimate sites of knowledge sharing.\n\nFabien Moustard"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=tDtcfD6lcC0",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "0:47:14",
+            "0:54:8"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:3:12",
+            "1:11:46"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:6:54",
+            "2:8:49"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "devenez-mod-rateurs--devenez-mod-ratrices",
+        "title": "Become a Moderator",
+        "year": "2020",
+        "project_leaders": "Dominique Cardon, Valentine Crosset, Axel Meunier, Donato Ricci",
+        "research_center": "médialab (Sciences Po, France)"
+      },
+      "texts": {
+        "presentation": "Initiated in 2020 as part of a postdoctoral fellowship, this research project began with a modest goal: to organise participatory workshops on content moderation within social networks. The project rapidly expanded its scope, evolving into a broader inquiry into social norms and users’ expectations regarding moderation. Instead of centring solely on platforms or regulators, the study seeks to capture “bottom-up” regulation – namely, everyday judgments by Internet users concerning what is or is not acceptable online. The research addresses two main questions about content reception: first, what role does reception play in shaping how offences are perceived and in constructing norms of acceptable speech? Second, can examining reception help us understand how users participate in moderation?\n\nThe project’s initial phase involved collecting data from Twitter  \nbefore API access restrictions. Approximately 5,000 tweets were collected daily using keywords related to deletion requests or reporting. This data informed the creation of sample qualitative interview questions and the design of participatory workshops. Collaborating with designers and students, the team developed a workshop prototype structured as a card game that presented participants with tweets considered problematic. Twenty-nine workshops were conducted to identify the normative processes underlying perceptions of “acceptable speech.”\n\nThe project is anchored in continuous participatory dynamics.  \nResearchers, designers, students, and participants from diverse backgrounds have been engaged throughout, co-designing workshops, testing various formats, offering feedback, and sharing practices. Such diversity enables a nuanced approach to online social regulation, accounting for both everyday discourse and the public debates surrounding freedom of expression. Another objective is to develop reusable formats that may later inform discussions on digital platform governance. Workshop reports have paved the way for an ongoing analysis of norm construction and a new collaborative investigation with professional practitioners, both of which remain in progress.",
+        "experience": "The experience largely validated our initial assumptions rather than altering them radically. It reinforced our conviction that interdisciplinary collaboration is profoundly enriching, both intellectually and methodologically. A significant lesson learned was the importance of venturing beyond one’s disciplinary boundaries and embracing innovative approaches.\n\nThis type of collaboration highlights the considerable effort required to legitimise these approaches within conventional disciplinary frameworks, especially in demonstrating how they diverge from the narrowly defined focus groups typical in our field. It prompted deeper reflection on our processes for constructing and validating knowledge, underscoring the influence of disciplinary labels and expectations on our perspectives. This experience also substantially reframed our understanding of materiality and co-presence in qualitative contexts – such as interviews or participatory workshops – which are valued differently across disciplines. Finally, cross-domain collaboration sharpens one’s awareness of diverse analytical perspectives and offers rich opportunities to learn from others’ interpretive approaches.",
+        "concept": "To start, we consider the phrase “trajectories of engagement” to be somewhat ambiguous. What is meant by “trajectory”? And what does “engagement” truly signify here? How does this terminology enrich or differ from established terms like collaborative or participatory research? It remains unclear what distinguishes these so-called trajectories, given that most research is, in some respects, already “engaged” – whether explicitly labelled as such or not.\n\nWe also have concerns about the opening sentence: “evolving research pathways sparked by engaged social science and shaped by pressing social challenges.” To begin with, what precisely does “engaged social science” mean? Engaged in what sense – politically, methodologically, institutionally? Moreover, what qualifies as a “pressing social challenge”? This wording appears to assume that some forms of research are inherently more meaningful or urgent than others.\n\nBy contrast, we find the latter parts of the definition more compelling – particularly its focus on shifting roles, the mediating influence of tools and infrastructures, and the transparency around tensions and power dynamics. These aspects strongly resonate with our own experiences. However, we recommend providing more precise conceptual boundaries from the start – specifying, for instance, whether these trajectories necessarily entail interdisciplinarity, innovation, or a critique of institutions. As currently formulated, the definition is overly broad and risks being interpreted inconsistently.\n\nFurthermore, from our perspective – at the intersection of sociology, criminology, and political science – these trajectories tend not to involve pioneering new territory, but rather legitimising existing hybrid practices that seldom align neatly with standard disciplinary norms. To make this concept meaningful to non-academic stakeholders, we believe it should be grounded in tangible practices, articulated in more explicit language, and accompanied by greater humility regarding the sources of knowledge.\n\nValentine Crosset"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=Lghgf-R1Eog",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "0:39:30",
+            "0:47:14"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "0:54:8",
+            "1:3:12"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:5:5",
+            "2:6:54"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "controverses-en-action",
+        "title": "Controversies in Action",
+        "year": "2021-2023",
+        "project_leaders": "Robin de Mourat, Clémence Seurat, Thomas Tari",
+        "research_center": "médialab (Sciences Po, France)"
+      },
+      "texts": {
+        "presentation": "The Controversies in Action project is a participatory research initiative based in Sevran, a suburb of Paris, centred on a sprawling 32-acre  \nvacant lot. Once farmland, the site is now a deserted expanse encircled by a succession of urban development proposals, one of which envisioned a wave pool. Situated in a district where 60% of residents live below the poverty line, the site is poised for redevelopment with the extension of a new metro line – an event likely to trigger gentrification. The project goes beyond the debate over urban planning, probing the more profound significance of this vacant space: What does it mean to local residents? What memories are attached to it? What future possibilities does it hold?\n\nThe project emerged from a collaboration between three researchers and a vital local cultural institution – the Théâtre de La Poudrerie, renowned for its participatory artistic practices. Operating without a permanent venue, the theatre stages performances in residents’ homes, fostering a strong sense of community involvement in the project. Multiple public meetings connected local residents with experts – botanists, ornithologists, historians, anthropologists, and landscape architects – for collaborative exploration of the site’s multiple facets. Over the course of several months, the initiative hosted workshops featuring garden visits, interviews, and collaborative urban landscape drawings. Ultimately, the project produced a sound piece – conceived with the theatre – which chronicled the participatory process, and a collective book, with every chapter discussed and peer-reviewed by a participant committee.\n\nPartnerships formed the cornerstone of the project, beginning with the Théâtre de La Poudrerie – without whose involvement, this research approach would have been impossible. Other local residents also played active roles; for example, bird enthusiasts collaborated with cartographers to create sensitive maps of territory. This collaborative effort foregrounded residents’ situated knowledge. It explored a research model that not only focuses on people but also actively involves them – integrating their perspectives and voices into the very fabric of knowledge production.",
+        "experience": "The project’s participatory approach was intended to ensure high-quality descriptions and to allow citizens – often weary of being merely studied – to genuinely benefit from the research, joining us in a Dewey-inspired collaborative process. We were confident in the relevance of our protocols and satisfied with the sustained engagement over the two-year span, yet didn’t see our approach as particularly distinctive given the proliferation of participatory research projects today. Visualising the varied dimensions through diagrams, along with the dialogue and comparison with other projects and participants, proved invaluable – it highlighted our initiative’s unique features, uncovered other relevant approaches, and created opportunities to nurture new publics within the framework of controversy analysis. Initiatives like the citizen reading committee (_comité de lecture habitante_) reviewing all our chapters, and the participation of diverse stakeholders – local theatre, invited specialists, citizen-experts, researchers, artist-cartographers – were compelling experiments. Still, it was the workshop that truly enhanced our reflexivity about the chosen methods. As we move into a European research collaboration spanning three countries, diverse disciplines, and involving political and institutional stakeholders to collectively organise workshops exploring citizens’ ties to spontaneous urban nature, the lessons from the trajectory workshop remain invaluable.",
+        "concept": "Rooted in science and technology studies and the sociology of knowledge, this definition broadly aligns with our disciplinary outlook. We value the grounded theory approach, which involves the ongoing evolution of research methods as the inquiry unfolds. Controversies, as Chateauraynaud (2011) proposed, may be understood through a ballistics metaphor, tracing the trajectories of public mobilisation and the simultaneous appearance of issues and their publics – echoing Dewey’s framework. Accordingly, as Latour’s actor-network theory advocates, it is pertinent to structure social science investigations as evolving trajectories that closely follow the actors involved. The underlying dichotomy between experts and laypersons, academics and non-academics, often assumed to require reconsideration, may itself be worth questioning: did it ever truly exist? In our experience, researchers sharing their ethnographic work in the field often possess much less understanding of both the relevant issues (local or otherwise), the diversity of knowledge forms, and, crucially, the worldviews or cosmologies shaping the controversy. Participants themselves may also possess various kinds of expertise – including those validated by scientific or technical credentials, such as ornithologists, urban planners, or agronomists.\n\nA further critique could be directed at diagrams outlining participatory frameworks: while they describe research protocols, they seldom reflect the practical reconfigurations that inevitably occur. While trajectories of engagement reveal the dynamic nature of participation, their representations often become complex and less conducive to reflective analysis.\n\nThomas Tari"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=Aa_bCI-A-zM",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "0:11:56",
+            "0:20:12"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "0:28:39",
+            "0:39:30"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:1:23",
+            "2:2:48"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "ateliers-de-situation-interculturelle",
+        "title": "Ateliers de situation interculturelle",
+        "year": "2015-",
+        "project_leaders": "Manon Deschênes, Anthony Grégoire, Bob W. White",
+        "research_center": "Laboratoire de recherche en relations interculturelles (Université de Montréal, Canada)"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=Bujk6_fq2mI",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:14:30",
+            "2:26:0"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "infrastructuring-care",
+        "title": "Infrastructing Care: Diversity Advocacy in Digitalisation Efforts in the Global South and North",
+        "year": "2021-2026",
+        "project_leaders": "Sol Martinez Demarco",
+        "research_center": "International Center for Ethics in the Sciences and Humanities (IZEW, Tübingen Universität, Germany)"
+      },
+      "texts": {
+        "presentation": "This research project investigates inclusion practices within techno-feminist communities, focusing on groups in Argentina and Germany. Born out of Sol’s long-standing interest in technology and activism, the project began by identifying and contacting active technofeminist collectives in both countries. Originally conceived as a hybrid ethnography combining face-to-face and online engagement, the project was reshaped by the COVID-19 pandemic, which necessitated a complete shift to digital methods. Through online participant observation, interviews, document analysis and interactions on platforms such as Slack, Sol embedded themselves in these communities to explore how care, solidarity and feminist technological practices unfold in different socio-political contexts.\n\nAs the project evolved, methodological and linguistic challenges arose, particularly in maintaining engagement with the German community after it moved entirely online. In contrast, the Argentine group welcomed Sol into their activities, providing a dynamic and ongoing research environment. The iterative research process included collaborative review: Sol invited community members to comment on drafts of their academic work via Slack and Discord, integrating their feedback before publication. This open, participatory approach not only shaped the research’s direction but also fostered trust and accountability between the researcher and the community.\n\nBeyond academia, the project has been extended through a collaboration with two academic-designers committed to inclusive practices. Together, they are developing a dedicated website section to amplify the voices of technofeminist groups around the world. This platform will feature short interviews and creative presentations, giving greater visibility to these often overlooked communities. Combining research, design, and outreach, the project aims to bridge academic work with tangible platforms for feminist tech activism. Running until 2026, it represents a growing effort to understand, document and support inclusive technological infrastructures.",
+        "experience": "The researcher preferred not to answer this question. For linguistic reasons, their participation in the workshop was limited.",
+        "concept": "I think it will be difficult for academics in Science and Technology Studies (STS) to adopt the idea of “trajectories of engagement” due to singling out social sciences as the only type of sciences that should be committed or show engagement. As an interdisciplinary researcher with a keen interest in the socio-political and economic aspects of technology developments, the absence of natural and engineering sciences, as well as practitioners, reinforces the status quo. The notion gives those who are not social scientists _carte blanche_ to act as they see fit to address (or not) those pressing social challenges that actually require their engagement. \n\nFurthermore, it particularly highlights one of the main problems of my research project: disinterest in social aspects. In this case, the project has focused on the lack of diversity in the technology sector and what is being done to address it. My focus on techno-feminist collectives has purposefully shown that inclusion in technology is a work primarily done by those who are diverse and marginalised – it is a self-inclusion practice. As a social problem, this lack of diversity is not of interest to those who are already part of the technology industry, mostly cis-white-able-heterosexual men. As those already part of the industry, they do not, or do not want to, see, feel, or experience the discrimination and exclusion. \n\nParadoxically, they are the natural, engineering or computer scientists, as well as practitioners who produce and/or reproduce the marginalisation. In sum, to make this notion relevant to my non-academic  \npartners it, needs to be reformulated to encompass other groups of scientists and stakeholders. \n\nSol Martinez Demarco"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=TiHWErAiWME",
+      "excerpts": []
+    },
+    {
+      "metadata": {
+        "id": "neurodiversit-s",
+        "title": "Neurodiversités",
+        "year": "2021-2022",
+        "project_leaders": "Lucas Fritz",
+        "research_center": "Dicen (Université Paris Nanterre, France)"
+      },
+      "texts": {},
+      "presentationURL": "https://www.youtube.com/watch?v=HWzi02PUJaY",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "1:58:10",
+            "1:59:17"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "experimental-audience-metrics-with-the-royal-danish-theatre",
+        "title": "Cultural Valuation Experiments with the Royal Danish Theatre",
+        "year": "2016",
+        "project_leaders": "Anders Kristian Munk, Anders Koed Madsen, Mette Simonsen Abildgaard, Mathieu Jacomy",
+        "research_center": "Techno-Anthropology Lab (Aalborg University, Denmark)"
+      },
+      "texts": {
+        "presentation": "This project, led by the Techno-Anthropology Lab in Copenhagen, grew out of a collaboration with the Royal Danish Theatre to explore alternative ways of measuring cultural value. Traditional metrics, such as ticket sales and attendance, often fail to capture the broader societal contributions of institutions such as theatres. In response, the theatre sought to work with researchers to experiment with Facebook data to develop new indicators of audience engagement and cultural relevance, particularly in the context of sponsorship and public visibility. The project addressed the classic tensions of the new public management: how to “prove” public value in a data-driven world without reducing culture to numbers.\n\nAt the heart of the collaboration was a five-day data sprint at the Royal Danish Theatre, involving researchers, theatre staff, marketing and sponsorship departments, students and data designers. The team collected and visualised user engagement data from seven different Facebook pages, identifying overlaps in audience interests. It quickly became clear that the theatre’s internal narratives were influencing their reading of the visualisations. To counter this, the team introduced exercises – such as unlabelled data visualisations – to encourage critical reflection and disrupt confirmation bias. A recurring theme was the elusive concept of “authenticity”, which stakeholders used freely but understood differently. As discussions deepened, the group grappled with how (or if) such a value could be operationalised through social media data.\n\nThis collaborative, iterative process shifted the project’s focus from seeking definitive answers to generating productive questions. The data itself came to be seen as a participant – what the team called a “data body” – that shaped the inquiry as much as it responded to it. The project culminated in an unexpected sponsorship deal, with a German car integrated into a ballet performance, reflecting the complex interplay between cultural production, data-driven insights and commercial partnerships. Ultimately, the project demonstrated that embracing uncertainty and reframing expectations can lead to more meaningful engagements with data in the cultural sector.",
+        "experience": "Any data sprint involving researchers and external stakeholders begins with a promise. There has to be a shared sense that the experiment is worthwhile. Otherwise, participants would not commit the time and energy required for the project. However, it is equally valid that successful data sprints must at some point break the promise. If it were simply a matter of solving a problem together, there would be no experiment, and a sprint would not be necessary. In sprints, then, the relationship you have with your research project and its actors necessarily changes. \n\nIn our case, the sprint began from the promise that digital traces from social media data might help us to datafy the value of cultural institutions in new ways. The theatre found itself in a situation where its commercial partnerships were predicated on conventional visibility metrics that did not capture the qualitative differences in the kinds of audiences it could engage. Notably, there was a notion that the theatre offered its commercial partners a form of authenticity that was not reflected in simply focusing on available engagement metrics, i.e., how many users would see or share the content produced by the theatre’s channels. The promise of the sprint was the possibility of solving this valuation problem by creatively including additional types of digital traces in the analysis. As described above, however, what became available to us in the attempt to datafy the somewhat abstract notion of authenticity was much more profound questions about what authenticity actually means to different stakeholders inside the theatre. We thus participated, researchers and participants from the theatre alike, in reformulating our collective research problem.\n\nFor further reference, we discuss these issues in detail in a chapter of Åsa Mäkitalo, Todd Nicewonger and Mark Elam’s book on _Designs for Experimentation and Inquiry_ (2019). The chapter, titled _Thinking Through the Databody: Sprints as Experimental Situations_, draws on the work of Vinciane Despret and John Dewey.",
+        "concept": "I think it more or less captures the way we think about intervention in digital methods and digital STS. One could perhaps add that data itself plays a key role beyond tools and infrastructures. It is the very act of engaging in the (re)datafication of a problem that creates commitment and pushes the operationalisation of otherwise abstract problems to a point where collaborative research becomes transformative. One could also add that tensions and power dynamics that are made visible are not only (and perhaps not most interestingly) those that pertain to the collaborative inquiry, but also those that were already in place before the collaboration. A typical sprint scenario, from our experience, is that participants have relatively stable ideas about their data (including where and what it is, and how it is available to them) and their problem-definition priorities. And it is these pre-existing ideas that get fundamentally challenged by the cooperation. \n\nAnders Kristian Munk"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=TQOYz_gKopU",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:36:54",
+            "1:42:1"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:50:7",
+            "1:53:29"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:26:0",
+            "2:18:28"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "sur-les--ternit-s-et-la-mort-num-rique",
+        "title": "ENEID (Digital Eternities: Post Mortem Digital Identities and Memorial Uses of the Web)",
+        "year": "2014-2018",
+        "project_leaders": "Fanny Georges",
+        "research_center": "IRMECCEN (Université Sorbonne Nouvelle, France)"
+      },
+      "texts": {
+        "presentation": "The ENEID project questions the persistence of digital identities after death by studying data left by users on social media and other platforms. Born in 2012 from a reflection on digital beliefs and online superstitions, it took shape after a seminal article on “online spiritualism”. The triggering event was the suicide of a teenager who had left digital messages to his loved ones, revealing the growing importance of digital memory. The project aims to understand how digital identity is perpetuated and managed through technology, memory, law, and emotion.\n\nStructured around three axes, the ANR project articulated an analysis of deceased Facebook pages via Factiva, a survey of user perceptions, and a study of media coverage of celebrity deaths. Despite the initial objectives of convergence, the diversity of the requests fragmented the whole. The project, however, produced some noteworthy publications, such as the issue _Garder les morts vivants_ (Keeping the dead alive) in the journal _Réseaux_, and workshops that anchored the theme in the academic landscape. International extensions have been initiated, notably with comparative research in China as part of the “network-body identity” project.\n\nFinally, the project opened up to inter-university and interdisciplinary partnerships, integrating legal reflections on post-mortem rights and the engagements of humanoid robotics. The project highlighted a major social tension: while a majority of users want their own data to disappear after their death, they strongly value the digital memory of their loved ones. These contradictions raise crucial issues around digital mourning, the right to forget and the commodification of memory in a hyper-connected society.",
+        "experience": "Participating in the Trajectories of engagement workshop has profoundly transformed our relationship with the ENEID project and with its various stakeholders. Before the workshop, I perceived our work along three largely compartmentalised axes: (1) quantitative analysis of deceased Facebook pages via Factiva; (2) a user survey on perceptions of post-mortem data; and (3) a media study of celebrity obituaries. These strands felt parallel rather than integrated, limiting our capacity to address the ethical, technical and emotional dimensions of digital afterlives as a unified whole. A conversation with a colleague in affect theory helped me recognise the need to treat emotional experience as central to our analysis, leading me to revise our interview guide accordingly. At the workshop, we engaged in a collaborative simulation that traced a digital identity from “active user” through “post-mortem data retention” to “controlled erasure.” Co-designing this case with legal scholars, software engineers, and bereavement support groups revealed the need for a single, adaptive protocol rather than three isolated methods. This shift pushed me to replace static questionnaires with an iterative, co-constructed roadmap and to rethink data governance as a shared responsibility. The workshop catalysed a shift from a siloed, top-down project to a dynamic, co-constructed engagement trajectory.\n\nI also realised that involving the researchers who contributed to the early phases of Digital Eternity would have brought valuable continuity to the workshop discussions. Some of them have continued to explore similar questions in parallel settings, and their perspective on the project’s fragmentation could have clarified how internal dynamics and diverging expectations gradually produced governance tensions. I now see these tensions not only as obstacles, but also as moments that can generate new forms of dialogue and disciplinary creativity. This shared reflexive moment encouraged me to situate my work within a broader reflection on how sociotechnical myths such as digital immortality take shape through these shifting engagement dynamics.",
+        "concept": "In post-mortem data research, stakes endure long after a project formally ends. We must therefore extend trajectory to include iterative workshops and inquiries that follow design thinking cycles. In ENEID, for example, interdisciplinary workshops brought together legal experts, software developers, bereavement advocates, original project researchers, and the bereaved themselves to co-analyse data and co-invent new memorial interfaces. By formally embedding these cycles within our trajectory, we acknowledge that engagement is itself an innovation process. Rather than treating scientific outputs as static repositories of ideas, we advocate their active integration into the broader social-innovation workflow.\n\nMoreover, considering discursive translation and enunciative responsibility, academic jargon often alienates non-specialist audiences. Yet retaining precise concepts within a critical framework is essential to uphold our enunciative responsibility and foster a sceptical stance toward emerging technologies. Crafting messages that directly address families, platform operators, and legal advisors not only promotes mutual understanding but also guards against the uncritical normalisation of digital interventions in everyday life.\n\nBy integrating user-centred workshops and focus groups, applying a meta-analytic lens to myth-making, structuring tension-calibration sessions, and adopting stakeholder-friendly discourse, the refined engagement-trajectory framework evolves into a dynamic, co-creative process – one that both examines and shapes the social construction of socio-technical myths, while upholding enunciative responsibility by interrogating, rather than uncritically celebrating, emerging technologies.\n\nFanny Georges"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=IgtHAmNxUg0",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:31:12",
+            "1:36:54"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:45:3",
+            "1:50:7"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:56:3",
+            "1:56:54"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:18:28",
+            "2:21:42"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "captoth-que",
+        "title": "Captothèque",
+        "year": "2019-2021",
+        "project_leaders": "Laurence Allard, Sophie Baudet-Michel, Vincent Dupuis, Malika Madelin,  Filipe Vilas-Boas",
+        "research_center": "Carrefour Numérique, Cité des Sciences (France)"
+      },
+      "texts": {
+        "presentation": "The Captothèque project was born in 2019 in a free public FabLab  \nCarrefour numérique at the Cité des Sciences in Paris, out of a desire to divert the dominant uses of connected objects. Inspired by a critique of the all-connected and the logics of individual capture, Captothèque explores a “citizen captology”: digital measurement devices oriented towards collective interests, in particular air quality. The challenge is to enable citizens to produce and appropriate local environmental data, with a focus on the sobriety, transparency and intelligibility of the technologies.\n\nThe project’s development is based on three principles: build your own sensors using open-source tools (Arduino, no soldering required), focus on situated measurement (anchored in a specific territory), and give meaning to the data collected. For a year, the team ran weekly workshops open to the public (Wednesdays and Saturdays), including captological walks around the Cité des Sciences. These tours contextualised the measurements (identification of sunken streets, pollution alerts). They introduced participants to the construction of sensors without a smartphone, with data recorded on an SD card and then visualised on a free cartographic interface. A great deal of work was also carried out on the tangibilisation of data through sensitive forms (tangible data, performances, LEGO objects, etc.).\n\nLed by a multidisciplinary team – sociologists, geographers, physicists, designers – Captothèque mobilised a wide range of partners and intergenerational audiences. This collective dynamic has enabled the creation of a library of practices for citizen capture, with open documentation (wikis, tutorials) available online. More than a technical project, Captothèque embodies a critical and situated approach, at the crossroads of research, scientific mediation and environmental action.",
+        "experience": "Participating in this workshop constituted a key moment of reflexivity regarding the ways in which my civic and associative engagement intertwines with my academic practice. It enabled me to reposition this engagement – often perceived as peripheral – at the core of my scholarly activity, thereby inscribing it within the broader continuity of my research work. Sharing this experience with colleagues, some of whom were not familiar with this participatory dimension, offered an opportunity to make visible the permeability between my research activities and my forms of collective action.\n\nMy work focuses on digital messages and discourses about the digital. Within this framework, I have pursued, through associative involvement, a project I refer to as an alternumerist utopia: an attempt to design and produce alternative connected objects, oriented toward different uses and socio-technical imaginaries. Although conducted outside the strict boundaries of academia, this engagement is rooted in the same logic of research through experimentation and participation. The workshop thus provided a valuable space for reflecting on the articulation between knowledge production and civic involvement, beyond the traditional posture of participant observation.\n\nThe tools and methods introduced during the workshop – particularly graphical mediation and research design – did not fundamentally transform the structure of my project, but instead confirmed the importance of the collective process of shaping and making sense of research experiences. More than the final output, it was the process of exchange, co-construction, and visual representation that proved truly heuristic. These shared moments allowed me to revisit a past phase of engagement, articulate its dynamics, identify both achievements and shortcomings, and better understand the forms of distributed cognition at play in such contexts.\n\nUltimately, the value of this experience lies less in the graphic production itself than in the reflexive and collegial process.",
+        "concept": "In my disciplinary and institutional context, the notion of a trajectory of engagement is both relevant and revealing of structural limitations. Within my scholarly community, we recently created a working group on research-creation – a semi-institutional space exploring experimental and participatory forms of inquiry. This initiative, rooted in diverse modes of engagement including citizen and participatory science, shows that disciplines can open up to new epistemic positions and practices, even when these remain marginal within formal academic structures.\n\nMy own trajectory has followed a parallel path: initially grounded in civic and associative activities outside academia, it has progressively reconnected with the academic field through these hybrid, para-institutional settings. They serve as mediating spaces between collective experimentation and scholarly practice, allowing engaged research to gain partial legitimacy without being fully institutionalised.\n\nRegarding the proposed definition, I would nuance the emphasis on “tensions and power dynamics.” While these indeed characterise collaborative inquiry, they obscure another essential dimension – institutional and infrastructural absences. The challenge often lies not only in negotiating power relations but also in compensating for what is missing: spaces, equipment, and institutional missions that could support such engagement.\n\nFrom my standpoint, as a researcher working on the epistemology of situated knowledge, these absences are particularly evident. In my environment, for instance, there are no Fab Labs or Media Labs to sustain experimental practices. Moreover, in the French academic system, the missions of teacher-researchers – research, teaching, administration – do not include what is recognised in Quebec as a “service to the community.” This lack makes civic and participatory research a peripheral activity rather than a fully acknowledged academic contribution.\n\nThus, the concept of a trajectory of engagement might be expanded to reveal not only tensions but also structural voids or absences.\n\nLaurence Allard"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=ftJXEhYN1rM",
+      "excerpts": []
+    },
+    {
+      "metadata": {
+        "id": "cov-culture",
+        "title": "Cov’Culture (Impact of the Health Crisis on the Field of Culture and Art in Nouvelle-Aquitaine. Study of Emerging Forms of Innovation)",
+        "year": "2021-2025",
+        "project_leaders": "Aurélie Chêne, Sarah Montero",
+        "research_center": "UMR Passages (France)"
+      },
+      "texts": {
+        "presentation": "Launched in 2021 with support from the Nouvelle-Aquitaine Region and the French Ministry of Culture, the Cov’Culture project examines how the health crisis has affected the performing arts sector. Its objective is to understand how professionals – artists, cultural mediators, and operators – have adapted their practices, and to ask whether the pandemic has revealed or accelerated deeper structural changes. The study is distinctive for its participatory approach: research is co-developed with partner organisations to generate knowledge of immediate value to practitioners in the field.\n\nThe researchers soon recognised the diversity of the partner fields. They established a flexible methodology in which researchers are paired with partners, adapting the approach to each institution. Each pair designed its own research protocols according to local needs, ranging from qualitative interviews to on-site observations. This process enabled researchers to move from mere observers to facilitators of collective reflection.\n\nThe project is built on diverse partnerships – ranging from a theatre company and a socio-cultural association to a mediation agency, a major festival, and a departmental cultural agency. Each of these actors plays an active role in the project, albeit at varying levels of involvement. Designers and a cultural engineering organisation were also brought in to assist with content creation. This cross-pollination required significant temporal and methodological flexibility, accommodating professional constraints, voluntary engagement, and the unique pace of each organisation. Cov’Culture thus exemplifies the conditions necessary for a rich, dynamic research-action project, thoroughly anchored in the realities of the cultural sector.",
+        "experience": "The workshop reinforced our commitment to clarifying the participatory aspect of our research. In particular, we explored the concept of the third party, delving into mediation and its pivotal role within these hybrid research settings. This led us to consider how to sustain a collective research dynamic over time, prompting further questions: How can continuity between professionals and researchers be ensured? In what ways can teamwork be supported? What forms – relational or spatial – might this support take? From a research perspective, involving a third-party actor – someone both external to the project yet closely connected to the process – appears especially relevant. This is notably important for addressing another key challenge identified in our analysis: enabling decentralisation, a crucial step in forging connections among diverse stakeholders.\n\nMuch remains to be considered about how this role might be embodied at the intersection of different boundaries to forge meaningful connections. “Resource persons”, “boundary actors”, “facilitators” – these terms only begin to capture the nature of this active, embodied mediation, which, grounded in a comprehensive approach, stands apart from the specialised roles of technical expertise or engineering. Other avenues invite us to reflect on the potential of artistic interventions. Involving artists, especially during group workshops, can serve as a powerful catalyst for collective thinking. By inviting modes of expression beyond the written word – such as photography, video, or theatre – artistic methods help create new forms of speech and narration, especially those rooted in lived experience.",
+        "concept": "One ongoing challenge in this research is to remain attentive to the forces that connect those involved, prompting us to create a space where each participant’s distinct perspectives and roles can be voiced and articulated. In our methodology, the collaborative workshop – a recurring encounter between researchers and practitioners – serves not only as a space for dialogue, but as a transformative agent in both the relationships among participants and the conduct of joint research. This “hybrid object” performs collaboration by continually shaping its boundaries through reflexive processes, encouraging both researchers and practitioners to step into one another’s professional spaces.\n\nBy introducing new relationships and spatial dynamics into the research process, the system facilitates the weaving together of diverse perspectives, building bridges and junctions between stakeholders. This process leads to experiences of decentralisation – especially in terms of perspective – and inspires shifts in how actions are taken. Ultimately, this collective journey fosters the dynamic – and often unexpected – emergence of a sense of group belonging among all participants. Time devoted to collaborative work becomes an opportunity not only to forge connections, but also to co-develop shared practices and collective points of reference – allowing a common culture to take shape.\n\nSarah Montero"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=CYumZp1I700",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:10:33",
+            "2:13:14"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "cinemaf",
+        "title": "CINEMAF (Animated Images, Controversial Memories)",
+        "year": "2020-2024",
+        "project_leaders": "Monica Heintz, Damien Mottier",
+        "research_center": "UMR LESC, HAR, Labex Les passés dans le présent (Université Paris Nanterre, France)"
+      },
+      "texts": {
+        "presentation": "The CINEMAF project aims to explore how colonial-era films – created between 1920 and 1940 and preserved in Western archives – can be shared or repatriated, given that they are rarely screened today due to their problematic content. Often silent, these films reflect a distinctly Eurocentric perspective that glorifies colonial dominance. The project interrogates the heritage status of these films, drawing parallels with debates surrounding cultural artefacts from African nations held in ethnographic museums. Its principal goal is to (re)digitise, interpret, and recontextualise these sensitive films, providing mindful access while remaining attentive to the ethical challenges inherent in their circulation.\n\nThroughout the project, researchers embraced collaboration with scholars and artists – especially those from the African diaspora – many of whom were encountering these visuals for the first time. The films were redigitised in partnership with curators and archivists, then showcased during residencies and participatory workshops. This collaborative process brought together researchers, artists, and archivists, allowing them to reconstruct the historical production contexts. The team also examined photographic archives to more accurately identify the people depicted in the films and the nature of the scenes. The project highlights the need for innovative initiatives that transcend the restrictive framework of colonial archives, prompting the development of new modes of transmission.\n\nCINEMAF is built on strategic partnerships, most notably with the Centre for the Less Good Idea in Johannesburg, established by William Kentridge and Bronwyn Lace. The Centre has hosted residencies that brought together African and European artists, researchers, and archivists. The project also established initiatives in Benin and the Democratic Republic of the Congo, launching fieldwork to locate descendants of those featured in the films. Through these efforts, CINEMAF  \nforegrounds the ongoing tensions between accessibility, collective memory, and reparation, creating a critical forum for exploring new modes of visual restitution in a postcolonial context.",
+        "experience": "The workshop enabled us to articulate the sense of tension we were experiencing within the project at that moment. Reframing the project through the lens of sharing and participant involvement revealed just how profoundly the participatory dimension had transformed an initiative that initially focused on studying, interrogating, and valorising a corpus of films. Participation moved us beyond mere recovery and restoration – such as redigitisation and remastering – of suppressed colonial films, and beyond their critical analysis as tools for interrogating colonialism. Early academic workshops in Western contexts nearly dismissed the scientific value of colonial films, reducing them to little more than historical evidence, with only a handful recognising their artistic or pioneering significance. When these films and photographs were introduced to artists and descendants of the communities depicted, attention shifted toward their content and their capacity to stimulate dialogue about contested heritage. Colonial films became catalysts for conversation and questioning – often well beyond their original representations – and inspired both artistic projects (sometimes fictional) and new avenues of research. This departure from our initial objectives generated debate and discord within our team. While participation was always envisioned, we had not foreseen the extent to which it would reshape our goals. In practice, shifting from academic authorship to active involvement in artistic projects changed everything – from logistics and methodology to our imagination as researchers. We came to realise that letting go of control could ultimately yield fresh perspectives on our archival materials. For some, this prospect was exhilarating, and as new partners joined the project, our confidence in the value of participation increased. Still, this evolution prompted some original team members to leave, concerned that the project was drifting away from academic rigour.",
+        "concept": "In anthropology, sharing lies at the heart of research practices and has been enshrined in ethical codes for at least two to three decades. Anthropologists are expected to share their findings with their interlocutors, recognising that knowledge is co-produced alongside them. Theoretically, there is no need to persuade our peers to adopt the perspectives of those we study; defending the opposite stance would be challenging. Here, ethics takes precedence over pure scientific inquiry. Ethics takes over science. Yet in practice, we encounter daily how difficult it is to implement these ethical commitments in our scholarly output fully. As noted earlier, the participatory elements of CINEMAF have sparked extensive debate within our team about the project’s scope, objectives, and outcomes – even though some of us emphasised it was only natural to evolve in response to our participants’ interests. In a project that grapples with histories of colonial power relations, comparing and questioning the priorities of African diaspora participants versus those of European academic colleagues proved to be a delicate undertaking. Who should be persuaded to follow whom? Whose interests and ideas should take precedence? While mutual understanding and goodwill prevailed, it was evident that divergent social realities, professions, and identities shaped our partners’ ongoing involvement and responses, sometimes resulting in varying levels of engagement. Should we dedicate our remaining funds to a scientific conference or to an artists’ event? Do we publish a book or curate an exhibition? Should we continue a project as long as our participants remain interested, or end it when our academic curiosity is satisfied? One of the most significant challenges of participatory anthropology is announcing a project’s closure to deeply involved participants; it can feel like betrayal or exploitation. Nevertheless, we must acknowledge that collective research projects rarely persist as long as the communities they engage with.\n\nMonica Heintz"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=jxTsx--txr0",
+      "excerpts": []
+    },
+    {
+      "metadata": {
+        "id": "generic-visuals-in-the-news",
+        "title": "Generic Visuals in the News",
+        "year": "2017-2023",
+        "project_leaders": "Giorgia Aiello, Chris W. Anderson, Helen Kennedy",
+        "research_center": "School of Media and Communication (University of Leeds, United Kingdom), School of Sociological Studies, Politics and International Relations (University of Sheffield, United Kingdom)"
+      },
+      "texts": {
+        "presentation": "The Generic Visuals in the News project explores the ubiquitous yet often unnoticed “generic” images in contemporary news media – images described as the “visual wallpaper of everyday life”. These are not the iconic photojournalistic shots or data-driven graphics typically analysed in media studies, but rather more mundane, recurring visuals that subtly shape our perceptions of the news. Using the “circuit of culture” framework from cultural studies, the project asks how these images are produced, circulated and interpreted by both media professionals and audiences. It combines approaches from visual communication, journalism studies and digital media to understand the cultural role and communicative power of generic visuals in an era of media saturation.\n\nFunded by the UK’s Arts and Humanities Research Council, the project unfolded over five years through a multi-stage process. It began with a lengthy funding application, followed by delays due to the recruitment of postdoctoral researchers under strict university regulations. The team conducted visual content analysis and semi-structured interviews with 17 media professionals and 35 members of the public. Audience research was particularly challenging, requiring external recruitment support and navigating university protocols for participant compensation. Public engagement activities – including an exhibition and community workshops – were logistically complex but central to the project’s ethos. These outreach activities provided visibility and community impact, although they diverted time from academic writing, which has continued beyond the official project timeline.\n\nThe project relied on extensive collaboration with external organisations. Partnerships with the Financial Times, the BBC and Reach Media Group were required before applying for funding and facilitated access to proprietary media content. An executive from Getty Images joined the advisory board and helped navigate complex image licensing issues. The project also collaborated with Full Fact, the UK’s leading fact-checking organisation, for a public workshop. These relationships, while enriching, added legal and administrative layers –  \nparticularly around image rights and third-party contracts – and highlighted the complexities of combining academic research with real-world media practice.",
+        "experience": "The workshop took place after we had already completed our data collection process, so it had no impact on how we conducted our research with news media professionals and audiences. It is also important to highlight that Giorgia Aiello was the only team member who participated in the workshop and, in her view, the Generic Visuals in the News project was planned and designed to foster the inclusion of our research partners’ voices into the research process, for example, by actively asking professionals from the three partner organisations to help us define the questions at hand and to engage with our questions about generic visuals in journalistic practice from their specific point of view as news media experts and members of their particular organisations. As far as our audience research goes, we made sure to let our research participants engage with and speak to news imagery in the way that was most congenial to them, namely by collecting images in a ‘news diary’ and bringing them to the interview, or else by having them look at our research repositories or, perhaps more simply, by having them navigate the websites of their news media of choice and select the images about which they wanted to say something.\n\nOverall, in our writing process, we also foregrounded an epistemological approach that valued the various forms of agency at the heart of our research subjects’ responses, whether in relation to the professional values and identities of news media workers or the emotions and lived experiences of audience members. Our project’s key findings were novel precisely because we actively sought to maintain an engaged relationship with our research subjects, even though, due to the pandemic, we were not able to conduct a newsroom ethnography as initially planned. This said, over the course of the project, we also planned for key moments of public engagement, namely through a half-day workshop with news media workers from our partner organisations, a day-long workshop in collaboration with fact-checkers aimed at both practitioners and academics, and a public exhibition.",
+        "concept": "There are two tensions that surround this definition and the questions it poses. The first is: how do academic fields shape how we understand trajectories of engagement as summarised above? “Media studies”, “visual communication”, and “journalism studies” are relatively new disciplines which are deeply shaped by the professional communities they study and their overwhelming popularity amongst undergraduate students. This reverses the problem faced by many, more independent and esoteric subfields. These more mature and established disciplines often struggle to convince so-called “ordinary people” that their contributions have any relevance to them. Studies of the digital, on the other hand, often have the opposite problem: they are seen as being almost _too relevant_ to the lives of people and the trajectories of industry. As a result, these disciplines struggle to establish their independence from questions that preoccupy business leaders and students. In short, we often face the opposite problems of sociology. \n\nThe second question is: how does the larger academic funding environment shape engaged research? There is little doubt that engagement is a buzzword in the world of funding today. While we lack the space to elaborate the possible reasons for this here, we think that there is a need for the recipients of the public purse to demonstrate they are useful in ways that are not simply esoteric. The problem with these funding requirements is that they occasionally contradict each other. Just take one example: engaged research and Open Access (OA) obligations. Engaged research often requires the assistance or participation of community members whose contributions – for reasons of privacy or because of their status as members of marginalised groups – require anonymity. And yet, OA requires maximum transparency and data accessibility. These mandates are obviously in conflict. \n\nIn short, while we would not change the definition proffered by the organising team, we would encourage them to be aware of the complexities of their definition.\n\nGiorgia Aiello"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=VxyKIs_pTdA",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:13:14",
+            "2:14:30"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "shaping-ia",
+        "title": "Shaping AI",
+        "year": "2021-2025",
+        "project_leaders": "Dominique Cardon, Maxime Crépel,  Valentin Goujon, Pauline Gourlet, Donato Ricci",
+        "research_center": "médialab (Sciences Po, France)"
+      },
+      "texts": {
+        "presentation": "This international research project aims to compare the controversies and public issues surrounding artificial intelligence (AI) in four countries: Canada, Germany, the UK and France. In France, the focus was on civic participation, using design methods developed at Sciences Po médialab over the past 10 years. The goal was to go beyond the dominant framings on AI, be it technophobic or enthusiastic, that they identified from an analysis of the recurring themes in the French press, by building an alternative way of participating in AI’s problematisation. \n\nThis participatory approach involved about 30 people who realised AI through their situated activities in a year-long collective inquiry. They are referred to as “AI practitioners”. The team broadened the notion of “AI practices” to include other activities that nonetheless participate in AI’s development. Therefore, AI practitioners participating in the co-inquiry were not only data scientists or AI researchers but also journalists, lawyers, public officials, artists, SHS researchers or activists. The co-inquirers were first met individually to talk about their activities and experiences with AI. Based on their testimonies, a corpus of over 1000 documents was compiled. During a second interview, they were invited to analyse this documentation, allowing them to structure their concerns in relation to their situated activities. This was video-recorded and used in a qualitative analysis from which 19 themes emerged. A two-day group workshop gathering all the co-inquirers was then held to explore and discuss these themes in greater depth, problematising AI from the plurality of their perspectives.\n\nThis collaborative work involves researchers and practitioners. It is a long-term project, and it took over a year to structure, analyse and disseminate the material produced. The research team is now exploring educational extensions in collaboration with museums and cultural institutions. It is considering creating a collective to better represent civil society in public debates on AI. The project highlights a lack of competent intermediaries in France on these subjects and proposes to remedy this through training and co-construction.",
+        "experience": "The workshop offered a space for peer exchang and revealed both a genuine need for such discussions and a lack of institutional arenas in which they can meaningfully take place. These conversations fostered a welcome inversion: rather than focusing on the results of our respective research projects, they centered the often invisible infrastructural, institutional, and material dimensions of research processes. This shift foregrounded new importances that resonated strongly with colleagues from diverse backgrounds, highlighting shared concerns about conducting research differently.\n\nWhen participatory and engaged research is difficult to value through traditional academic channels, it can become frustrating – and at times discouraging – to invest substantial care and time into aspects of research that are often undervalued. Participating in this workshop helped re-affirm how much thought and care had gone into our research designs, underscoring how rarely such efforts are acknowledged despite their significance. Much of this collective moment was devoted to presenting and critiquing our research protocols, without reducing them to methodological challenges, but recognizing their importance in enabling research work that matters and takes care of the people involved. eeling that this work was valued within a research collective brought renewed attention to the broader issue of how essential – yet routinely overlooked – the infrastructural and relational dimensions of research truly are. \n\nIn particular, the workshop highlighted the need to reconsider who defines research questions, what is deemed important, and how to cultivate long-term research experiences that generate meaning not only through academic contributions but also through their effects on the various people involved. Seen in this light, stronger connections with open science and citizen science communities appear as a promising path forward – moving beyond slogans of doing science in or for society, and toward genuinely practicing science within society.",
+        "concept": "In my view, the notion of a trajectory of engagement would immediately encounter tensions around the long-standing ideal of objectivity. Many researchers still adhere to a model in which scholarly authority derives from analytical distance and methodological neutrality. Introducing trajectories that foreground evolving roles, situated engagements, and reciprocal influence can therefore be perceived as threatening academic rigor and biasing knowledge. To be welcomed, the notion would need to be reframed not as a departure from objectivity but as a movement toward _interobjectivation_ (Zask, 2004): a process in which objectivity is co-constructed through exchanges among multiple actors who bring different forms of situated expertise. This reframing clarifies that trajectories of engagement may not erode rigor but expose expose and negotiate assumptions, power asymmetries, and material conditions that shape all research – whether acknowledged or not. Ultimately, _interobjectivation_ is a critical transformative process. \n\nFor non-academic partners, the practical relevance of this concept has to be emphasised. Why engage on a demanding collective path when addressing an issue? How responsibilities change? What tools or constraints intervene, and how decisions about the problem are shared? Such attention invites partners to see themselves not as informants or resources, but as co-producers of both questions and outcomes. The effects of multi-actor engagements on the situations at stake are often subtle: they shift problem definitions, redistribute agency, and reveal tensions that may otherwise remain invisible. Assessing these effects requires participatory forms of listening and descriptions that account for experiential, relational, and material changes, not only for measurable outputs. Crucially, determining what counts as a “pressing social challenge” must be a negotiated process rather than an academic prerogative. Only by foregrounding shared decision-making, reflexive transparency, and interobjectivation can we avoid reproducing extractive dynamics and instead cultivate genuinely collaborative, situated inquiry.\n\nPauline Gourlet"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=6KzRyC90QS8",
+      "excerpts": []
+    },
+    {
+      "metadata": {
+        "id": "a-l-ombre-des-biblioth-ques",
+        "title": "In the Shadow of Libraries",
+        "year": "2020",
+        "project_leaders": "Muriel Amar, Clément Bert-Erboul, Sylvie Fayet, Louis Wiart",
+        "research_center": "Université Libre de Bruxelles (Belgium), ENSSIB (France), Dicen (Université Paris Nanterre, France)"
+      },
+      "texts": {
+        "presentation": "The In the Shadow of Libraries (_À l’ombre des bibliothèques_) research project was born out of an interrogation launched by the ENSSIB editor at the time of the unprecedented closure of French libraries during the first Covid-19-related lockdown, in March 2020\\. Faced with the abrupt suspension of access to these places central to the university ecosystem, the aim was to document the alternative forms of knowledge circulation that emerged during this period. The analysis focused in particular on the “Library in Solidarity with Confinement”, a Facebook group that rapidly grew to over 60,000 members. The initiative aimed to understand how users reinvented the social, documentary and symbolic functions of libraries in times of crisis.\n\nThe project was structured around weekly “Friday meetings” that brought together a group of researchers from diverse disciplinary backgrounds. While the study of the Facebook group formed a central core, other phenomena were also integrated: silent workrooms on Zoom, coworking videos on YouTube, and digital self-help communities. A flexible, collaborative methodology enabled the constitution of a vast corpus. The researchers conducted interviews, obtained permission to access private data and produced a 330-page manuscript. An Open Access version was published, and conferences were held to disseminate the results to professional and academic audiences.\n\nPartnerships and external involvement were key to the project. The support of ENSSIB, the researchers’ commitment, and the cooperation of the Facebook group administrators made the collection and analysis of sensitive data possible. This involved overcoming the legal and ethical issues associated with access to closed digital spaces. Thanks to these collaborations, the survey has sparked unprecedented reflection on the social role of libraries and the uses of knowledge in a context of crisis.",
+        "experience": "A trajectory of engagement is, for me, the detailed and evolving path through which project participants – academic and non-academic – engage with a research initiative in real, often unpredictable, ways. It is both a chronological and reflective process, marked by critical junctures: planning, data collection, testing, collaboration, publication, and public dissemination.\n\nWorking with analytic grids and project mapping tools made visible the often-overlooked phases and failed attempts of the research pathway, not just its final outputs. These exposed moments of trust, misaligned expectations, or informal negotiation among the contributors. Particularly in collaborations with non-academic partners – such as public librarians – trajectories of engagement reveal how engagement, ethical mediation, and practical constraints are managed discreetly rather than openly. These trajectories are always shaped by institutional boundaries, technical obstacles, and diverse personal motivations.\n\nIn summary, a trajectory of engagement is not a uniform or linear path. It is a nuanced narrative made up of structured protocols, informal adaptations, and the hidden labour of both researchers and practitioners as they navigate institutional and social landscapes.",
+        "concept": "Reflecting on and actively documenting trajectories of engagement, especially through structured interviews and collaborative mapping, has led me to appreciate the importance of making the process – not just the results – of research visible. This approach encouraged us to chronicle not only successes but also failed connections, unrealised plans, and backstage negotiations.\n\nIn practical terms, project design now pays much greater attention to the needs and constraints of non-academic partners, recognising the boundaries imposed by their institutional roles (for example, the limits public librarians face in openly sharing resources). We learned that engagement and power dynamics can rarely be addressed directly; instead, they are often managed discreetly, negotiated through informal collective practices or “backchannels.”\n\nUltimately, the concept of trajectories of engagement prompted us to structure our research with greater humility and flexibility – including “soft” processes and latent developments. It allowed for a more honest recognition that some moments of collaboration are shaped by trust, adaptation to constraints, or silent resistance, rather than open conflict or visible engagement. For us, building collaboration now means valorising these subtle, informal practices and respecting the private or “off-stage” forms of agency that non-academic partners exercise.\n\nMuriel Amar"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=yrzADhJAf7Y",
+      "excerpts": [
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:21:42",
+            "2:23:25"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "encyclop-die-atimatekw",
+        "title": "Wikipetcia Atikamekw Nehiromowin",
+        "year": "2017–",
+        "project_leaders": "Nathalie Casemajor,\nThérèse Ottawa and others",
+        "research_center": "Otapi School of Manawan (Canada), Wikimedia Canada, Institut national de la recherche scientifique (Canada),"
+      },
+      "texts": {
+        "presentation": "The project aims to support the creation of an Atikamekw-language version of Wikipedia to support the cultural, linguistic and territorial transmission of this First Nation of Quebec. Based on an action-research and partnership approach, it promotes linguistic and cultural diversity on open knowledge platforms. The aim is twofold: to offer the community a tool to document and share its knowledge in its mother tongue, while analysing the tensions between inclusion, autonomy and the norms of digital ecosystems. Initiated in 2017 at the Otapi Secondary School (Manawan) by a teacher and a German linguist, the Atikamekw Wikipedia now includes nearly 2,000 articles written by community members, including young people, teachers, seniors, and technolinguists.\n\nThe development of the project has mobilised numerous participatory initiatives: translation of the interface, terminological validation by the Atikamekw Linguistic Institute, writing workshops, field trips, photo hunting, digitisation of archives and language recordings. The project also led to the creation of one of the first “Wiki Clubs” in Quebec. All these activities have stimulated young people’s participation through digital tools. The project has been widely disseminated via public events, conferences, blogs and media reports, and has led to critical reflection on sensitive knowledge and its exposure on the Web.\n\nThe project’s success is based on the close collaboration between the Atikamekw community of Manawan, Wikimedia Canada and university researchers. A Memorandum of Understanding (MOU) was signed with the Nation’s representatives to govern the collaboration within the project. Discussions led to the adaptation of Wikipedia’s free license to exclude certain sensitive cultural content, such as ritual or medicinal knowledge. The project illustrates how a global digital platform can become a local tool for linguistic revitalisation and cultural sovereignty.",
+        "experience": "The workshop offered us a meaningful opportunity to travel together from Quebec to Paris, allowing me, as a researcher to deepen the collaboration with Thérèse Ottawa as a project partner, to deepen our collaboration with our project partner. We are grateful for this opportunity, which enabled us to present the project with both voices and to reinforce our shared commitment. From a governance perspective, this joint presence was essential. In the context of research partnerships with Indigenous communities, it is crucial that researchers do not speak on behalf of their partners, but instead create space to recognise and support their agency. For this reason, I found it especially meaningful that our Atikamekw colleague opened the presentation by speaking a few words in her language. It allowed the audience to hear the language and immediately anchored the project in concrete issues of cultural and linguistic transmission.\n\nThe experience reaffirmed the importance of not standing alone as a researcher when discussing project outcomes – particularly when the work is rooted in long-term, co-constructed relationships. I appreciated how the workshop format made space for collaborative reflection and co-presentation, which aligns closely with the ethos of our project. What remains vivid is the richness of the exchanges. Hearing about the diversity of other projects, and seeing how fellow researchers conducted their work was particularly inspiring. More than transforming how I perceive our own project, the workshop expanded our perspective on the many ways collaborative research can be structured – insights I carry forward into the development of future partnership initiatives.",
+        "concept": "I find the proposed definition compelling – particularly the emphasis on trajectories as evolving, and on the potential reconfiguration of roles among academic and non-academic actors. The attention given to tensions and power dynamics is especially relevant. In our case, one of the complexities lies in locating the project’s point of origin. It would be problematic to claim that the initiative was purely research-driven. At the time, I was serving on the board of Wikimedia Canada, which ultimately enabled the project to secure funding through a Wikimedia Foundation grant.\n\nImportantly, we have always clarified that the idea of creating an Atikamekw-language Wikipedia did not originate with the research team. The project’s objective was to support and accelerate a trajectory already initiated by community actors. The Atikamekw Wikipedia existed in a dormant state, and our role was to help revitalise and sustain it. For our partners, this framing is essential. In a context marked by power asymmetries between academic institutions and Indigenous communities, it is crucial that the project is not perceived as appropriating the initiative. Instead, our work should be understood as a form of accompaniment – offering resources and infrastructure to support a community-led process.\n\nTo make this concept of “trajectories of engagement” more relevant to non-academic partners, I would emphasise the idea of shared responsibility and long-term commitment, as well as the importance of acknowledging pre-existing community initiatives and forms of leadership.\n\nNathalie Casemajor"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=Oeedh9aHrbU",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:19:59",
+            "1:26:35"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:30:51",
+            "1:31:12"
+          ]
+        },
+        {
+          "type": "debriefing",
+          "timecodes": [
+            "2:8:49",
+            "2:10:33"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "coeso",
+        "title": "COESO (Collaborative Engagement on Societal Issues)",
+        "year": "2020–2023",
+        "project_leaders": "Alessia Smaniotto",
+        "research_center": "EHESS, OpenEdition (France)"
+      },
+      "texts": {
+        "presentation": "The European COESO initiative supported ten citizen science pilot projects spanning diverse disciplines, societal issues, and modes of participation – each involving engaged stakeholders across several European countries. The project investigated participatory research in the humanities and social sciences through an open, collaborative, and experimental framework. These “engaged stakeholders” actively involved in the ten COESO pilots included artists, journalists, association members, government officials, public service providers, and social enterprise participants. Collaborating with researchers in the social sciences and humanities, they co-developed the research questions, methodologies, and collaborative practices – eschewing rigid protocols – to gain insight into how such research could organically emerge, structure itself, and generate results firmly grounded in social realities.\n\nCollectively, they co-developed the VERA digital platform, designed to support and showcase participatory research within the social sciences and humanities. The pilot teams played an active role in shaping the platform, primarily through mutual learning sessions, which facilitated the sharing of participatory methods and significantly informed the platform design. Additional digital innovations emerged from COESO, including the use of the academic blogging platform Hypothèses.org, a transmedia website for presenting ethnographic work, and updated versions of MemoRekall to document creative research processes. Altogether, these initiatives have allowed us to examine how digital ecosystems can be tailored to support the full spectrum of participatory research projects.\n\nCOESO was a project that included 19 European institutions, with nine more organisations joining through a project call. This diversity has enriched the project’s methodologies, while also revealing the limitations of digital tools when not paired with locally grounded engagement. COESO underscored the importance of integrating digital platforms with physical meeting spaces to sustain and enhance collaborative research. Beyond technology, COESO encouraged reflection on how open science is reshaping approaches to knowledge production within the social sciences and humanities.",
+        "experience": "The workshop provided new angles to relate to my research project and its participants. It fostered mutual learning; hearing other coordinators reflect on the participatory aspects of their initiatives – regardless of whether they led or joined them – prompted me to reconsider my own participatory approaches. This experience gave me food for thought to fine-tune the methods I implemented, and also news references to advocate for them more effectively.\n\nA particularly memorable moment was a presentation given by researcher Anders Kristian Munk, centred on experimental audience metrics in collaboration with the Royal Danish Theatre. I was struck by his emphasis that every participatory process inevitably faces a moment of failure – not an outright breakdown, but rather a point of structural tension or uncertainty. He framed this not as a flaw but as a normal and inherent part of participatory dynamics. That perspective resonated profoundly with me.\n\nDiscovering that others had not only encountered but also theorised these pivotal moments equipped me with the conceptual tools and vocabulary to better comprehend and support the projects I engage with. Ultimately, the collective insights shared during the workshop enabled me to return to my work with greater clarity and enhanced my ability to foster and guide the participatory processes I facilitate.",
+        "concept": "I’ve harboured concerns about the proposed definition from the outset – particularly the phrase “sparked by engaged social science.” This immediately privileges the academic perspective, implying that trajectories of engagement invariably begin with researchers. In my experience, however, this is simply not accurate. Such trajectories are frequently initiated or co-initiated by social actors themselves. Therefore, if we seek a definition that resonates with non-academic partners, we must recognise from the beginning that they are not merely participants – they are often initiators as well.\n\nWe must also acknowledge that so-called “engaged actors” might include researchers from other disciplines, students, or individuals who navigate more ambiguous roles. This reinforces the importance of recognising what I would call “border people” – individuals who traverse different worlds, bridging academia and non-academic spheres or moving across various disciplines and roles. The idea draws on the work of the sociologist Robert E. Park, who coined the term “marginal man”, building on the figure of the “stranger” in George Simmel. Personally, I prefer the terms “border person” or “boundary actor.” Such individuals do not merely exist at boundaries – they sometimes embody the very boundary itself.\n\nThese individuals frequently assume multiple roles and embrace a diverse array of unconventional practices. Acknowledging, welcoming, and supporting such figures is essential to the success of participatory processes. When neither academics nor non-academics integrate or appreciate these boundary actors, meaningful collaboration becomes significantly more challenging to achieve. The result is an isolated collection of silos, lacking the bridges necessary for true connection.\n\nAlessia Smaniotto"
+      },
+      "presentationURL": "https://www.youtube.com/watch?v=YtZkeY22YYM",
+      "excerpts": [
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:11:46",
+            "1:19:59"
+          ]
+        },
+        {
+          "type": "discussion",
+          "timecodes": [
+            "1:26:35",
+            "1:30:51"
+          ]
+        }
+      ]
+    }
+  ]
 }

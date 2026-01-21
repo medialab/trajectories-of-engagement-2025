@@ -2,7 +2,7 @@
 	import type { PageProps } from './$types';
 	import Button from '$lib/comps/btn.svelte';
 	import Header from '$lib/comps/header.svelte';
-	import BezierCanvas from '$lib/comps/cnvs.svelte';
+	import BezierCanvas from '$lib/comps/canvas.svelte';
 	import { currentTag, currentAuthor, currentResearchCenter } from '$lib/utils';
 	import { slide, fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
@@ -14,6 +14,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { isTextureReady } from '$lib/utils';
 	import { marked } from 'marked';
+	import Footer from '$lib/comps/footer.svelte';
 
 	let loadElements = $state(false);
 	let containerEl: HTMLElement | undefined = $state(undefined);
@@ -99,6 +100,7 @@
 	{/key}
 {/if}
 
+<Footer />
 <BezierCanvas bind:this={bezRef} />
 
 <style>
@@ -119,6 +121,11 @@
 		line-clamp: 5;
 	}
 
+	:global(.line_clamp h2) {
+		font-size: 16px;
+		font-weight: unset;
+	}
+
 	.hero_container {
 		left: var(--space-xl);
 		top: var(--space-xl);
@@ -131,7 +138,7 @@
 	.tag_container {
 		position: fixed;
 		right: var(--space-xl);
-		bottom: var(--space-xl);
+		bottom: calc(var(--space-xl) + 40px);
 		z-index: 10;
 	}
 

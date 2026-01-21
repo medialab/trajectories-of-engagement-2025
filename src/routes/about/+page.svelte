@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Header from '$lib/comps/header.svelte';
 	import Button from '$lib/comps/btn.svelte';
-	import BezierCanvas from '$lib/comps/cnvs.svelte';
+	import BezierCanvas from '$lib/comps/canvas.svelte';
 	import { marked } from 'marked';
 	import Footer from '$lib/comps/footer.svelte';
 

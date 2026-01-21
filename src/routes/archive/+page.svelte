@@ -2,7 +2,7 @@
 	import type { PageProps } from './$types';
 
 	import Header from '$lib/comps/header.svelte';
-	import BezierCanvas from '$lib/comps/cnvs.svelte';
+	import BezierCanvas from '$lib/comps/canvas.svelte';
 	import { goto } from '$app/navigation';
 	import { isMobile } from '$lib/utils';
 	import { resolve } from '$app/paths';

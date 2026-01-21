@@ -3,7 +3,7 @@
 	import Header from '$lib/comps/header.svelte';
 	import Button from '$lib/comps/btn.svelte';
 	import Accordion from '$lib/comps/accordion.svelte';
-	import BezierCanvas from '$lib/comps/cnvs.svelte';
+	import BezierCanvas from '$lib/comps/canvas.svelte';
 	import Vid from '$lib/comps/vid.svelte';
 	import Poster from '$lib/comps/poster.svelte';
 	import { fade } from 'svelte/transition';

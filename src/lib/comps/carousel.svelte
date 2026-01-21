@@ -158,13 +158,11 @@
 			for (let i = 0; i < vertexCount; i++) {
 				const x = position.getX(i);
 				const y = position.getY(i);
-
-				const nx = x / Math.max(1e-6, halfW); // -1..1, corners have |nx| ~ 1
 				const ny = y / Math.max(1e-6, halfH); // -1 bottom .. 1 top
 
 				// Vertical half-parabola: uniform across X
 				const t = Math.min(1, Math.max(0, (ny + 1) * 0.5)); // bottom=0 .. top=1
-				const weight = Math.pow(1 - t, verticalCurvePower);
+				const weight = -Math.pow(1 - t, verticalCurvePower);
 
 				const bend = weight * maxBend * r.windScale * windStrength;
 				position.setZ(i, baseZ[i] + bend);

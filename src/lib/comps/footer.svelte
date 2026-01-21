@@ -17,4 +17,10 @@
 		right: 0;
 		z-index: 100;
 	}
+
+	@media (max-width: 768px) {
+		footer {
+			background-color: white;
+		}
+	}
 </style>

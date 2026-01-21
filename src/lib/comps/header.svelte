@@ -1,7 +1,6 @@
-<script>
+<script lang="ts">
 	import Button from '$lib/comps/btn.svelte';
 	import BurgerIcon from '$lib/assets/icons/burger.svg';
-	import logo from '$lib/assets/favicon.svg';
 
 	import { isMobile } from '$lib/utils';
 	import { onMount } from 'svelte';
@@ -14,7 +13,7 @@
 
 	onMount(() => {
 		isMobileFlag = isMobile();
-		console.log(isMobileFlag);
+		//console.log(isMobileFlag);
 	});
 
 	beforeNavigate(() => {
@@ -24,14 +23,12 @@
 
 <header class="horizontal_flex">
 	{#if isMobileFlag}
-		<Button img={logo} href="/" />
 		<Button label="TRAJECTORIES" href="/" />
 		<Button img={BurgerIcon} href="burger_menu" />
 	{:else}
-		<Button label="FR" />
 		<Button label="EN" />
 		<Button label="ABOUT" href="/about" />
-		<Button img={logo} href="/" />
+		<Button label="HOME" href="/" />
 	{/if}
 </header>
 
@@ -46,8 +43,6 @@
 			in:slide={{ duration: 750, axis: 'y', easing: cubicOut, delay: 300 }}
 			out:slide={{ duration: 750, axis: 'y', easing: cubicOut }}
 		>
-			<Button label="FR" />
-			<Button label="/" />
 			<Button label="EN" disabled={true} />
 		</div>
 		<div
@@ -75,8 +70,8 @@
 
 <style>
 	header {
-		position: absolute;
-		right: 0;
+		position: fixed;
+		right: 20px;
 		top: 0;
 		width: fit-content;
 		column-gap: 5px;

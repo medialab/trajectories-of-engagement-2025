@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Header from '$lib/comps/hdr.svelte';
+	import Header from '$lib/comps/header.svelte';
 	import Button from '$lib/comps/btn.svelte';
 	import logoIcon from '$lib/assets/favicon.svg';
 	import BezierCanvas from '$lib/comps/cnvs.svelte';
+	import { marked } from 'marked';
 
 	import { isMobile } from '$lib/utils';
 	import { onMount } from 'svelte';
@@ -10,16 +11,16 @@
 	import { slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 
+	let { data } = $props();
+
 	let isMobileFlag = $state(isMobile());
 	let loadElements = $state(false);
+
+	let aboutText = $derived(marked.parse((Object.values(data.intro)[0] as any).markdown));
 
 	onMount(() => {
 		isMobileFlag = isMobile();
 	});
-
-	let AboutText: string = $state(
-		'Trajectories of engagement refer to moments in the research process where external actors are involved and co-construct knowledge with the research team. These research paths involving an outside can take various forms of material production based on physical and/or digital environments. Often used in digital data-grounded labs or citizen science projects, trajectories of engagement are shaped in research which aims to address social concerns or public issues. <br><br> This research project aims to explore and describe the different forms that trajectories of engagement can take in the humanities and social sciences, the interactions between internal and external actors that they can generate, and the materiality of the socio-technical choices involved. <br><br> The expected outputs are to build an observatory and a network of researchers interested in studying these trajectories and a book will be written to present the identified trajectories.'
-	);
 
 	afterNavigate(() => {
 		loadElements = true;
@@ -27,6 +28,9 @@
 </script>
 
 <Header />
+<div class="return_btn_container">
+	<Button label="← GO BACK" href="back" />
+</div>
 
 {#if loadElements}
 	<div
@@ -38,7 +42,9 @@
 		{:else}
 			<h1>ABOUT</h1>
 		{/if}
-		<p class="l">{@html AboutText}</p>
+		{#await aboutText then text}
+			<p class="l">{@html text}</p>
+		{/await}
 		<Button label="Get in touch with us" href="mailto:trajectoriesofengagement@sciencespo.fr" />
 	</div>
 {/if}
@@ -53,14 +59,15 @@
 <style>
 	.about_container {
 		position: absolute;
-		top: 50%;
+		top: 10%;
 		left: 50%;
-		transform: translate(-50%, -50%);
+		transform: translate(-50%);
 		width: 95ch;
 		row-gap: 20px;
 		background-color: var(--primary-light);
 		padding: 20px;
 		white-space: pre-line;
+		justify-content: flex-start;
 		align-items: center;
 		z-index: 10;
 	}

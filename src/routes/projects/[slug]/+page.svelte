@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
-	import Header from '$lib/comps/hdr.svelte';
+	import Header from '$lib/comps/header.svelte';
 	import Button from '$lib/comps/btn.svelte';
 	import Accordion from '$lib/comps/accordion.svelte';
 	import BezierCanvas from '$lib/comps/cnvs.svelte';
@@ -10,28 +10,39 @@
 	import { cubicOut } from 'svelte/easing';
 	import { menuOpen } from '$lib/utils';
 	import { onMount } from 'svelte';
+	import Footer from '$lib/comps/footer.svelte';
 
 	const mainYtb = 'https://www.youtube.com/watch?v=BLa_1fw-pQA';
 
 	let { data }: PageProps = $props();
+	$inspect('Received data is:', data);
 	let scrollContainer: HTMLElement | null = null;
 
 	// Open Graph/Twitter card data
 	const BASE = 'https://medialab.github.io/trajectories-of-engagement-2025';
-	const pageUrl = `${BASE}/projects/${data.project.metadata.id}/`;
-	const ogTitle = `${data.project.metadata.title} – Trajectories of Engagement 2025`;
-	const ogDescription =
-		data.project.texts?.presentation ||
-		[data.project.metadata?.project_leaders, data.project.metadata?.research_center]
-			.filter(Boolean)
-			.join(' | ') ||
-		'A research showcase exploring engagement across culture, media and technology.';
-	const imagePath = (data.annotatedPoster || data.originalPoster) as string | undefined;
-	const ogImage = imagePath
-		? imagePath.startsWith('http')
-			? imagePath
-			: `${BASE}${imagePath.startsWith('/') ? imagePath : '/' + imagePath}`
-		: undefined;
+	let pageUrl = $derived(
+		data.project?.metadata?.id ? `${BASE}/projects/${data.project.metadata.id}/` : BASE
+	);
+	let ogTitle = $derived(
+		data.project?.metadata?.title
+			? `${data.project.metadata.title} – Trajectories of Engagement 2025`
+			: 'Project – Trajectories of Engagement 2025'
+	);
+	let ogDescription = $derived(
+		data.project?.texts?.presentation ||
+			[data.project?.metadata?.project_leaders, data.project?.metadata?.research_center]
+				.filter(Boolean)
+				.join(' | ') ||
+			'A research showcase exploring engagement across culture, media and technology.'
+	);
+	let imagePath = $derived((data.annotatedPoster || data.originalPoster) as string | undefined);
+	let ogImage = $derived(
+		imagePath
+			? imagePath.startsWith('http')
+				? imagePath
+				: `${BASE}${imagePath.startsWith('/') ? imagePath : '/' + imagePath}`
+			: undefined
+	);
 
 	$effect(() => {
 		console.log('effectFired');
@@ -60,78 +71,79 @@
 	{#if ogImage}<meta name="twitter:image" content={ogImage} />{/if}
 </svelte:head>
 
-<div class="project_page_container" style="overflow: {$menuOpen ? 'hidden' : 'scroll'}">
+<div class="project_page_container">
 	<Header />
 
 	<div class="return_btn_container">
 		<Button label="← GO BACK" href="back" />
+		<Button label="COPY LINK" href="copyLink" />
 	</div>
 
-	<div class="vertical_flex info_container" style="row-gap: 30px;">
-		<div class="vertical_flex" style="background-color: var(--primary-light)">
-			<h1 id="pr_title">{data.project.metadata.title}</h1>
-			{#if data.project.metadata?.year || data.project.metadata?.project_leaders || data.project.metadata?.research_center}
-				<p class="m">
-					{data.project.metadata?.year} | {data.project.metadata?.project_leaders} | {data.project
-						.metadata?.research_center}
-				</p>
-			{:else}
-				<p class="m">No metadata available</p>
-			{/if}
-			{#if data.project.texts?.presentation}
-				<p class="m">{data.project.texts?.presentation}</p>
-			{:else}
-				<p class="m">No presentation text available</p>
-			{/if}
+	{#if data.project}
+		<div class="vertical_flex info_container" style="row-gap: 30px;">
+			<div class="vertical_flex" style="background-color: var(--primary-light)">
+				<h1 id="pr_title">{data.project.metadata.title}</h1>
+				{#if data.project.metadata?.year || data.project.metadata?.project_leaders || data.project.metadata?.research_center}
+					<p class="m">
+						{data.project.metadata?.year} | {data.project.metadata?.project_leaders} | {data.project
+							.metadata?.research_center}
+					</p>
+				{:else}
+					<p class="m">No metadata available</p>
+				{/if}
+				{#if data.project.texts?.presentation}
+					<p class="m">{data.project.texts?.presentation}</p>
+				{:else}
+					<p class="m">No presentation text available</p>
+				{/if}
+			</div>
+			<div class="vertical_flex" style="background-color: var(--primary-light)">
+				<Accordion text={data.project.texts?.experience} title="Experience" />
+				<Accordion text={data.project.texts?.concept} title="Concept" />
+				<Vid src={mainYtb} />
+			</div>
 		</div>
-		<div class="vertical_flex" style="background-color: var(--primary-light">
-			<Accordion text={data.project.texts?.experience} title="Experience" />
-			<Accordion text={data.project.texts?.concept} title="Concept" />
-			<Vid title={data.project.metadata.title} src={data.project.presentationURL} />
-		</div>
-	</div>
 
-	{#if data}
 		<div class="media_cont" transition:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}>
-			<Vid excerpts={data.project.excerpts} src={mainYtb} />
+			<Vid
+				title={data.project.metadata.title}
+				src={data.project.presentationURL}
+				excerpts={data.project.excerpts}
+			/>
 			<Poster
 				id={data.project.metadata.id}
 				originalPoster={data.originalPoster}
 				annotatedPoster={data.annotatedPoster}
 			/>
 		</div>
+	{:else}
+		<div class="vertical_flex info_container" style="row-gap: 30px;">
+			<div class="vertical_flex" style="padding: 20px; background-color: var(--primary-light)">
+				<h1 id="pr_title">Project Not Found</h1>
+				<p class="m">We couldn't find the project you're looking for.</p>
+				<div style="margin-top: 20px; pointer-events: auto;">
+					<Button label="← BACK TO PROJECTS" href="/projects" />
+				</div>
+			</div>
+		</div>
 	{/if}
 </div>
+
+<Footer />
 
 <BezierCanvas />
 
 <style>
-	.return_btn_container {
-		position: absolute;
-		width: fit-content;
-		padding: 20px 0px;
-		left: 0;
-		top: 0;
-		z-index: 41;
-		pointer-events: none;
-	}
-
-	@media (min-width: 1780px) {
-		.return_btn_container {
-			padding: 20px 0px;
-		}
-	}
-
 	.project_page_container {
 		width: auto;
 		position: relative;
-		height: 100%;
+		height: fit-content;
+		min-height: 100vh;
 		display: grid;
 		grid-template-columns: repeat(20, 1fr);
 		grid-column-gap: 10px;
-		margin: 0px 20px 0px 20px;
+		margin: 0px 20px 40px 20px;
 		padding-top: 80px;
-		overflow: hidden;
 		background-color: transparent;
 		max-width: 1600px;
 		place-self: center;
@@ -144,7 +156,7 @@
 	}
 
 	.info_container {
-		grid-column: 1 / 9;
+		grid-column: 1 / 10;
 		width: 100%;
 		height: fit-content;
 		overflow: scroll;
@@ -156,16 +168,18 @@
 		display: flex;
 		flex-direction: column;
 		height: fit-content;
-		align-items: flex-end;
 	}
 
 	:global(.media_cont > :nth-child(1)) {
-		position: absolute;
-		bottom: 0;
-		left: 0;
+		order: 2;
+		align-self: flex-start;
 		mix-blend-mode: color-burn;
 		max-width: 90%;
-		transform: translateY(50%);
+		/* Overlap with the poster above by approximately half of the video's height */
+		/* Since the video is 16:9, half of its height is roughly 28% of its width. */
+		/* adjusted to account for the 90% max-width. */
+		margin-top: -26%;
+		z-index: 2;
 	}
 
 	:global(.media_cont > :nth-child(1):hover) {
@@ -179,9 +193,11 @@
 	}
 
 	:global(.media_cont > :nth-child(2)) {
-		position: relative;
+		order: 1;
+		align-self: flex-end;
 		max-height: 90%;
 		max-width: 90%;
+		z-index: 1;
 	}
 
 	@media (max-width: 768px) {
@@ -210,10 +226,8 @@
 		:global(.media_cont > :nth-child(2)) {
 			max-width: 100%;
 			transform: unset;
-		}
-
-		.return_btn_container {
-			display: none;
+			order: unset;
+			margin-top: 0;
 		}
 	}
 </style>

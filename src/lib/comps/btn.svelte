@@ -14,6 +14,12 @@
 			history.back();
 			return;
 		}
+
+		if (ref === 'copyLink') {
+			navigator.clipboard.writeText(window.location.href);
+			return;
+		}
+
 		if (ref === 'burger_menu') {
 			$menuOpen = !$menuOpen;
 			return;

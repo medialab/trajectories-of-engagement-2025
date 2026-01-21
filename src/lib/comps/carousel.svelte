@@ -48,7 +48,7 @@
 	const handlePointerEnter = (d: any) => {
 		if (isMobileFlag) return;
 		cursorEnter();
-		console.log(d);
+		//console.log(d);
 		$currentTag = d.id;
 		$currentAuthor = d.project_leaders;
 		$currentResearchCenter = d.research_center;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import Button from '$lib/comps/btn.svelte';
-	import Header from '$lib/comps/hdr.svelte';
+	import Header from '$lib/comps/header.svelte';
 	import BezierCanvas from '$lib/comps/cnvs.svelte';
 	import { currentTag, currentAuthor, currentResearchCenter } from '$lib/utils';
 	import { slide, fade } from 'svelte/transition';
@@ -13,6 +13,7 @@
 	import { NoToneMapping } from 'three';
 	import { afterNavigate } from '$app/navigation';
 	import { isTextureReady } from '$lib/utils';
+	import { marked } from 'marked';
 
 	let loadElements = $state(false);
 	let containerEl: HTMLElement | undefined = $state(undefined);
@@ -27,6 +28,8 @@
 	afterNavigate(() => {
 		loadElements = true;
 	});
+
+	let aboutText = $derived(marked.parse((Object.values(data.intro)[0] as any).markdown));
 </script>
 
 <Header />
@@ -46,16 +49,17 @@
 	>
 		<div class="vertical_flex">
 			<h1>Trajectories of engagement</h1>
-			<p class="m">
-				Trajectories of engagement are the paths through which researchers and external actors meet,
-				collaborate, and co-create knowledge—across physical and digital settings—to address public
-				issues
-			</p>
+			{#if data.intro}
+				<p class="m line_clamp">
+					{@html aboutText}
+				</p>
+			{/if}
 		</div>
 
 		<div class="horizontal_flex">
 			<Button label="Access the archive ↓" href="/archive" />
-			<Button label="Get this bezier" onClick={() => bezRef?.downloadSvg()} />
+			<Button label="Read more →" href="/about" />
+			<!-- <Button label="Get this bezier" onClick={() => bezRef?.downloadSvg()} /> -->
 		</div>
 	</div>
 {/if}
@@ -107,6 +111,14 @@
 		background-color: var(--primary-light);
 	}
 
+	.line_clamp {
+		display: -webkit-box;
+		-webkit-line-clamp: 5;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		line-clamp: 5;
+	}
+
 	.hero_container {
 		left: 20px;
 		top: 20px;
@@ -150,10 +162,7 @@
 		user-select: none;
 		/* Add these to prevent image dragging */
 		-webkit-user-drag: none;
-		-khtml-user-drag: none;
-		-moz-user-drag: none;
-		-o-user-drag: none;
-		user-drag: none;
+		user-select: none;
 		cursor: grab;
 	}
 

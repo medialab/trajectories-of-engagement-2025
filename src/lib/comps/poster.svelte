@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import { cubicOut, quartInOut, } from 'svelte/easing';
+	import { cubicOut, quartInOut } from 'svelte/easing';
 	import { Tween } from 'svelte/motion';
 	import { afterNavigate } from '$app/navigation';
 
@@ -43,7 +43,7 @@
 		} else {
 			sourceURl = annotatedURl;
 		}
-		console.log(sourceURl, title);
+		//console.log(sourceURl, title);
 		const response = await fetch(sourceURl);
 		const blob = await response.blob();
 		const url = URL.createObjectURL(blob);
@@ -68,42 +68,50 @@
 </script>
 
 {#if props.originalPoster !== '' && props.annotatedPoster !== ''}
-		<div class="post_img">
-			<p class="mix_value" style="left: {Math.max(5, Math.min(95, Math.round(mixValue)))}%;">{Math.round(mixValue)}%</p>
-			<div class="slid_cont horizontal_flex">
-				
-				<input
-					class="mix_slider"
-					type="range"
-					name="fading"
-					min={minValue}
-					max={maxValue}
-					bind:value={mixValue}
-					step="any"
-				/>
-				<label for="fading" style="display: none">Fade</label>
-			</div>
-			<img
-				class="base_img"
-				src={props.originalPoster}
-				alt={props.id}
-				style="opacity: {1 - mixOpacity};"
+	<div class="post_img">
+		<p class="mix_value" style="left: {Math.max(5, Math.min(95, Math.round(mixValue)))}%;">
+			{Math.round(mixValue)}%
+		</p>
+		<div class="slid_cont horizontal_flex">
+			<input
+				class="mix_slider"
+				type="range"
+				name="fading"
+				min={minValue}
+				max={maxValue}
+				bind:value={mixValue}
+				step="any"
 			/>
-			<img
-				class="blend_img"
-				src={props.annotatedPoster}
-				alt="{props.id}_annotated"
-				style="opacity: {mixOpacity};"
-			/>
-			<button class="download_btn" onclick={() => downloadPoster(props.annotatedPoster, props.originalPoster, props.id.trim())} aria-label="Download poster">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
-			</button>
-			<div class="bg_back"></div>
+			<label for="fading" style="display: none">Fade</label>
 		</div>
+		<img
+			class="base_img"
+			src={props.originalPoster}
+			alt={props.id}
+			style="opacity: {1 - mixOpacity};"
+		/>
+		<img
+			class="blend_img"
+			src={props.annotatedPoster}
+			alt="{props.id}_annotated"
+			style="opacity: {mixOpacity};"
+		/>
+		<button
+			class="download_btn"
+			onclick={() => downloadPoster(props.annotatedPoster, props.originalPoster, props.id.trim())}
+			aria-label="Download poster"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+				><path
+					d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
+				/></svg
+			>
+		</button>
+		<div class="bg_back"></div>
+	</div>
 {/if}
 
 <style>
-
 	.mix_value {
 		position: absolute;
 		z-index: 20;
@@ -226,10 +234,8 @@
 	}
 
 	@media (max-width: 768px) {
-
 		.mix_value {
 			width: fit-content;
 		}
-
 	}
 </style>

@@ -83,8 +83,8 @@
 		font-family: 'Inter', sans-serif;
 		font-weight: 300;
 		background-color: var(--primary-light);
-		height: 100%;
 		width: 100%;
+		overscroll-behavior: none;
 	}
 
 	:global(::selection) {
@@ -180,11 +180,33 @@
 			max-width: 100vw !important;
 			overflow-x: hidden !important;
 		}
+
+		:global(.return_btn_container) {
+			display: none;
+		}
 	}
 
 	@media (min-width: 1780px) {
 		:global(h1) {
 			font-size: 64px;
+		}
+	}
+
+	:global(.return_btn_container) {
+		position: fixed;
+		display: flex;
+		flex-direction: row;
+		width: fit-content;
+		padding: 20px 0px;
+		left: 20px;
+		top: 0;
+		z-index: 41;
+		pointer-events: none;
+	}
+
+	@media (min-width: 1780px) {
+		:global(.return_btn_container) {
+			padding: 20px 0px;
 		}
 	}
 </style>

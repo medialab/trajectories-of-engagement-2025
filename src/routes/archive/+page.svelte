@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 
-	import Header from '$lib/comps/hdr.svelte';
+	import Header from '$lib/comps/header.svelte';
 	import BezierCanvas from '$lib/comps/cnvs.svelte';
 	import { goto } from '$app/navigation';
 	import { isMobile } from '$lib/utils';
@@ -204,8 +204,6 @@
 	}
 
 	#link {
-		line-clamp: 1;
-		webkit-line-clamp: 1;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;

@@ -7,5 +7,6 @@ export const load: PageLoad = async () => {
 		import: 'default'
 	}) as Record<string, string>;
 	const projects = (data as any).default?.projects ?? (data as any).projects ?? [];
-	return { projects, posters: postersRaw };
+	const intro = data.intro;
+	return { projects, posters: postersRaw, intro };
 };

@@ -13,7 +13,6 @@
 
 	onMount(() => {
 		isMobileFlag = isMobile();
-		//console.log(isMobileFlag);
 	});
 
 	beforeNavigate(() => {
@@ -26,7 +25,6 @@
 		<Button label="TRAJECTORIES" href="/" />
 		<Button img={BurgerIcon} href="burger_menu" />
 	{:else}
-		<!-- <Button label="EN" /> -->
 		<Button label="ABOUT" href="/about" />
 		<Button label="HOME" href="/" />
 	{/if}
@@ -42,9 +40,7 @@
 			class="horizontal_flex lang_switch"
 			in:slide={{ duration: 750, axis: 'y', easing: cubicOut, delay: 300 }}
 			out:slide={{ duration: 750, axis: 'y', easing: cubicOut }}
-		>
-			<!--<Button label="EN" disabled={true} />-->
-		</div>
+		></div>
 		<div
 			class="vertical_flex clickables"
 			in:slide={{ duration: 750, axis: 'y', easing: cubicOut, delay: 300 }}

@@ -15,7 +15,6 @@
 	const mainYtb = 'https://www.youtube.com/watch?v=BLa_1fw-pQA';
 
 	let { data }: PageProps = $props();
-	$inspect('Received data is:', data);
 	let scrollContainer: HTMLElement | null = null;
 
 	// Open Graph/Twitter card data
@@ -45,7 +44,6 @@
 	);
 
 	$effect(() => {
-		console.log($menuOpen);
 		if (!scrollContainer) return;
 		scrollContainer.style.overflowY = $menuOpen ? 'hidden' : 'scroll';
 	});
@@ -179,11 +177,6 @@
 		margin-top: -26%;
 		z-index: 2;
 	}
-
-	/*:global(.media_cont > :nth-child(1):hover) {
-		z-index: 10;
-		mix-blend-mode: normal;
-	}*/
 
 	:global(.media_cont > :nth-child(2):hover) {
 		z-index: 10;

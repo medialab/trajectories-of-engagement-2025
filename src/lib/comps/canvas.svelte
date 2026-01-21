@@ -191,7 +191,6 @@
 			in:fade={{ duration: IN_MS, easing: cubicOut, delay: 1000 }}
 		/>
 	{/each}
-	<!-- optional: defs/filters could be added here -->
 	<defs></defs>
 </svg>
 

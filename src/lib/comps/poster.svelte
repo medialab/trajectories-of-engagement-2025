@@ -61,7 +61,6 @@
 			class="mix_value"
 			style="left: {Math.max(12, Math.min(88, Math.round(mixValue)))}%; text-wrap: nowrap"
 		>
-			<!--{Math.round(mixValue)}%-->
 			← Grab here to slide! →
 		</p>
 		<div class="slid_cont horizontal_flex">

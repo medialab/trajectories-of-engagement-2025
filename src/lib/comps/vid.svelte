@@ -4,7 +4,7 @@
 	import { fade, slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
-	import { secondsToTimecode, timecodeToSeconds } from 'timecode-converter';
+	import { timecodeToSeconds } from 'timecode-converter';
 
 	let props = $props();
 
@@ -35,22 +35,6 @@
 			}
 		})
 	);
-	/*const timecodeToSeconds = (timecode: string) => {
-		const parts = timecode.split(':').map(Number);
-		if (parts.length === 3) {
-			// H:M:S
-			const [hours, minutes, seconds] = parts;
-			return hours * 3600 + minutes * 60 + seconds;
-		} else if (parts.length === 2) {
-			// M:S
-			const [minutes, seconds] = parts;
-			return minutes * 60 + seconds;
-		} else if (parts.length === 1) {
-			// S
-			return parts[0];
-		}
-		return 0;
-	};*/
 
 	const calculateSegments = () => {
 		if (!props.excerpts) return;
@@ -58,9 +42,7 @@
 			if (excerpt.timecodes && excerpt.timecodes.length > 0) {
 				const startTime = timecodeToSeconds(excerpt.timecodes[0], 25);
 
-				console.log('startTime', startTime);
 				timestamps.push(startTime);
-				console.log('timestamps', timestamps);
 			}
 		});
 		currentTime = timestamps[0];

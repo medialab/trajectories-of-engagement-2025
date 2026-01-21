@@ -51,9 +51,7 @@
 	</div>
 {/if}
 
-{#if isMobileFlag}
-	<!-- nada-->
-{:else}
+{#if !isMobileFlag}
 	<BezierCanvas />
 	<BezierCanvas />
 {/if}
@@ -75,11 +73,6 @@
 		justify-content: flex-start;
 		align-items: center;
 		z-index: 10;
-	}
-
-	img {
-		width: var(--space-2xl);
-		height: var(--space-2xl);
 	}
 
 	@media (max-width: 768px) {

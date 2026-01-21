@@ -22,10 +22,6 @@
 
 	let { data }: PageProps = $props();
 
-	$effect(() => {
-		console.log(data.posters);
-	});
-
 	afterNavigate(() => {
 		loadElements = true;
 	});

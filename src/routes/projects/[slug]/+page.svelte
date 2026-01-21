@@ -45,7 +45,6 @@
 	);
 
 	$effect(() => {
-		console.log('effectFired');
 		console.log($menuOpen);
 		if (!scrollContainer) return;
 		scrollContainer.style.overflowY = $menuOpen ? 'hidden' : 'scroll';
@@ -100,16 +99,12 @@
 			<div class="vertical_flex" style="background-color: var(--primary-light)">
 				<Accordion text={data.project.texts?.experience} title="Experience" />
 				<Accordion text={data.project.texts?.concept} title="Concept" />
-				<Vid src={mainYtb} />
+				<Vid src={mainYtb} excerpts={data.project.excerpts} />
 			</div>
 		</div>
 
 		<div class="media_cont" transition:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}>
-			<Vid
-				title={data.project.metadata.title}
-				src={data.project.presentationURL}
-				excerpts={data.project.excerpts}
-			/>
+			<Vid title={data.project.metadata.title} src={data.project.presentationURL} />
 			<Poster
 				id={data.project.metadata.id}
 				originalPoster={data.originalPoster}

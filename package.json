@@ -36,6 +36,7 @@
 		"marked": "^17.0.1",
 		"svelte-youtube-embed": "github:TommasoPrinetti/youtube-embed#fix/svelte5-derived-syntax",
 		"tempus": "^1.0.0-dev.11",
-		"three": "^0.180.0"
+		"three": "^0.180.0",
+		"timecode-converter": "^2.0.0"
 	}
 }

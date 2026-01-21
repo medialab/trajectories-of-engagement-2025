@@ -4,6 +4,7 @@
 	import { fade, slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
+	import { secondsToTimecode, timecodeToSeconds } from 'timecode-converter';
 
 	let props = $props();
 
@@ -17,51 +18,65 @@
 	let isYouTube: boolean = videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be');
 	let timestamps: number[] = $state([]);
 
-	$inspect('timestamps', timestamps);
-
-	//$inspect(timestamps);
-
 	let youtubeId: Promise<string> = $derived(
 		new Promise((resolve) => {
 			if (videoUrl.includes('youtu.be/')) {
 				// Handle youtu.be/VIDEO_ID format
 				const videoId = videoUrl.split('youtu.be/')[1].split('?')[0];
-				console.log('videoUrl', videoUrl);
-				console.log('videoId', videoId);
+
 				resolve(videoId);
 			} else if (videoUrl.includes('youtube.com/watch?v=')) {
 				// Handle youtube.com/watch?v=VIDEO_ID format
 				const videoId = videoUrl.split('v=')[1].split('&')[0];
-				console.log('videoUrl', videoUrl);
-				console.log('videoId', videoId);
+
 				resolve(videoId);
 			} else {
 				resolve('');
 			}
 		})
 	);
+	/*const timecodeToSeconds = (timecode: string) => {
+		const parts = timecode.split(':').map(Number);
+		if (parts.length === 3) {
+			// H:M:S
+			const [hours, minutes, seconds] = parts;
+			return hours * 3600 + minutes * 60 + seconds;
+		} else if (parts.length === 2) {
+			// M:S
+			const [minutes, seconds] = parts;
+			return minutes * 60 + seconds;
+		} else if (parts.length === 1) {
+			// S
+			return parts[0];
+		}
+		return 0;
+	};*/
 
 	const calculateSegments = () => {
 		if (!props.excerpts) return;
 		props.excerpts.forEach((excerpt: any) => {
-			excerpt.timecodes.forEach((timecode: string) => {
-				const [minutes, seconds] = timecode.split(':').map(Number);
-				timestamps.push(minutes * 60 + seconds);
-			});
+			if (excerpt.timecodes && excerpt.timecodes.length > 0) {
+				const startTime = timecodeToSeconds(excerpt.timecodes[0], 25);
+
+				console.log('startTime', startTime);
+				timestamps.push(startTime);
+				console.log('timestamps', timestamps);
+			}
 		});
+		currentTime = timestamps[0];
 	};
 
 	const goToNextSegment = () => {
+		if (timestamps.length === 0) return;
 		currentTimeIndex = (currentTimeIndex + 1) % timestamps.length;
 		currentTime = timestamps[currentTimeIndex];
-		if (play === true) return;
 		play = true;
 	};
 
 	const goToPreviousSegment = () => {
+		if (timestamps.length === 0) return;
 		currentTimeIndex = (currentTimeIndex - 1 + timestamps.length) % timestamps.length;
 		currentTime = timestamps[currentTimeIndex];
-		if (play === true) return;
 		play = true;
 	};
 

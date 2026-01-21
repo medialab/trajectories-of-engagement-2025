@@ -14,19 +14,7 @@
 	let maxValue = $state(100);
 	let minValue = $state(0);
 
-	// Keep opacity derived from slider value
 	const mixOpacity = $derived(mixValue / 100);
-
-	// Preload all poster assets and expose their built URLs
-	const originals = import.meta.glob('/src/lib/assets/posters/*.png', {
-		query: '?url',
-		eager: true
-	}) as Record<string, string>;
-
-	const annotated = import.meta.glob('/src/lib/assets/posters/*_annotated.png', {
-		query: '?url',
-		eager: true
-	}) as Record<string, string>;
 
 	function slideAnimation() {
 		initialSlide.set(100);
@@ -43,7 +31,7 @@
 		} else {
 			sourceURl = annotatedURl;
 		}
-		//console.log(sourceURl, title);
+
 		const response = await fetch(sourceURl);
 		const blob = await response.blob();
 		const url = URL.createObjectURL(blob);

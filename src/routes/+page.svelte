@@ -68,13 +68,13 @@
 {#if $currentTag}
 	<div class="tag_container align_right vertical_flex">
 		{#if $currentAuthor}
-			<Info label="Leader: {$currentAuthor}" />
+			<Info label="Leader	" value={$currentAuthor} />
 		{/if}
 		{#if $currentResearchCenter}
-			<Info label="Research center: {$currentResearchCenter}" />
+			<Info label="Research center" value={$currentResearchCenter} />
 		{/if}
 		{#if $currentTag}
-			<Info label="Title: #{$currentTag}" />
+			<Info label="Title" value={$currentTag} />
 		{/if}
 	</div>
 {/if}

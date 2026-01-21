@@ -69,9 +69,9 @@
 		display: flex;
 		width: fit-content;
 		height: fit-content;
-		min-height: 30px;
-		padding: 10px 20px;
-		border-radius: 5px;
+		min-height: var(--space-2xl);
+		padding: var(--space-m) var(--space-xl);
+		border-radius: var(--space-xs);
 		background-color: var(--primary-color);
 		color: var(--primary-dark);
 		cursor: pointer;
@@ -96,6 +96,6 @@
 	}
 
 	img {
-		height: 20px;
+		height: var(--space-xl);
 	}
 </style>

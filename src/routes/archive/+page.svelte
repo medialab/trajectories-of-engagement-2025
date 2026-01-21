@@ -9,6 +9,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { fade, slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import Footer from '$lib/comps/footer.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -148,9 +149,9 @@
 <style>
 	.t_container {
 		position: absolute;
-		top: 100px;
-		left: 20px;
-		right: 20px;
+		top: var(--space-7xl);
+		left: var(--space-xl);
+		right: var(--space-xl);
 		width: auto;
 		z-index: 10;
 		background-color: color-mix(in srgb, var(--primary-light) 95%, transparent);
@@ -161,14 +162,14 @@
 		width: 100%;
 		font-weight: 400;
 		border-collapse: separate;
-		border-spacing: 0 10px; /* row gap */
+		border-spacing: 0 var(--space-m); /* row gap */
 	}
 
 	/* add vertical gap between header and first data row */
 	.archive_table tbody::before {
 		content: '';
 		display: block;
-		height: 10px; /* adjust gap size */
+		height: var(--space-m); /* adjust gap size */
 	}
 
 	.t_header {
@@ -177,7 +178,7 @@
 	}
 
 	.t_header th {
-		padding: 5px 5px 5px 0px;
+		padding: var(--space-xs) var(--space-xs) var(--space-xs) 0px;
 		border-top: 2px solid #000;
 		border-bottom: 2px solid #000;
 	}
@@ -211,8 +212,8 @@
 
 	.title_container {
 		position: fixed;
-		top: 20px;
-		left: 20px;
+		top: var(--space-xl);
+		left: var(--space-xl);
 		width: fit-content;
 		height: fit-content;
 		background-color: var(--primary-light);
@@ -228,8 +229,8 @@
 			width: 100%;
 			height: fit-content;
 			background-color: unset;
-			margin-top: 80px;
-			padding: 20px 20px 0px 20px;
+			margin-top: var(--space-6xl);
+			padding: var(--space-xl) var(--space-xl) 0px var(--space-xl);
 		}
 		.t_header {
 			display: none;
@@ -245,7 +246,8 @@
 			height: fit-content;
 			background-color: unset;
 			margin-top: 0px;
-			padding: 0px 20px;
+			padding: 0px var(--space-xl);
+			margin-bottom: var(--space-xl);
 			background-color: var(--primary-light);
 			z-index: 10;
 		}
@@ -262,7 +264,7 @@
 		}
 
 		.t_num {
-			padding: 0px 20px 0px 0px;
+			padding: 0px var(--space-xl) 0px 0px;
 		}
 	}
 </style>

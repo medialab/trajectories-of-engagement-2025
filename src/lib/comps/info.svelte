@@ -19,8 +19,8 @@
 <style>
 	.info_container {
 		background-color: var(--primary-color);
-		padding: 5px 10px;
-		border-radius: 5px;
+		padding: var(--space-xs) var(--space-m);
+		border-radius: var(--space-xs);
 		width: fit-content;
 		height: fit-content;
 		border: 2px solid var(--primary-dark);

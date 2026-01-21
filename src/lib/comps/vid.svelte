@@ -146,7 +146,7 @@
 		left: 0;
 		right: 0;
 		z-index: 1;
-		padding: 8px 12px;
+		padding: var(--space-s) var(--space-ml);
 		position: relative;
 	}
 
@@ -157,7 +157,7 @@
 		background-color: var(--primary-color);
 		border: 2px solid var(--primary-dark);
 		cursor: pointer;
-		padding: 4px 10px;
+		padding: var(--space-2xs) var(--space-m);
 		border-radius: 0px;
 		z-index: 2;
 		mix-blend-mode: normal;
@@ -170,13 +170,13 @@
 	}
 
 	.next_vid {
-		top: -2px;
-		right: -2px;
+		top: calc(-1 * var(--space-3xs));
+		right: calc(-1 * var(--space-3xs));
 	}
 
 	.prev_vid {
-		top: -2px;
-		left: -2px;
+		top: calc(-1 * var(--space-3xs));
+		left: calc(-1 * var(--space-3xs));
 	}
 
 	p {

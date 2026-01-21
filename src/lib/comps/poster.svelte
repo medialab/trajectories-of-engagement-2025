@@ -69,8 +69,12 @@
 
 {#if props.originalPoster !== '' && props.annotatedPoster !== ''}
 	<div class="post_img">
-		<p class="mix_value" style="left: {Math.max(5, Math.min(95, Math.round(mixValue)))}%;">
-			{Math.round(mixValue)}%
+		<p
+			class="mix_value"
+			style="left: {Math.max(12, Math.min(88, Math.round(mixValue)))}%; text-wrap: nowrap"
+		>
+			<!--{Math.round(mixValue)}%-->
+			← Grab here to slide! →
 		</p>
 		<div class="slid_cont horizontal_flex">
 			<input
@@ -118,7 +122,7 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		padding: 2px 5px;
+		padding: var(--space-3xs) var(--space-xs);
 		background-color: var(--primary-color);
 		border: 2px solid black;
 		transform-origin: center;
@@ -142,34 +146,61 @@
 		width: 110%;
 		-webkit-appearance: none;
 		appearance: none;
-		height: 8px;
+		height: var(--space-s);
 		outline: none;
-		border-radius: 5px;
+		border-radius: var(--space-xs);
 		border: 0px solid black;
 		pointer-events: all;
 		background-color: transparent;
 		cursor: grab;
 	}
 
+	.mix_slider:active {
+		cursor: grabbing;
+	}
+
 	.mix_slider::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
-		width: 10px;
+		width: var(--space-m);
 		height: 2000px;
 		background: var(--primary-color);
-		cursor: pointer;
-		border-radius: 5px;
+		cursor: inherit;
+		border-radius: var(--space-xs);
 		border: 2px solid black;
 	}
 
-	.mix_slider::-webkit-slider-thumb:focus {
+	.mix_slider::-moz-range-thumb {
+		width: var(--space-m);
+		height: 2000px;
+		background: var(--primary-color);
+		cursor: inherit;
+		border-radius: var(--space-xs);
+		border: 2px solid black;
+	}
+
+	.mix_slider::-webkit-slider-thumb:active {
 		cursor: grabbing;
+	}
+
+	.mix_slider::-moz-range-thumb:active {
+		cursor: grabbing;
+	}
+
+	.mix_slider::-webkit-slider-thumb:focus {
+		transform: scale(1.2);
+		transition: transform 3s ease-in-out;
+	}
+
+	.mix_slider::-moz-range-thumb:focus {
+		transform: scale(1.2);
+		transition: transform 0.2s ease-in-out;
 	}
 
 	.mix_slider::-webkit-slider-track {
 		width: 100%;
-		height: 4px;
-		border-radius: 2px;
+		height: var(--space-2xs);
+		border-radius: var(--space-3xs);
 		border: 1px solid black;
 	}
 
@@ -216,11 +247,11 @@
 		bottom: 0;
 		right: 0;
 		z-index: 12;
-		padding: 5px;
+		padding: var(--space-xs);
 		background-color: var(--primary-color);
 		border: 2px solid var(--primary-dark);
 		pointer-events: all;
-		border-radius: 5px 0px 0px 0px;
+		border-radius: var(--space-xs) 0px 0px 0px;
 	}
 
 	.download_btn:hover {

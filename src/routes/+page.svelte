@@ -120,18 +120,18 @@
 	}
 
 	.hero_container {
-		left: 20px;
-		top: 20px;
+		left: var(--space-xl);
+		top: var(--space-xl);
 		width: 50ch;
-		row-gap: 20px;
+		row-gap: var(--space-xl);
 		position: fixed;
 		z-index: 5;
 	}
 
 	.tag_container {
 		position: fixed;
-		right: 20px;
-		bottom: 20px;
+		right: var(--space-xl);
+		bottom: var(--space-xl);
 		z-index: 10;
 	}
 
@@ -197,12 +197,12 @@
 
 	@media (max-width: 768px) {
 		.hero_container {
-			top: 80px;
+			top: var(--space-6xl);
 			width: 90%;
 		}
 
 		.carousel_container {
-			margin-top: 220px;
+			margin-top: var(--space-huge);
 			overflow: hidden !important;
 		}
 

@@ -76,6 +76,24 @@
 		--primary-color: #ceffbf;
 		--primary-light: #f5f5f5;
 		--primary-dark: #111111;
+
+		/* Spacing System */
+		--space-3xs: 2px;
+		--space-2xs: 4px;
+		--space-xs: 5px;
+		--space-s: 8px;
+		--space-m: 10px;
+		--space-ml: 12px;
+		--space-l: 15px;
+		--space-xl: 20px;
+		--space-2xl: 30px;
+		--space-3xl: 40px;
+		--space-4xl: 50px;
+		--space-5xl: 60px;
+		--space-6xl: 80px;
+		--space-7xl: 100px;
+		--space-8xl: 120px;
+		--space-huge: 220px;
 	}
 
 	:global(html),
@@ -93,7 +111,7 @@
 	}
 
 	:global(h1) {
-		font-size: 48px;
+		font-size: 36px;
 		font-weight: 600;
 		line-height: 1.1;
 		letter-spacing: -0.05em;
@@ -122,23 +140,23 @@
 	:global(.vertical_flex) {
 		display: flex;
 		flex-direction: column;
-		row-gap: 10px;
+		row-gap: var(--space-m);
 	}
 
 	:global(.narrow) {
-		row-gap: 5px;
-		column-gap: 5px;
+		row-gap: var(--space-xs);
+		column-gap: var(--space-xs);
 	}
 
 	:global(.wide) {
-		row-gap: 20px;
-		column-gap: 20px;
+		row-gap: var(--space-xl);
+		column-gap: var(--space-xl);
 	}
 
 	:global(.horizontal_flex) {
 		display: flex;
 		flex-direction: row;
-		column-gap: 10px;
+		column-gap: var(--space-m);
 	}
 
 	:global(.align_right) {
@@ -188,7 +206,7 @@
 
 	@media (min-width: 1780px) {
 		:global(h1) {
-			font-size: 64px;
+			font-size: 48px;
 		}
 	}
 
@@ -196,9 +214,10 @@
 		position: fixed;
 		display: flex;
 		flex-direction: row;
+		column-gap: var(--space-xs);
 		width: fit-content;
-		padding: 20px 0px;
-		left: 20px;
+		padding: var(--space-xl) 0px;
+		left: var(--space-xl);
 		top: 0;
 		z-index: 41;
 		pointer-events: none;
@@ -206,7 +225,7 @@
 
 	@media (min-width: 1780px) {
 		:global(.return_btn_container) {
-			padding: 20px 0px;
+			padding: var(--space-xl) 0px;
 		}
 	}
 </style>

@@ -76,11 +76,11 @@
 
 	<div class="return_btn_container">
 		<Button label="← GO BACK" href="back" />
-		<Button label="COPY LINK" href="copyLink" />
+		<Button label="COPY PAGE LINK" href="copyLink" />
 	</div>
 
 	{#if data.project}
-		<div class="vertical_flex info_container" style="row-gap: 30px;">
+		<div class="vertical_flex info_container" style="row-gap: var(--space-2xl);">
 			<div class="vertical_flex" style="background-color: var(--primary-light)">
 				<h1 id="pr_title">{data.project.metadata.title}</h1>
 				{#if data.project.metadata?.year || data.project.metadata?.project_leaders || data.project.metadata?.research_center}
@@ -117,11 +117,14 @@
 			/>
 		</div>
 	{:else}
-		<div class="vertical_flex info_container" style="row-gap: 30px;">
-			<div class="vertical_flex" style="padding: 20px; background-color: var(--primary-light)">
+		<div class="vertical_flex info_container" style="row-gap: var(--space-2xl);">
+			<div
+				class="vertical_flex"
+				style="padding: var(--space-xl); background-color: var(--primary-light)"
+			>
 				<h1 id="pr_title">Project Not Found</h1>
 				<p class="m">We couldn't find the project you're looking for.</p>
-				<div style="margin-top: 20px; pointer-events: auto;">
+				<div style="margin-top: var(--space-xl); pointer-events: auto;">
 					<Button label="← BACK TO PROJECTS" href="/projects" />
 				</div>
 			</div>
@@ -141,9 +144,9 @@
 		min-height: 100vh;
 		display: grid;
 		grid-template-columns: repeat(20, 1fr);
-		grid-column-gap: 10px;
-		margin: 0px 20px 40px 20px;
-		padding-top: 80px;
+		grid-column-gap: var(--space-m);
+		margin: 0px var(--space-xl) var(--space-6xl) var(--space-xl);
+		padding-top: var(--space-6xl);
 		background-color: transparent;
 		max-width: 1600px;
 		place-self: center;
@@ -182,10 +185,10 @@
 		z-index: 2;
 	}
 
-	:global(.media_cont > :nth-child(1):hover) {
+	/*:global(.media_cont > :nth-child(1):hover) {
 		z-index: 10;
 		mix-blend-mode: normal;
-	}
+	}*/
 
 	:global(.media_cont > :nth-child(2):hover) {
 		z-index: 10;
@@ -200,6 +203,16 @@
 		z-index: 1;
 	}
 
+	@media (max-width: 1780px) {
+		:global(.media_cont) {
+			grid-column: 13 / 22 !important;
+		}
+
+		:global(.info_container) {
+			grid-column: 1 / 9 !important;
+		}
+	}
+
 	@media (max-width: 768px) {
 		.project_page_container {
 			width: 100%;
@@ -207,8 +220,8 @@
 			display: flex;
 			flex-direction: column;
 			margin: 0px;
-			padding: 80px 20px;
-			row-gap: 20px;
+			padding: var(--space-6xl) var(--space-xl);
+			row-gap: var(--space-xl);
 			overflow: scroll;
 			background-color: transparent;
 		}
@@ -216,10 +229,10 @@
 		.media_cont {
 			width: 100% !important;
 			height: fit-content;
-			row-gap: 20px;
+			row-gap: var(--space-xl);
 			position: static;
 			justify-content: flex-start;
-			margin-bottom: 50px;
+			margin-bottom: var(--space-4xl);
 		}
 
 		:global(.media_cont > :nth-child(1)),

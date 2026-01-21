@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Header from '$lib/comps/header.svelte';
 	import Button from '$lib/comps/btn.svelte';
-	import logoIcon from '$lib/assets/favicon.svg';
 	import BezierCanvas from '$lib/comps/cnvs.svelte';
 	import { marked } from 'marked';
+	import Footer from '$lib/comps/footer.svelte';
 
 	import { isMobile } from '$lib/utils';
 	import { onMount } from 'svelte';
@@ -38,12 +38,14 @@
 		transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 300 }}
 	>
 		{#if !isMobileFlag}
-			<img src={logoIcon} alt="medialab's logo" />
+			<p>Trajectories of Engagement 2025</p>
 		{:else}
 			<h1>ABOUT</h1>
 		{/if}
 		{#await aboutText then text}
-			<p class="l">{@html text}</p>
+			<p class="l" transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}>
+				{@html text}
+			</p>
 		{/await}
 		<Button label="Get in touch with us" href="mailto:trajectoriesofengagement@sciencespo.fr" />
 	</div>
@@ -56,6 +58,8 @@
 	<BezierCanvas />
 {/if}
 
+<Footer />
+
 <style>
 	.about_container {
 		position: absolute;
@@ -63,9 +67,10 @@
 		left: 50%;
 		transform: translate(-50%);
 		width: 95ch;
-		row-gap: 20px;
+		row-gap: var(--space-xl);
 		background-color: var(--primary-light);
-		padding: 20px;
+		padding: var(--space-xl);
+		padding-bottom: var(--space-5xl);
 		white-space: pre-line;
 		justify-content: flex-start;
 		align-items: center;
@@ -73,8 +78,8 @@
 	}
 
 	img {
-		width: 30px;
-		height: 30px;
+		width: var(--space-2xl);
+		height: var(--space-2xl);
 	}
 
 	@media (max-width: 768px) {
@@ -85,7 +90,7 @@
 			transform: unset;
 			align-items: flex-start;
 			position: static;
-			margin-top: 80px;
+			margin-top: var(--space-6xl);
 		}
 	}
 </style>

@@ -26,7 +26,7 @@
 		<Button label="TRAJECTORIES" href="/" />
 		<Button img={BurgerIcon} href="burger_menu" />
 	{:else}
-		<Button label="EN" />
+		<!-- <Button label="EN" /> -->
 		<Button label="ABOUT" href="/about" />
 		<Button label="HOME" href="/" />
 	{/if}
@@ -43,7 +43,7 @@
 			in:slide={{ duration: 750, axis: 'y', easing: cubicOut, delay: 300 }}
 			out:slide={{ duration: 750, axis: 'y', easing: cubicOut }}
 		>
-			<Button label="EN" disabled={true} />
+			<!--<Button label="EN" disabled={true} />-->
 		</div>
 		<div
 			class="vertical_flex clickables"
@@ -71,20 +71,20 @@
 <style>
 	header {
 		position: fixed;
-		right: 20px;
+		right: var(--space-xl);
 		top: 0;
 		width: fit-content;
-		column-gap: 5px;
+		column-gap: var(--space-xs);
 		z-index: 40;
 
 		justify-content: flex-end;
-		padding: 20px 0px;
+		padding: var(--space-xl) 0px;
 		pointer-events: none;
 	}
 
 	:global(.generic_btn) {
 		height: 35px !important;
-		padding: 5px 10px !important;
+		padding: var(--space-xs) var(--space-m) !important;
 	}
 
 	.burger_menu {
@@ -104,7 +104,7 @@
 			left: 0px;
 			right: unset;
 			justify-content: space-between;
-			padding: 10px 20px;
+			padding: var(--space-m) var(--space-xl);
 			background-color: var(--primary-light);
 			align-items: center;
 			border-bottom: 1px solid var(--primary-dark);
@@ -126,16 +126,16 @@
 			position: fixed;
 			top: 0;
 			left: 0;
-			padding-top: 50px;
+			padding-top: var(--space-4xl);
 			display: flex;
 			align-items: flex-start;
 			justify-content: center;
 			width: 100%;
 			height: 100%;
-			padding: 20px;
+			padding: var(--space-xl);
 			background-color: white;
 			z-index: 43;
-			row-gap: 20px;
+			row-gap: var(--space-xl);
 			pointer-events: visible;
 			scroll-behavior: disabled;
 		}
@@ -148,14 +148,14 @@
 		.lang_switch {
 			display: flex;
 			position: absolute;
-			top: 60px;
-			column-gap: 5px;
+			top: var(--space-5xl);
+			column-gap: var(--space-xs);
 		}
 
 		.bottom_text {
 			bottom: 0px;
 			top: unset !important;
-			padding-bottom: 20px;
+			padding-bottom: var(--space-xl);
 		}
 	}
 </style>

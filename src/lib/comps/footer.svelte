@@ -1,6 +1,3 @@
-<script>
-</script>
-
 <footer>
 	<p class="s">Trajectories of Engagement 2025</p>
 </footer>
@@ -20,7 +17,7 @@
 
 	@media (max-width: 768px) {
 		footer {
-			background-color: white;
+			display: none;
 		}
 	}
 </style>

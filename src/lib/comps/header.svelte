@@ -100,7 +100,7 @@
 			left: 0px;
 			right: unset;
 			justify-content: space-between;
-			padding: var(--space-m) var(--space-xl);
+			padding: 0px var(--space-m);
 			background-color: var(--primary-light);
 			align-items: center;
 			border-bottom: 1px solid var(--primary-dark);

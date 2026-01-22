@@ -27,4 +27,10 @@
 		white-space: nowrap;
 		z-index: 20;
 	}
+
+	@media (max-width: 768px) {
+		.info_container {
+			display: none;
+		}
+	}
 </style>

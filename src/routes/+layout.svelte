@@ -200,7 +200,7 @@
 		}
 
 		:global(.return_btn_container) {
-			display: none;
+			display: none !important;
 		}
 	}
 

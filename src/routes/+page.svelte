@@ -200,7 +200,7 @@
 
 	@media (max-width: 768px) {
 		.hero_container {
-			top: var(--space-6xl);
+			top: var(--space-4xl);
 			width: 90%;
 		}
 

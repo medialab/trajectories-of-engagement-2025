@@ -20,13 +20,7 @@
 </script>
 
 <svelte:head>
-	<title>Trajectories of Engagement 2025</title>
-	<meta
-		name="description"
-		content="A research showcase exploring engagement across culture, media and technology."
-	/>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-
 	<link rel="icon" href={favicon} />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
@@ -36,23 +30,6 @@
 	/>
 
 	<meta name="theme-color" content="#111111" />
-
-	<meta property="og:title" content="Trajectories of Engagement 2025" />
-	<meta
-		property="og:description"
-		content="A research showcase exploring engagement across culture, media and technology."
-	/>
-	<meta property="og:type" content="website" />
-
-	<meta property="og:url" content={baseUrl} />
-	<meta property="og:site_name" content="Trajectories of Engagement 2025" />
-
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Trajectories of Engagement 2025" />
-	<meta
-		name="twitter:description"
-		content="A research showcase exploring engagement across culture, media and technology."
-	/>
 </svelte:head>
 
 {@render children?.()}

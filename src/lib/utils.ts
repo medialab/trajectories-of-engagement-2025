@@ -74,3 +74,7 @@ export const carouselConfig = {
 } as const;
 
 export let baseUrl = 'https://trajectories.sciencespo.fr';
+
+export let ogDescription =
+	'A research showcase exploring engagement across culture, media and technology.';
+export let ogTitle = 'Trajectories of Engagement 2025';

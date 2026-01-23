@@ -4,7 +4,7 @@
 	import Header from '$lib/comps/header.svelte';
 	import BezierCanvas from '$lib/comps/canvas.svelte';
 	import { goto } from '$app/navigation';
-	import { isMobile, baseUrl } from '$lib/utils';
+	import { isMobile, baseUrl, ogTitle, ogDescription } from '$lib/utils';
 	import { resolve } from '$app/paths';
 	import { afterNavigate } from '$app/navigation';
 	import { fade, slide } from 'svelte/transition';
@@ -60,8 +60,19 @@
 </script>
 
 <svelte:head>
+	<title>{ogTitle}</title>
+	<meta property="og:title" content={ogTitle} />
+	<meta property="og:site_name" content={ogTitle} />
+	<meta name="twitter:card" content={ogTitle} />
+	<meta name="twitter:title" content={ogTitle} />
 	<meta property="og:image" content={`${baseUrl}/Thumb.jpg`} />
 	<meta name="twitter:image" content={`${baseUrl}/Thumb.jpg`} />
+	<meta name="description" content={ogDescription} />
+	<meta property="og:description" content={ogDescription} />
+	<meta name="twitter:description" content={ogDescription} />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content={baseUrl} />
+	<link rel="canonical" href={baseUrl} />
 </svelte:head>
 
 <Header />

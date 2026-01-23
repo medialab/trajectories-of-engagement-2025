@@ -5,7 +5,7 @@
 	import { marked } from 'marked';
 	import Footer from '$lib/comps/footer.svelte';
 
-	import { isMobile } from '$lib/utils';
+	import { isMobile, baseUrl } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
 	import { slide } from 'svelte/transition';
@@ -26,6 +26,11 @@
 		loadElements = true;
 	});
 </script>
+
+<svelte:head>
+	<meta property="og:image" content={`${baseUrl}/Thumb.jpg`} />
+	<meta name="twitter:image" content={`${baseUrl}/Thumb.jpg`} />
+</svelte:head>
 
 <Header />
 <div class="return_btn_container">

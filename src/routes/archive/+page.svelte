@@ -4,7 +4,7 @@
 	import Header from '$lib/comps/header.svelte';
 	import BezierCanvas from '$lib/comps/canvas.svelte';
 	import { goto } from '$app/navigation';
-	import { isMobile } from '$lib/utils';
+	import { isMobile, baseUrl } from '$lib/utils';
 	import { resolve } from '$app/paths';
 	import { afterNavigate } from '$app/navigation';
 	import { fade, slide } from 'svelte/transition';
@@ -59,6 +59,11 @@
 	});
 </script>
 
+<svelte:head>
+	<meta property="og:image" content={`${baseUrl}/Thumb.jpg`} />
+	<meta name="twitter:image" content={`${baseUrl}/Thumb.jpg`} />
+</svelte:head>
+
 <Header />
 
 {#if isPageLoaded}
@@ -109,35 +114,21 @@
 			</thead>
 			<tbody class="t_body">
 				{#each sortedProjects() as project, index}
-					{#if isPageLoaded}
-						<tr
-							id="row"
-							onclick={(e: any) => {
-								e.stopPropagation();
-								const resolvedPath = resolve(`/projects/${project.metadata.id}`);
-								goto(resolvedPath);
-							}}
-						>
-							<th scope="row" class="t_num">({index + 1})</th>
-							<td id="year"
-								>{project.metadata.year?.trim() ? project.metadata.year : '2020-2023'}</td
-							>
-							<td id="title">{project.metadata.title?.trim() ? project.metadata.title : ''}</td>
-							<td id="project_leaders"
-								>{project.metadata.project_leaders?.trim()
-									? project.metadata.project_leaders
-									: 'Donato Ricci'}</td
-							>
-							<td id="research_center"
-								>{project.metadata.research_center?.trim()
-									? project.metadata.research_center
-									: 'Medialab Sciences Po'}</td
-							>
-							<td id="link"
-								>{project.presentationURL?.trim() ? project.presentationURL : 'ytb.com'}</td
-							>
-						</tr>
-					{/if}
+					<tr
+						id="row"
+						onclick={(e) => {
+							e.stopPropagation();
+							const resolvedPath = resolve(`/projects/${project.metadata.id}`);
+							goto(resolvedPath);
+						}}
+					>
+						<th scope="row" class="t_num">({index + 1})</th>
+						<td id="year">{project.metadata.year?.trim() || ''}</td>
+						<td id="title">{project.metadata.title?.trim() || ''}</td>
+						<td id="project_leaders">{project.metadata.project_leaders?.trim() || ''}</td>
+						<td id="research_center">{project.metadata.research_center?.trim() || ''}</td>
+						<td id="link">{project.presentationURL?.trim() || ''}</td>
+					</tr>
 				{/each}
 			</tbody>
 		</table>
@@ -218,6 +209,11 @@
 		height: fit-content;
 		background-color: var(--primary-light);
 		z-index: 2;
+	}
+
+	td {
+		align-items: start;
+		justify-items: start;
 	}
 
 	@media (max-width: 768px) {

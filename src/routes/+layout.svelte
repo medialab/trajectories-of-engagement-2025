@@ -4,6 +4,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import { baseUrl } from '$lib/utils';
 	// @ts-ignore - types provided via ambient module until package is installed
 	import Tempus from 'tempus';
 
@@ -42,15 +43,8 @@
 		content="A research showcase exploring engagement across culture, media and technology."
 	/>
 	<meta property="og:type" content="website" />
-	<meta
-		property="og:image"
-		content="https://raw.githubusercontent.com/medialab/trajectories-of-engagement-2025/0aa1ea759a3ad925ca650164984cc5e54dbf55c2/static/Thumb.jpg"
-	/>
-	<meta
-		name="twitter:image"
-		content="https://raw.githubusercontent.com/medialab/trajectories-of-engagement-2025/0aa1ea759a3ad925ca650164984cc5e54dbf55c2/static/Thumb.jpg"
-	/>
-	<meta property="og:url" content="https://medialab.github.io/trajectories-of-engagement-2025/" />
+
+	<meta property="og:url" content={baseUrl} />
 	<meta property="og:site_name" content="Trajectories of Engagement 2025" />
 
 	<meta name="twitter:card" content="summary_large_image" />

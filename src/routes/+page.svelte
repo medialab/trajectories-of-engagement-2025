@@ -14,6 +14,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { isTextureReady } from '$lib/utils';
 	import { marked } from 'marked';
+	import { baseUrl } from '$lib/utils';
 	import Footer from '$lib/comps/footer.svelte';
 
 	let loadElements = $state(false);
@@ -28,6 +29,11 @@
 
 	let aboutText = $derived(marked.parse((Object.values(data.intro)[0] as any).markdown));
 </script>
+
+<svelte:head>
+	<meta property="og:image" content={`${baseUrl}/Thumb.jpg`} />
+	<meta name="twitter:image" content={`${baseUrl}/Thumb.jpg`} />
+</svelte:head>
 
 <Header />
 

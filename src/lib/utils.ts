@@ -73,4 +73,4 @@ export const carouselConfig = {
 	}
 } as const;
 
-export let baseUrl = 'https://medialab.github.io/trajectories-of-engagement-2025';
+export let baseUrl = 'https://trajectories.sciencespo.fr';

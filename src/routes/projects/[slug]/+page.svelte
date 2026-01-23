@@ -36,7 +36,7 @@
 	<meta property="og:type" content="article" />
 	<meta property="og:image" content={ogImage} />
 	<meta property="og:url" content={pageUrl} />
-	<meta property="og:site_name" content={`Trajectories of Engagement 2025 - ${ogTitle}`} />
+	<meta property="og:site_name" content={`Trajectories of Engagement - ${ogTitle}`} />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={ogTitle} />
 	<meta name="twitter:description" content={ogDescription} />

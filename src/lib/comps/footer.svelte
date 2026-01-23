@@ -1,5 +1,5 @@
 <footer>
-	<p class="s">Trajectories of Engagement 2025</p>
+	<p class="s">Trajectories of Engagement</p>
 </footer>
 
 <style>

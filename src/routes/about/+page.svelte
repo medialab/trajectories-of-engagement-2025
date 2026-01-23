@@ -54,7 +54,7 @@
 		transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 300 }}
 	>
 		{#if !isMobileFlag}
-			<p>Trajectories of Engagement 2025</p>
+			<p>Trajectories of Engagement</p>
 		{:else}
 			<h1>ABOUT</h1>
 		{/if}

@@ -8,25 +8,16 @@
 	import Poster from '$lib/comps/poster.svelte';
 	import { fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
-	import { menuOpen } from '$lib/utils';
+	import { menuOpen, baseUrl } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import Footer from '$lib/comps/footer.svelte';
 
 	const mainYtb = 'https://www.youtube.com/watch?v=BLa_1fw-pQA';
 
 	let { data }: PageProps = $props();
-	let scrollContainer: HTMLElement | null = null;
 
-	// Open Graph/Twitter card data
-	const BASE = 'https://medialab.github.io/trajectories-of-engagement-2025';
-	let pageUrl = $derived(
-		data.project?.metadata?.id ? `${BASE}/projects/${data.project.metadata.id}/` : BASE
-	);
-	let ogTitle = $derived(
-		data.project?.metadata?.title
-			? `${data.project.metadata.title} – Trajectories of Engagement 2025`
-			: 'Project – Trajectories of Engagement 2025'
-	);
+	let pageUrl = $derived(`${baseUrl}/projects/${data.project.metadata.id}/`);
+	let ogTitle = $derived(data.project.metadata.title);
 	let ogDescription = $derived(
 		data.project?.texts?.presentation ||
 			[data.project?.metadata?.project_leaders, data.project?.metadata?.research_center]
@@ -34,23 +25,7 @@
 				.join(' | ') ||
 			'A research showcase exploring engagement across culture, media and technology.'
 	);
-	let imagePath = $derived((data.annotatedPoster || data.originalPoster) as string | undefined);
-	let ogImage = $derived(
-		imagePath
-			? imagePath.startsWith('http')
-				? imagePath
-				: `${BASE}${imagePath.startsWith('/') ? imagePath : '/' + imagePath}`
-			: undefined
-	);
-
-	$effect(() => {
-		if (!scrollContainer) return;
-		scrollContainer.style.overflowY = $menuOpen ? 'hidden' : 'scroll';
-	});
-
-	onMount(() => {
-		scrollContainer = document.documentElement;
-	});
+	let ogImage = $derived(`${baseUrl}/og/${data.project.metadata.id}.jpg`);
 </script>
 
 <svelte:head>
@@ -59,13 +34,13 @@
 	<meta property="og:title" content={ogTitle} />
 	<meta property="og:description" content={ogDescription} />
 	<meta property="og:type" content="article" />
-	{#if ogImage}<meta property="og:image" content={ogImage} />{/if}
+	<meta property="og:image" content={ogImage} />
 	<meta property="og:url" content={pageUrl} />
 	<meta property="og:site_name" content="Trajectories of Engagement 2025" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={ogTitle} />
 	<meta name="twitter:description" content={ogDescription} />
-	{#if ogImage}<meta name="twitter:image" content={ogImage} />{/if}
+	<meta name="twitter:image" content={ogImage} />
 </svelte:head>
 
 <div class="project_page_container">

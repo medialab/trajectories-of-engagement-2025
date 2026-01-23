@@ -112,11 +112,11 @@
 				</Youtube>
 			{/if}
 
-			{#if props.title}
+			<!--{#if props.title}
 				<footer>
-					<p>{props.title}</p>
+					<p>{props.title.slice(0, 20)}</p>
 				</footer>
-			{/if}
+			{/if}-->
 		</div>
 	{/if}
 {/await}

@@ -43,7 +43,7 @@
 			<h1>ABOUT</h1>
 		{/if}
 		{#await aboutText then text}
-			<p class="l" transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}>
+			<p class="m" transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}>
 				{@html text}
 			</p>
 		{/await}

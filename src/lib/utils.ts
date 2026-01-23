@@ -72,3 +72,5 @@ export const carouselConfig = {
 		windScale: [0.8, 1.2] as [number, number]
 	}
 } as const;
+
+export let baseUrl = 'https://medialab.github.io/trajectories-of-engagement-2025';

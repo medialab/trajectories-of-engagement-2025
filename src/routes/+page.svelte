@@ -26,7 +26,7 @@
 		loadElements = true;
 	});
 
-	let aboutText = $derived(marked.parse((Object.values(data.intro)[0] as any).markdown));
+	let aboutText = $derived(marked.parse((Object.values(data.intro)[0] as any)));
 </script>
 
 <Header />

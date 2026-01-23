@@ -41,6 +41,8 @@
 	<meta name="twitter:title" content={ogTitle} />
 	<meta name="twitter:description" content={ogDescription} />
 	<meta name="twitter:image" content={ogImage} />
+
+	<link rel="canonical" href={pageUrl} />
 </svelte:head>
 
 <div class="project_page_container">

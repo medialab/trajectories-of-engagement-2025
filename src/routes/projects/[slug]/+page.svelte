@@ -131,6 +131,8 @@
 		grid-template-columns: repeat(20, 1fr);
 		grid-column-gap: var(--space-m);
 		margin: 0px auto var(--space-6xl) auto;
+		padding-left: var(--space-l);
+		padding-right: var(--space-l);
 		width: 100%;
 		max-width: var(--page-max-width);
 		padding-top: var(--space-6xl);

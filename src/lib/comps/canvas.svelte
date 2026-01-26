@@ -222,4 +222,8 @@
 		-ms-user-select: none;
 		user-select: none;
 	}
+
+	svg::-webkit-scrollbar {
+		display: none;
+	}
 </style>

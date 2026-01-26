@@ -16,7 +16,13 @@
 	let isMobileFlag = $state(isMobile());
 	let loadElements = $state(false);
 
-	let aboutText = $derived(marked.parse((Object.values(data.intro)[0] as any).markdown));
+	const getIntroMarkdown = (intro: unknown) => {
+		const fromBook = intro && typeof intro === 'object' ? (intro as any).fromBook : null;
+		const markdown = fromBook && typeof fromBook === 'object' ? (fromBook as any).markdown : '';
+		return typeof markdown === 'string' ? markdown : '';
+	};
+
+	let aboutText = $derived(marked.parse(getIntroMarkdown(data?.intro)));
 
 	onMount(() => {
 		isMobileFlag = isMobile();
@@ -64,6 +70,19 @@
 			</p>
 		{/await}
 		<Button label="Get in touch with us" href="mailto:trajectoriesofengagement@sciencespo.fr" />
+		<div class="credits vertical_flex">
+			<p class="m"><b>Credits</b></p>
+			<p class="m"><span>Project design:</span>Marta Severo, Donato Ricci, Robin de Mourat</p>
+			<p class="m"><span>Chapters editing:</span>Élie Petit, Marta Severo, Donato Ricci</p>
+			<p class="m"><span>Book design:</span>Donato Ricci</p>
+			<p class="m"><span>Website design & development:</span>Tommaso Prinetti</p>
+			<p class="m"><span>Preliminary inquiries and workshop preparation:</span> Alex Pellier</p>
+			<p class="m"><span>Posters design:</span> Alex Pellier, Donato Ricci, Robin de Mourat</p>
+			<p class="m">
+				<span>Workshop design and animation:</span> Robin de Mourat, Marta Severo, Alex Pellier
+			</p>
+			<p class="m"><span>Videos captation and editing:</span> la SCOP des sales gosses</p>
+		</div>
 	</div>
 {/if}
 
@@ -89,6 +108,14 @@
 		justify-content: flex-start;
 		align-items: center;
 		z-index: 10;
+	}
+
+	.credits {
+		width: 100%;
+		align-items: flex-start;
+		row-gap: var(--space-xs);
+		border-top: 2px solid var(--primary-dark);
+		padding-top: var(--space-m);
 	}
 
 	@media (max-width: 768px) {

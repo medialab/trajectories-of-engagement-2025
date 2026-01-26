@@ -8,18 +8,28 @@
 
 	let props = $props();
 
+	const toStringValue = (value: unknown) => (typeof value === 'string' ? value : '');
+
 	// Bindable playback state exposed to parents and wired to <Youtube>
 	let play: boolean = $state(false);
 	let isPlaying: boolean = $state(false);
 	let currentTime: number = $state(0);
 	let currentTimeIndex: number = $state(0);
 
-	let videoUrl: string = props.src;
-	let isYouTube: boolean = videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be');
+	let videoUrl = $derived.by(() => toStringValue(props.src));
+	let isYouTube = $derived.by(
+		() => videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')
+	);
+	let hasVideo = $derived.by(() => videoUrl.length > 0);
 	let timestamps: number[] = $state([]);
 
-	let youtubeId: Promise<string> = $derived(
+	let youtubeId: Promise<string> = $state(
 		new Promise((resolve) => {
+			if (!isYouTube || !videoUrl) {
+				resolve('');
+				return;
+			}
+
 			if (videoUrl.includes('youtu.be/')) {
 				// Handle youtu.be/VIDEO_ID format
 				const videoId = videoUrl.split('youtu.be/')[1].split('?')[0];
@@ -37,7 +47,8 @@
 	);
 
 	const calculateSegments = () => {
-		if (!props.excerpts) return;
+		timestamps = [];
+		if (!Array.isArray(props.excerpts)) return;
 		props.excerpts.forEach((excerpt: any) => {
 			if (excerpt.timecodes && excerpt.timecodes.length > 0) {
 				const startTime = timecodeToSeconds(excerpt.timecodes[0], 25);
@@ -45,7 +56,9 @@
 				timestamps.push(startTime);
 			}
 		});
-		currentTime = timestamps[0];
+		if (timestamps.length > 0) {
+			currentTime = timestamps[0];
+		}
 	};
 
 	const goToNextSegment = () => {
@@ -67,29 +80,33 @@
 	});
 </script>
 
-{#await youtubeId}
-	<p>loading...</p>
-{:then videoId}
-	{#if typeof videoId === 'string'}
-		<div class="vid_cont vertical_flex">
-			{#if props.excerpts && isPlaying === true}
-				<button
-					class="next_vid horizontal_flex"
-					onclick={() => goToNextSegment()}
-					transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y' }}
-				>
-					<p class="s">NEXT SEGMENT →</p>
-				</button>
-				<button
-					class="prev_vid horizontal_flex"
-					onclick={() => goToPreviousSegment()}
-					transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y' }}
-				>
-					<p class="s">PREVIOUS SEGMENT ←</p>
-				</button>
-			{/if}
+{#if !hasVideo}
+	<div class="vid_empty">
+		<p class="s">No video available</p>
+	</div>
+{:else}
+	{#await youtubeId}
+		<p>loading...</p>
+	{:then videoId}
+		{#if isYouTube && videoId}
+			<div class="vid_cont vertical_flex">
+				{#if Array.isArray(props.excerpts) && isPlaying === true}
+					<button
+						class="next_vid horizontal_flex"
+						onclick={() => goToNextSegment()}
+						transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y' }}
+					>
+						<p class="s">NEXT SEGMENT →</p>
+					</button>
+					<button
+						class="prev_vid horizontal_flex"
+						onclick={() => goToPreviousSegment()}
+						transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y' }}
+					>
+						<p class="s">PREVIOUS SEGMENT ←</p>
+					</button>
+				{/if}
 
-			{#if isYouTube}
 				<Youtube
 					id={videoId as string}
 					bind:play={play as boolean}
@@ -110,16 +127,20 @@
 						</button>
 					{/snippet}
 				</Youtube>
-			{/if}
 
-			<!--{#if props.title}
-				<footer>
-					<p>{props.title.slice(0, 20)}</p>
-				</footer>
-			{/if}-->
-		</div>
-	{/if}
-{/await}
+				<!--{#if props.title}
+					<footer>
+						<p>{props.title.slice(0, 20)}</p>
+					</footer>
+				{/if}-->
+			</div>
+		{:else}
+			<div class="vid_empty">
+				<p class="s">No video available</p>
+			</div>
+		{/if}
+	{/await}
+{/if}
 
 <style>
 	.vid_cont {
@@ -133,18 +154,16 @@
 		aspect-ratio: 16/9;
 	}
 
-	:global(.you__tube) {
-		height: fit-content;
+	.vid_empty {
+		width: 100%;
+		border: 2px solid var(--primary-dark);
+		background-color: var(--primary-light);
+		padding: var(--space-l);
+		text-align: center;
 	}
 
-	footer {
-		background-color: var(--primary-color);
-		bottom: 0;
-		left: 0;
-		right: 0;
-		z-index: 1;
-		padding: var(--space-s) var(--space-ml);
-		position: relative;
+	:global(.you__tube) {
+		height: fit-content;
 	}
 
 	button {

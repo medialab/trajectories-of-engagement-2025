@@ -27,7 +27,13 @@
 		loadElements = true;
 	});
 
-	let aboutText = $derived(marked.parse((Object.values(data.intro)[0] as any).markdown));
+	const getIntroMarkdown = (intro: unknown) => {
+		const fromBook = intro && typeof intro === 'object' ? (intro as any).fromBook : null;
+		const markdown = fromBook && typeof fromBook === 'object' ? (fromBook as any).markdown : '';
+		return typeof markdown === 'string' ? markdown : '';
+	};
+
+	let aboutText = $derived(marked.parse(getIntroMarkdown(data?.intro)));
 </script>
 
 <svelte:head>
@@ -62,17 +68,27 @@
 		transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}
 	>
 		<div class="vertical_flex">
-			<h1>Trajectories of engagement</h1>
-			{#if data.intro}
+			<h1>Trajectories<br />of engagement</h1>
+			{#if aboutText}
 				<p class="m line_clamp">
 					{@html aboutText}
 				</p>
 			{/if}
+			<div class="horizontal_flex">
+				{#each data.authors as author}
+					<p class="s">
+						{#if author.role === 'creator'}
+							{author.firstName} {author.lastName}
+						{/if}
+					</p>
+				{/each}
+			</div>
 		</div>
 
 		<div class="horizontal_flex">
-			<Button label="Access the archive ↓" href="/archive" />
 			<Button label="Read more →" href="/about" />
+			<Button label="Access the archive ↓" href="/archive" />
+			<Button label="Read the book" href="https://hal.science/hal-05459145v1" />
 			<!-- <Button label="Get this bezier" onClick={() => bezRef?.downloadSvg()} /> -->
 		</div>
 	</div>
@@ -132,6 +148,14 @@
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		line-clamp: 5;
+	}
+
+	@supports not (-webkit-line-clamp: 1) {
+		.line_clamp {
+			display: block;
+			line-height: 1.2;
+			max-height: calc(1.2em * 5);
+		}
 	}
 
 	:global(.line_clamp h2) {
@@ -213,6 +237,10 @@
 		-moz-user-select: none;
 		-ms-user-select: none;
 		cursor: cell;
+	}
+
+	.loader_screen::-webkit-scrollbar {
+		display: none;
 	}
 
 	@media (max-width: 768px) {

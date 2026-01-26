@@ -7,6 +7,9 @@
 
 	let props = $props();
 
+	const isNonEmptyString = (value: unknown): value is string =>
+		typeof value === 'string' && value.trim().length > 0;
+
 	let initialSlide = new Tween(20, { duration: 2000, easing: quartInOut });
 
 	let mixValue = $state(100);
@@ -15,6 +18,10 @@
 	let minValue = $state(0);
 
 	const mixOpacity = $derived(mixValue / 100);
+	const hasPosters = $derived.by(
+		() => isNonEmptyString(props.originalPoster) && isNonEmptyString(props.annotatedPoster)
+	);
+	const safeId = $derived.by(() => (typeof props.id === 'string' ? props.id.trim() : ''));
 
 	function slideAnimation() {
 		initialSlide.set(100);
@@ -24,6 +31,8 @@
 	}
 
 	async function downloadPoster(annotatedURl: string, originalURl: string, title: string) {
+		const safeTitle = typeof title === 'string' ? title.trim() : '';
+		if (!safeTitle) return;
 		let sourceURl: string;
 
 		if (mixValue < 50) {
@@ -37,7 +46,7 @@
 		const url = URL.createObjectURL(blob);
 		const link = document.createElement('a');
 		link.href = url;
-		link.download = `${title}.png`;
+		link.download = `${safeTitle}.png`;
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
@@ -55,11 +64,11 @@
 	});
 </script>
 
-{#if props.originalPoster !== '' && props.annotatedPoster !== ''}
+{#if hasPosters}
 	<div class="post_img">
 		<p
 			class="mix_value"
-			style="left: {Math.max(12, Math.min(88, Math.round(mixValue)))}%; text-wrap: nowrap"
+			style="left: {Math.max(12, Math.min(88, Math.round(mixValue)))}%; white-space: nowrap"
 		>
 			← Grab here to slide! →
 		</p>
@@ -78,18 +87,18 @@
 		<img
 			class="base_img"
 			src={props.originalPoster}
-			alt={props.id}
+			alt={safeId}
 			style="opacity: {1 - mixOpacity};"
 		/>
 		<img
 			class="blend_img"
 			src={props.annotatedPoster}
-			alt="{props.id}_annotated"
+			alt={safeId ? `${safeId}_annotated` : ''}
 			style="opacity: {mixOpacity};"
 		/>
 		<button
 			class="download_btn"
-			onclick={() => downloadPoster(props.annotatedPoster, props.originalPoster, props.id.trim())}
+			onclick={() => downloadPoster(props.annotatedPoster, props.originalPoster, safeId)}
 			aria-label="Download poster"
 		>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
@@ -200,8 +209,13 @@
 		overflow: hidden;
 		border: 0.5px solid black;
 		aspect-ratio: 0.69;
+		mix-blend-mode: normal;
+	}
 
-		mix-blend-mode: color-burn;
+	@supports (mix-blend-mode: color-burn) {
+		.post_img {
+			mix-blend-mode: color-burn;
+		}
 	}
 
 	.post_img > img {

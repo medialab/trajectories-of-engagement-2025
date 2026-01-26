@@ -18,6 +18,9 @@
 	let sortedBy = $state('year');
 	let isPageLoaded = $state(false);
 
+	const toText = (value: unknown) => (value == null ? '' : String(value));
+	const safeTrim = (value: unknown) => toText(value).trim();
+
 	afterNavigate(() => {
 		isPageLoaded = true;
 	});
@@ -32,13 +35,13 @@
 				return m ? parseInt(m[0], 10) : -Infinity;
 			}
 			case 'title':
-				return project?.metadata?.title ?? '';
+				return toText(project?.metadata?.title);
 			case 'project_leaders':
-				return project?.metadata?.project_leaders ?? '';
+				return toText(project?.metadata?.project_leaders);
 			case 'research_center':
-				return project?.metadata?.research_center ?? '';
+				return toText(project?.metadata?.research_center);
 			case 'presentationURL':
-				return project?.presentationURL ?? '';
+				return toText(project?.presentationURL);
 			default:
 				return '';
 		}
@@ -134,11 +137,11 @@
 						}}
 					>
 						<th scope="row" class="t_num">({index + 1})</th>
-						<td id="year">{project.metadata.year?.trim() || ''}</td>
-						<td id="title">{project.metadata.title?.trim() || ''}</td>
-						<td id="project_leaders">{project.metadata.project_leaders?.trim() || ''}</td>
-						<td id="research_center">{project.metadata.research_center?.trim() || ''}</td>
-						<td id="link">{project.presentationURL?.trim() || ''}</td>
+						<td id="year">{safeTrim(project.metadata?.year)}</td>
+						<td id="title">{safeTrim(project.metadata?.title)}</td>
+						<td id="project_leaders">{safeTrim(project.metadata?.project_leaders)}</td>
+						<td id="research_center">{safeTrim(project.metadata?.research_center)}</td>
+						<td id="link">{safeTrim(project.presentationURL)}</td>
 					</tr>
 				{/each}
 			</tbody>
@@ -156,6 +159,7 @@
 		right: var(--space-xl);
 		width: auto;
 		z-index: 10;
+		background-color: var(--primary-light);
 		background-color: color-mix(in srgb, var(--primary-light) 95%, transparent);
 	}
 

@@ -3,8 +3,8 @@
 A research showcase exploring how researchers and external actors meet, collaborate and co‑create knowledge across physical and digital settings to address public issues. The site presents a curated set of projects from the humanities and social sciences, highlighting their participatory “trajectories of engagement,” the socio‑technical choices involved, and reflections from practitioners.
 
 > A living observatory of participatory research practices across HSS projects.
-> 
-🌐 **Website**: [https://medialab.github.io/trajectories-of-engagement-2025/](https://medialab.github.io/trajectories-of-engagement-2025/)
+>
+> 🌐 **Website**: [https://medialab.github.io/trajectories-of-engagement-2025/](https://medialab.github.io/trajectories-of-engagement-2025/)
 
 <details>
 <summary><strong>Abstract</strong></summary>
@@ -33,52 +33,52 @@ This research project aims to explore and describe the different forms that traj
 
 ### Data model fields
 
-| Field | Type | Description |
-| --- | --- | --- |
-| `metadata.id` | string | Route slug and poster filename stem |
-| `metadata.title` | string | Project title |
-| `metadata.year` | string | Year or range (e.g., `2020 - 2023`) |
-| `metadata.project_leaders` | string | Author(s) / coordinator(s) |
-| `metadata.research_center` | string | Institution(s) |
-| `presentationURL` | string | Video URL (YouTube supported) |
-| `texts.presentation` | string | Project presentation (optional) |
-| `texts.experience` | string | Field notes / lived experience (optional) |
-| `texts.concept` | string | Conceptual framing (optional) |
-| `excerpts[].type` | string | Segment label (e.g., `discussion`, `debriefing`) |
-| `excerpts[].timecodes[]` | string[] | Start–end pairs as `m:s` or `h:m:s` strings |
+| Field                      | Type     | Description                                      |
+| -------------------------- | -------- | ------------------------------------------------ |
+| `metadata.id`              | string   | Route slug and poster filename stem              |
+| `metadata.title`           | string   | Project title                                    |
+| `metadata.year`            | string   | Year or range (e.g., `2020 - 2023`)              |
+| `metadata.project_leaders` | string   | Author(s) / coordinator(s)                       |
+| `metadata.research_center` | string   | Institution(s)                                   |
+| `presentationURL`          | string   | Video URL (YouTube supported)                    |
+| `texts.presentation`       | string   | Project presentation (optional)                  |
+| `texts.experience`         | string   | Field notes / lived experience (optional)        |
+| `texts.concept`            | string   | Conceptual framing (optional)                    |
+| `excerpts[].type`          | string   | Segment label (e.g., `discussion`, `debriefing`) |
+| `excerpts[].timecodes[]`   | string[] | Start–end pairs as `m:s` or `h:m:s` strings      |
 
 ### Example project entry
 
 ```json
 {
-  "metadata": {
-    "id": "coeso",
-    "title": "COESO : Collaborative Engagement on Societal Issues",
-    "year": "2020 - 2023",
-    "project_leaders": "Alessia Smaniotto",
-    "research_center": "EHESS / OpenEdition"
-  },
-  "texts": {
-    "presentation": "…",
-    "experience": "…",
-    "concept": "…"
-  },
-  "presentationURL": "https://www.youtube.com/watch?v=YtZkeY22YYM",
-  "excerpts": [
-    { "type": "discussion", "timecodes": ["1:11:46", "1:19:59"] },
-    { "type": "discussion", "timecodes": ["1:26:35", "1:30:51"] }
-  ]
+	"metadata": {
+		"id": "coeso",
+		"title": "COESO : Collaborative Engagement on Societal Issues",
+		"year": "2020 - 2023",
+		"project_leaders": "Alessia Smaniotto",
+		"research_center": "EHESS / OpenEdition"
+	},
+	"texts": {
+		"presentation": "…",
+		"experience": "…",
+		"concept": "…"
+	},
+	"presentationURL": "https://www.youtube.com/watch?v=YtZkeY22YYM",
+	"excerpts": [
+		{ "type": "discussion", "timecodes": ["1:11:46", "1:19:59"] },
+		{ "type": "discussion", "timecodes": ["1:26:35", "1:30:51"] }
+	]
 }
 ```
 
 ## Routes
 
-| Path | Section | Notes |
-| --- | --- | --- |
-| `/` | Home | Interactive 3D poster carousel |
-| `/archive` | Archive | Sort by year, title, author, institution, link |
+| Path               | Section | Notes                                           |
+| ------------------ | ------- | ----------------------------------------------- |
+| `/`                | Home    | Interactive 3D poster carousel                  |
+| `/archive`         | Archive | Sort by year, title, author, institution, link  |
 | `/projects/[slug]` | Project | Video with curated segments + poster comparison |
-| `/about` | About | Project background and contact link |
+| `/about`           | About   | Project background and contact link             |
 
 ## Credits
 
@@ -99,4 +99,3 @@ This research project aims to explore and describe the different forms that traj
 - [x] Project pages with YouTube segments
 - [x] Poster comparison slider (original vs annotated)
 - [x] About page and mailto contact
-

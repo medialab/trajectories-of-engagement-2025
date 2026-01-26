@@ -8,5 +8,5 @@ export const load: PageLoad = async () => {
 	}) as Record<string, string>;
 	const projects = (data as any).default?.projects ?? (data as any).projects ?? [];
 	const intro = data.intro;
-	return { projects, posters: postersRaw, intro };
+	return { projects, posters: postersRaw, intro, authors: data.metadata.meta_authors };
 };

@@ -132,8 +132,8 @@
 			background-color: white;
 			z-index: 43;
 			row-gap: var(--space-xl);
-			pointer-events: visible;
-			scroll-behavior: disabled;
+			pointer-events: auto;
+			scroll-behavior: auto;
 		}
 
 		:global(.burger_menu > .clickables > button > p) {

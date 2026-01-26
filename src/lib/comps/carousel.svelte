@@ -45,12 +45,13 @@
 
 	const { onPointerEnter: cursorEnter, onPointerLeave } = useCursor();
 
-	const handlePointerEnter = (d: any) => {
+	const handlePointerEnter = (d?: any) => {
 		if (isMobileFlag) return;
 		cursorEnter();
-		$currentTag = d.title;
-		$currentAuthor = d.project_leaders;
-		$currentResearchCenter = d.research_center;
+		const title = typeof d?.title === 'string' && d.title.trim().length > 0 ? d.title : '';
+		$currentTag = title || 'No data to be displayed';
+		$currentAuthor = typeof d?.project_leaders === 'string' ? d.project_leaders : '';
+		$currentResearchCenter = typeof d?.research_center === 'string' ? d.research_center : '';
 	};
 
 	let spacing = carouselConfig.spacing;
@@ -65,8 +66,36 @@
 	});
 
 	const startZ = carouselConfig.startZ;
-	const groupTotalLength = props.projects.length * spacing;
-	const middleZ = startZ + Math.floor(props.projects.length / 2) * spacing;
+
+	const getProjectId = (project: any) => {
+		if (!project?.metadata) return '';
+		const value = project.metadata.id;
+		return typeof value === 'string' ? value.trim() : '';
+	};
+
+	function getPoster(id: string) {
+		if (!props.posters || !id) return undefined;
+		const projectPoster = props.posters[`/src/lib/assets/posters/${id}.png`];
+		return projectPoster;
+	}
+
+	const projectsList = $derived.by(() => (Array.isArray(props.projects) ? props.projects : []));
+	const renderableProjects = $derived.by(() =>
+		projectsList
+			.map((project: any) => {
+				const id = getProjectId(project);
+				const poster = id ? getPoster(id) : undefined;
+				return { project, id, poster };
+			})
+			.filter((item: { id: string; poster?: string }) => item.id && item.poster)
+	);
+	const renderCount = $derived.by(() => renderableProjects.length);
+	const hasMissingData = $derived.by(
+		() => projectsList.length > 0 && renderableProjects.length < projectsList.length
+	);
+
+	const groupTotalLength = $derived.by(() => renderCount * spacing);
+	const middleZ = $derived.by(() => startZ + Math.floor(renderCount / 2) * spacing);
 
 	let meshes: ThreeMesh[] = [];
 
@@ -85,9 +114,14 @@
 		}
 	>();
 
-	let hoverToScale = $state<number[]>(Array(props.projects.length).fill(0));
-	let targetScaleByIndex = $state<number[]>(Array(props.projects.length).fill(0));
+	let hoverToScale = $state<number[]>([]);
+	let targetScaleByIndex = $state<number[]>([]);
 	let hoverAnimFrame: number | null = null;
+
+	$effect(() => {
+		hoverToScale = Array(renderCount).fill(0);
+		targetScaleByIndex = Array(renderCount).fill(0);
+	});
 
 	function animateHoverScales() {
 		hoverAnimFrame = null;
@@ -110,6 +144,7 @@
 	}
 
 	function setHoverTarget(index: number, value: number) {
+		if (index < 0 || index >= targetScaleByIndex.length) return;
 		targetScaleByIndex[index] = value;
 		if (hoverAnimFrame === null) hoverAnimFrame = requestAnimationFrame(animateHoverScales);
 	}
@@ -117,8 +152,10 @@
 	const originalZByMesh = new WeakMap<ThreeMesh, Float32Array>();
 
 	function cardBoundTeleport(zValue: number): number {
+		const total = groupTotalLength;
+		if (total <= 0) return startZ;
 		const min = startZ;
-		const max = startZ + groupTotalLength;
+		const max = startZ + total;
 		const range = max - min;
 		return ((((zValue - min) % range) + range) % range) + min;
 	}
@@ -170,12 +207,6 @@
 			mesh.geometry.computeVertexNormals?.();
 		}
 		invalidate();
-	}
-
-	function getPoster(id: string) {
-		if (!props.posters || !id) return undefined;
-		const projectPoster = props.posters[`/src/lib/assets/posters/${id}.png`];
-		return projectPoster;
 	}
 
 	interactivity({ target: props.containerEl });
@@ -246,10 +277,13 @@
 	});
 </script>
 
-<T.Group rotation={[0.3, -0.5, 0]}>
-	{#each props.projects as project, index}
-		{@const poster = getPoster(project.metadata.id)}
-		{#if poster}
+{#if renderCount === 0}
+	<div class="carousel_notice">No data to be displayed</div>
+{:else}
+	<T.Group rotation={[0.3, -0.5, 0]}>
+		{#each renderableProjects as item, index}
+			{@const project = item.project}
+			{@const poster = item.poster}
 			{@const texture = useTexture(poster as string).then((texture) => texture)}
 			{#await texture then map}
 				{($isTextureReady = true)}
@@ -292,7 +326,7 @@
 						if (!$isTextureReady) return;
 						e.stopPropagation();
 						setHoverTarget(index, carouselConfig.hover.scale);
-						handlePointerEnter(project.metadata);
+						handlePointerEnter(project?.metadata);
 						props.onHoverPoster?.();
 					}}
 					onpointerleave={(e: any) => {
@@ -304,7 +338,7 @@
 					onclick={(e: any) => {
 						e.stopPropagation();
 						if (!$isTextureReady) return;
-						const resolvedPath = resolve(`/projects/${project.metadata.id}`);
+						const resolvedPath = resolve(`/projects/${item.id}`);
 						goto(resolvedPath);
 					}}
 					interactive={true}
@@ -324,9 +358,9 @@
 					<T.MeshBasicMaterial {map} toneMapped={false} />
 				</T.Mesh>
 			{/await}
-		{/if}
-	{/each}
-</T.Group>
+		{/each}
+	</T.Group>
+{/if}
 
 <T.OrthographicCamera
 	position={[-20, -6, middleZ + 15]}
@@ -339,3 +373,29 @@
 ></T.OrthographicCamera>
 
 <T.AmbientLight intensity={1000} color="white" />
+
+{#if hasMissingData}
+	<div class="carousel_notice subtle">Some items have no data to display</div>
+{/if}
+
+<style>
+	.carousel_notice {
+		position: fixed;
+		top: var(--space-xl);
+		left: 50%;
+		transform: translateX(-50%);
+		padding: var(--space-xs) var(--space-m);
+		background-color: var(--primary-light);
+		border: 2px solid var(--primary-dark);
+		font-size: 14px;
+		z-index: 2;
+		pointer-events: none;
+	}
+
+	.carousel_notice.subtle {
+		top: auto;
+		bottom: var(--space-xl);
+		font-size: 12px;
+		opacity: 0.7;
+	}
+</style>

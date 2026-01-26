@@ -16,16 +16,31 @@
 
 	let { data }: PageProps = $props();
 
-	let pageUrl = $derived(`${baseUrl}/projects/${data.project.metadata.id}/`);
-	let ogTitle = $derived(data.project.metadata.title);
-	let ogDescription = $derived(
-		data.project?.texts?.presentation ||
-			[data.project?.metadata?.project_leaders, data.project?.metadata?.research_center]
-				.filter(Boolean)
-				.join(' | ') ||
-			'A research showcase exploring engagement across culture, media and technology.'
+	const fallbackTitle = 'Trajectories of Engagement 2025';
+	const fallbackDescription =
+		'A research showcase exploring engagement across culture, media and technology.';
+	const fallbackImage = `${baseUrl}/Thumb.jpg`;
+
+	const toText = (value: unknown) => (value == null ? '' : String(value));
+	const toTrimmed = (value: unknown) => toText(value).trim();
+
+	let project = $derived(data?.project ?? null);
+	let projectId = $derived(toTrimmed(project?.metadata?.id));
+	let projectTitle = $derived(toTrimmed(project?.metadata?.title));
+	let displayTitle = $derived(projectTitle || 'No data to be displayed');
+	let projectYear = $derived(toText(project?.metadata?.year));
+	let projectLeaders = $derived(toText(project?.metadata?.project_leaders));
+	let projectResearchCenter = $derived(toText(project?.metadata?.research_center));
+	let hasSegments = $derived(Array.isArray(project?.excerpts) && project.excerpts.length > 0);
+
+	let metaSummary = $derived(
+		[projectLeaders, projectResearchCenter].filter((value) => value.trim().length > 0).join(' | ')
 	);
-	let ogImage = $derived(`${baseUrl}/og/${data.project.metadata.id}.jpg`);
+
+	let pageUrl = $derived(projectId ? `${baseUrl}/projects/${projectId}/` : baseUrl);
+	let ogTitle = $derived(projectTitle || fallbackTitle);
+	let ogDescription = $derived(project?.texts?.presentation || metaSummary || fallbackDescription);
+	let ogImage = $derived(projectId ? `${baseUrl}/og/${projectId}.jpg` : fallbackImage);
 </script>
 
 <svelte:head>
@@ -55,11 +70,10 @@
 	{#if data.project}
 		<div class="vertical_flex info_container" style="row-gap: var(--space-2xl);">
 			<div class="vertical_flex" style="background-color: var(--primary-light)">
-				<h1 id="pr_title">{data.project.metadata.title}</h1>
-				{#if data.project.metadata?.year || data.project.metadata?.project_leaders || data.project.metadata?.research_center}
-					<p class="m">
-						{data.project.metadata?.year} | {data.project.metadata?.project_leaders} | {data.project
-							.metadata?.research_center}
+				<h1 id="pr_title">{displayTitle}</h1>
+				{#if projectYear || projectLeaders || projectResearchCenter}
+					<p class="m" style="font-weight: bold;">
+						{projectYear} | {projectLeaders} | {projectResearchCenter}
 					</p>
 				{:else}
 					<p class="m">No metadata available</p>
@@ -73,14 +87,16 @@
 			<div class="vertical_flex" style="background-color: var(--primary-light)">
 				<Accordion text={data.project.texts?.experience} title="Experience" />
 				<Accordion text={data.project.texts?.concept} title="Concept" />
-				<Vid src={mainYtb} excerpts={data.project.excerpts} />
+				{#if hasSegments}
+					<Vid src={mainYtb} excerpts={data.project.excerpts} />
+				{/if}
 			</div>
 		</div>
 
 		<div class="media_cont" transition:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}>
-			<Vid title={data.project.metadata.title} src={data.project.presentationURL} />
+			<Vid title={projectTitle || fallbackTitle} src={data.project.presentationURL} />
 			<Poster
-				id={data.project.metadata.id}
+				id={projectId}
 				originalPoster={data.originalPoster}
 				annotatedPoster={data.annotatedPoster}
 			/>
@@ -145,13 +161,19 @@
 	:global(.media_cont > :nth-child(1)) {
 		order: 2;
 		align-self: flex-start;
-		mix-blend-mode: color-burn;
+		mix-blend-mode: normal;
 		max-width: 90%;
 		/* Overlap with the poster above by approximately half of the video's height */
 		/* Since the video is 16:9, half of its height is roughly 28% of its width. */
 		/* adjusted to account for the 90% max-width. */
 		margin-top: -26%;
 		z-index: 2;
+	}
+
+	@supports (mix-blend-mode: color-burn) {
+		:global(.media_cont > :nth-child(1)) {
+			mix-blend-mode: color-burn;
+		}
 	}
 
 	:global(.media_cont > :nth-child(2):hover) {

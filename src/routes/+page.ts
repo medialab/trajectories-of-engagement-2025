@@ -7,6 +7,6 @@ export const load: PageLoad = async () => {
 		import: 'default'
 	}) as Record<string, string>;
 	const projects = (data as any).default?.projects ?? (data as any).projects ?? [];
-	const intro = data.intro;
-	return { projects, posters: postersRaw, intro, authors: data.metadata.meta_authors };
+	const abstract = data.metadata.abstract;
+	return { projects, posters: postersRaw, abstract, authors: data.metadata.meta_authors };
 };

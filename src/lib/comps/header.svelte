@@ -67,7 +67,7 @@
 <style>
 	header {
 		position: fixed;
-		right: var(--space-xl);
+		right: calc(var(--page-gutter) + var(--page-inset));
 		top: 0;
 		width: fit-content;
 		column-gap: var(--space-xs);

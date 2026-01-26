@@ -196,7 +196,8 @@
 
 <style>
 	svg {
-		width: 100vw;
+		width: 100%;
+		max-width: var(--page-max-width);
 		height: 100vh;
 		pointer-events: none;
 		display: block;
@@ -204,7 +205,8 @@
 		background-color: transparent;
 		position: fixed;
 		top: 0;
-		left: 0;
+		left: 50%;
+		transform: translateX(-50%);
 		right: 0;
 		bottom: 0;
 		z-index: 0;
@@ -225,5 +227,14 @@
 
 	svg::-webkit-scrollbar {
 		display: none;
+	}
+
+	@media (max-width: 768px) {
+		svg {
+			width: 100vw;
+			max-width: none;
+			left: 0;
+			transform: none;
+		}
 	}
 </style>

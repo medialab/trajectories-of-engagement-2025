@@ -155,9 +155,10 @@
 	.t_container {
 		position: absolute;
 		top: var(--space-7xl);
-		left: var(--space-xl);
-		right: var(--space-xl);
-		width: auto;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100%;
+		max-width: var(--page-max-width);
 		z-index: 10;
 		background-color: var(--primary-light);
 		background-color: color-mix(in srgb, var(--primary-light) 95%, transparent);
@@ -219,7 +220,7 @@
 	.title_container {
 		position: fixed;
 		top: var(--space-xl);
-		left: var(--space-xl);
+		left: var(--page-gutter);
 		width: fit-content;
 		height: fit-content;
 		background-color: var(--primary-light);
@@ -250,10 +251,11 @@
 		.t_container {
 			position: relative;
 			top: unset;
-			left: unset;
-			right: unset;
-			transform: unset;
+			left: 0;
+			right: 0;
+			transform: none;
 			width: 100%;
+			max-width: none;
 			height: fit-content;
 			background-color: unset;
 			margin-top: 0px;

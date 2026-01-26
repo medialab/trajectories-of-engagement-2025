@@ -47,6 +47,9 @@
 		--primary-color: #ceffbf;
 		--primary-light: #f5f5f5;
 		--primary-dark: #111111;
+		--page-gutter: var(--space-xl);
+		--page-max-width: 1600px;
+		--page-inset: 0px;
 
 		/* Spacing System */
 		--space-3xs: 2px;
@@ -154,6 +157,7 @@
 		font-optical-sizing: unset;
 		font-kerning: unset;
 		font-feature-settings: unset;
+		text-wrap: nowrap;
 	}
 
 	@media (max-width: 768px) {
@@ -181,6 +185,13 @@
 		}
 	}
 
+	@media (min-width: 1921px) {
+		:root {
+			--page-gutter: max(var(--space-xl), calc((100vw - var(--page-max-width)) / 2));
+			--page-inset: var(--space-m);
+		}
+	}
+
 	:global(.return_btn_container) {
 		position: fixed;
 		display: flex;
@@ -188,7 +199,7 @@
 		column-gap: var(--space-xs);
 		width: fit-content;
 		padding: var(--space-xl) 0px;
-		left: var(--space-xl);
+		left: calc(var(--page-gutter) + var(--page-inset));
 		top: 0;
 		z-index: 41;
 		pointer-events: none;

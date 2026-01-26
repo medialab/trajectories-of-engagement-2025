@@ -26,14 +26,6 @@
 	afterNavigate(() => {
 		loadElements = true;
 	});
-
-	const getIntroMarkdown = (intro: unknown) => {
-		const fromBook = intro && typeof intro === 'object' ? (intro as any).fromBook : null;
-		const markdown = fromBook && typeof fromBook === 'object' ? (fromBook as any).markdown : '';
-		return typeof markdown === 'string' ? markdown : '';
-	};
-
-	let aboutText = $derived(marked.parse(getIntroMarkdown(data?.intro)));
 </script>
 
 <svelte:head>
@@ -69,12 +61,12 @@
 	>
 		<div class="vertical_flex">
 			<h1>Trajectories<br />of engagement</h1>
-			{#if aboutText}
+			{#if data.abstract}
 				<p class="m line_clamp">
-					{@html aboutText}
+					{@html data.abstract}
 				</p>
 			{/if}
-			<div class="horizontal_flex">
+			<div class="horizontal_flex" style="column-gap: 6px">
 				{#each data.authors as author}
 					<p class="s">
 						{#if author.role === 'creator'}
@@ -85,10 +77,10 @@
 			</div>
 		</div>
 
-		<div class="horizontal_flex">
-			<Button label="Read more →" href="/about" />
-			<Button label="Access the archive ↓" href="/archive" />
+		<div class="landing_btn horizontal_flex">
+			<Button label="Read more" href="/about" />
 			<Button label="Read the book" href="https://hal.science/hal-05459145v1" />
+			<Button label="Access the archive" href="/archive" />
 			<!-- <Button label="Get this bezier" onClick={() => bezRef?.downloadSvg()} /> -->
 		</div>
 	</div>
@@ -164,7 +156,7 @@
 	}
 
 	.hero_container {
-		left: var(--space-xl);
+		left: calc(var(--page-gutter) + var(--page-inset));
 		top: var(--space-xl);
 		width: 50ch;
 		row-gap: var(--space-xl);
@@ -174,7 +166,7 @@
 
 	.tag_container {
 		position: fixed;
-		right: var(--space-xl);
+		right: calc(var(--page-gutter) + var(--page-inset));
 		bottom: calc(var(--space-xl) + 40px);
 		z-index: 10;
 	}
@@ -183,13 +175,18 @@
 		display: block;
 		position: fixed;
 		top: 0;
-		left: 0;
-		width: 100vw;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100%;
+		max-width: var(--page-max-width);
 		height: 100vh;
 		overflow: hidden;
 		place-items: start;
 		z-index: 1;
 		pointer-events: none;
+		box-sizing: border-box;
+		border-left: 1px solid #000;
+		border-right: 1px solid #000;
 		touch-action: none;
 		overscroll-behavior: contain;
 		user-select: none;
@@ -198,7 +195,7 @@
 	}
 
 	.carousel_container div {
-		position: fixed;
+		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
@@ -250,12 +247,23 @@
 		}
 
 		.carousel_container {
+			left: 0;
+			transform: none;
+			width: 100vw;
+			max-width: none;
 			margin-top: var(--space-huge);
 			overflow: hidden !important;
+			border-left: none;
+			border-right: none;
 		}
 
 		.carousel_container > * {
 			position: relative !important;
+		}
+
+		.landing_btn {
+			flex-direction: column;
+			row-gap: var(--space-s);
 		}
 	}
 

@@ -130,10 +130,11 @@
 		display: grid;
 		grid-template-columns: repeat(20, 1fr);
 		grid-column-gap: var(--space-m);
-		margin: 0px var(--space-xl) var(--space-6xl) var(--space-xl);
+		margin: 0px auto var(--space-6xl) auto;
+		width: 100%;
+		max-width: var(--page-max-width);
 		padding-top: var(--space-6xl);
 		background-color: transparent;
-		max-width: 1600px;
 		place-self: center;
 		align-self: center;
 		z-index: 15;

@@ -2,7 +2,7 @@
 	let props = $props();
 
 	import { T, useThrelte } from '@threlte/core';
-	import { useTexture } from '@threlte/extras';
+	import { useTexture, transitions } from '@threlte/extras';
 	import { onMount, onDestroy } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
 	import { interactivity, useCursor } from '@threlte/extras';
@@ -17,6 +17,8 @@
 	import Tempus from 'tempus';
 
 	import { isMobile, isTextureReady } from '$lib/utils';
+	import { fly } from 'svelte/transition';
+	import { render } from 'svelte/server';
 
 	const { invalidate } = useThrelte();
 
@@ -279,7 +281,7 @@
 
 {#if renderCount === 0}
 	<div class="carousel_notice">No data to be displayed</div>
-{:else}
+{:else if renderCount !== 0 && props.loadstatus}
 	<T.Group rotation={[0.3, -0.5, 0]}>
 		{#each renderableProjects as item, index}
 			{@const project = item.project}
@@ -287,76 +289,83 @@
 			{@const texture = useTexture(poster as string).then((texture) => texture)}
 			{#await texture then map}
 				{($isTextureReady = true)}
-				<T.Mesh
-					position={[0, 0, cardBoundTeleport(startZ + index * spacing + scrollY)]}
-					scale={[baseScale + hoverToScale[index], baseScale + hoverToScale[index], baseScale]}
-					rotation={[0, 0, 0]}
-					oncreate={(value) => {
-						if (value && !meshes.includes(value)) {
-							meshes.push(value);
-							const rand = (min: number, max: number) => Math.random() * (max - min) + min;
-							meshRand.set(value as any, {
-								curlScale: rand(
-									carouselConfig.randomness.curlScale[0],
-									carouselConfig.randomness.curlScale[1]
-								),
-								thresholdShift: rand(
-									carouselConfig.randomness.thresholdShift[0],
-									carouselConfig.randomness.thresholdShift[1]
-								),
-								edgePower: rand(
-									carouselConfig.randomness.edgePower[0],
-									carouselConfig.randomness.edgePower[1]
-								),
-								dirScale: rand(
-									carouselConfig.randomness.dirScale[0],
-									carouselConfig.randomness.dirScale[1]
-								),
-								windScale: rand(
-									carouselConfig.randomness.windScale[0],
-									carouselConfig.randomness.windScale[1]
-								),
-								oscAmp: rand(0.05, 0.18),
-								oscFreq: rand(0.004, 0.012),
-								oscPhase: rand(0, Math.PI * 2)
-							});
-						}
-					}}
-					onpointerenter={(e: any) => {
-						if (!$isTextureReady) return;
-						e.stopPropagation();
-						setHoverTarget(index, carouselConfig.hover.scale);
-						handlePointerEnter(project?.metadata);
-						props.onHoverPoster?.();
-					}}
-					onpointerleave={(e: any) => {
-						if (!$isTextureReady) return;
-						e.stopPropagation();
-						setHoverTarget(index, 0);
-						onPointerLeave();
-					}}
-					onclick={(e: any) => {
-						e.stopPropagation();
-						if (!$isTextureReady) return;
-						const resolvedPath = resolve(`/projects/${item.id}`);
-						goto(resolvedPath);
-					}}
-					interactive={true}
-					castShadow={true}
-					receiveShadow={true}
+				<T.Group
+					plugins={[transitions]}
+					initial={false}
+					in={fly}
+					transition={{ y: -20, duration: 1500, delay: 100 * index + 100, easing: cubicOut }}
 				>
-					<T.BoxGeometry
-						args={[
-							carouselConfig.card.width,
-							carouselConfig.card.width * carouselConfig.card.aspectRatio,
-							carouselConfig.card.depth,
-							carouselConfig.card.segments.width,
-							carouselConfig.card.segments.height,
-							carouselConfig.card.segments.depth
-						]}
-					/>
-					<T.MeshBasicMaterial {map} toneMapped={false} />
-				</T.Mesh>
+					<T.Mesh
+						position={[0, 0, cardBoundTeleport(startZ + index * spacing + scrollY)]}
+						scale={[baseScale + hoverToScale[index], baseScale + hoverToScale[index], baseScale]}
+						rotation={[0, 0, 0]}
+						oncreate={(value) => {
+							if (value && !meshes.includes(value)) {
+								meshes.push(value);
+								const rand = (min: number, max: number) => Math.random() * (max - min) + min;
+								meshRand.set(value as any, {
+									curlScale: rand(
+										carouselConfig.randomness.curlScale[0],
+										carouselConfig.randomness.curlScale[1]
+									),
+									thresholdShift: rand(
+										carouselConfig.randomness.thresholdShift[0],
+										carouselConfig.randomness.thresholdShift[1]
+									),
+									edgePower: rand(
+										carouselConfig.randomness.edgePower[0],
+										carouselConfig.randomness.edgePower[1]
+									),
+									dirScale: rand(
+										carouselConfig.randomness.dirScale[0],
+										carouselConfig.randomness.dirScale[1]
+									),
+									windScale: rand(
+										carouselConfig.randomness.windScale[0],
+										carouselConfig.randomness.windScale[1]
+									),
+									oscAmp: rand(0.05, 0.18),
+									oscFreq: rand(0.004, 0.012),
+									oscPhase: rand(0, Math.PI * 2)
+								});
+							}
+						}}
+						onpointerenter={(e: any) => {
+							if (!$isTextureReady) return;
+							e.stopPropagation();
+							setHoverTarget(index, carouselConfig.hover.scale);
+							handlePointerEnter(project?.metadata);
+							props.onHoverPoster?.();
+						}}
+						onpointerleave={(e: any) => {
+							if (!$isTextureReady) return;
+							e.stopPropagation();
+							setHoverTarget(index, 0);
+							onPointerLeave();
+						}}
+						onclick={(e: any) => {
+							e.stopPropagation();
+							if (!$isTextureReady) return;
+							const resolvedPath = resolve(`/projects/${item.id}`);
+							goto(resolvedPath);
+						}}
+						interactive={true}
+						castShadow={true}
+						receiveShadow={true}
+					>
+						<T.BoxGeometry
+							args={[
+								carouselConfig.card.width,
+								carouselConfig.card.width * carouselConfig.card.aspectRatio,
+								carouselConfig.card.depth,
+								carouselConfig.card.segments.width,
+								carouselConfig.card.segments.height,
+								carouselConfig.card.segments.depth
+							]}
+						/>
+						<T.MeshBasicMaterial {map} toneMapped={false} />
+					</T.Mesh>
+				</T.Group>
 			{/await}
 		{/each}
 	</T.Group>
@@ -386,7 +395,6 @@
 		transform: translateX(-50%);
 		padding: var(--space-xs) var(--space-m);
 		background-color: var(--primary-light);
-		border: 2px solid var(--primary-dark);
 		font-size: 14px;
 		z-index: 2;
 		pointer-events: none;

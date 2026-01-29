@@ -11,7 +11,7 @@
 			class="info_container horizontal_flex"
 			in:slide={{ duration: 1000, easing: cubicOut, axis: 'x' }}
 		>
-			<p class="s"><b>{props.label}:</b> {props.value}</p>
+			<p><b>{props.label}:</b> {props.value}</p>
 		</div>
 	{/key}
 {/if}

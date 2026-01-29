@@ -2,6 +2,8 @@
 	import { goto } from '$app/navigation';
 	import { menuOpen } from '$lib/utils';
 	import { resolve } from '$app/paths';
+	import { slide } from 'svelte/transition';
+	import { cubicInOut } from 'svelte/easing';
 
 	let props = $props();
 
@@ -37,12 +39,22 @@
 		const resolvedPath = resolve(`${ref}`);
 		goto(resolvedPath);
 	};
+
+	let hasBeenClicked = $state(false);
+
+	const clickLoop = () => {
+		if (!props?.imgVar) return;
+		hasBeenClicked = true;
+		setTimeout(() => {
+			hasBeenClicked = false;
+		}, 400);
+	};
 </script>
 
 <button
 	type="button"
 	data-sveltekit-reload
-	class="generic_btn"
+	class="generic_btn active:scale-[98%] focus:scale-[98%] transition-all ease-in-out duration-125"
 	class:disabled={props?.disabled === true}
 	onclick={() => {
 		if (props.onClick) {
@@ -50,27 +62,37 @@
 			return;
 		}
 		intDecide(props?.href);
+		clickLoop();
 	}}
 	style={props?.img ? 'background-color: white' : ''}
 >
 	{#if props?.label}
-		<p class="m">
+		<p>
 			{props.label}
 		</p>
 	{/if}
 
-	{#if props?.img}
-		<img src={props?.img} alt={props?.imgAlt} />
+	{#if props?.img && !hasBeenClicked}
+		<div
+			class="img_container"
+			out:slide={{ duration: 350, easing: cubicInOut, axis: 'y' }}
+			in:slide={{ duration: 350, easing: cubicInOut, axis: 'y', delay: 1200 }}
+		>
+			<img src={props?.img} alt={props?.imgAlt} />
+		</div>
+	{:else if props?.imgVar && hasBeenClicked}
+		<div
+			class="img_container"
+			in:slide={{ duration: 350, easing: cubicInOut, axis: 'y' }}
+			out:slide={{ duration: 350, easing: cubicInOut, axis: 'y', delay: 1200 }}
+		>
+			<img src={props?.imgVar} alt={props?.imgAlt} />
+		</div>
 	{/if}
 </button>
 
 <style>
 	.generic_btn {
-		display: flex;
-		width: fit-content;
-		height: fit-content;
-		min-height: var(--space-2xl);
-		padding: var(--space-m) var(--space-xl);
 		border-radius: var(--space-xs);
 		background-color: var(--primary-color);
 		color: var(--primary-dark);
@@ -87,15 +109,27 @@
 	}
 
 	.generic_btn:active {
-		background-color: var(--primary-dark);
+		background-color: var(--primary-dark) !important;
 		color: var(--primary-color);
+	}
+
+	.generic_btn:active > img {
+		filter: invert(1) brightness(10);
 	}
 
 	.disabled {
 		opacity: 0.3;
 	}
 
+	.img_container {
+		height: 20px;
+		width: auto;
+		aspect-ratio: 1/1;
+		place-items: center;
+	}
+
 	img {
-		height: var(--space-xl);
+		width: auto;
+		object-fit: contain;
 	}
 </style>

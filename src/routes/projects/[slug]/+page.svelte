@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
-	import Header from '$lib/comps/header.svelte';
 	import Button from '$lib/comps/btn.svelte';
 	import Accordion from '$lib/comps/accordion.svelte';
 	import BezierCanvas from '$lib/comps/canvas.svelte';
@@ -8,9 +7,12 @@
 	import Poster from '$lib/comps/poster.svelte';
 	import { fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
-	import { menuOpen, baseUrl } from '$lib/utils';
-	import { onMount } from 'svelte';
 	import Footer from '$lib/comps/footer.svelte';
+	import copyIcon from '$lib/assets/icons/copy.svg';
+	import infoIcon from '$lib/assets/icons/info.svg';
+	import checkIcon from '$lib/assets/icons/check.svg';
+	import { setupLenis, baseUrl } from '$lib/utils';
+	import { onMount } from 'svelte';
 
 	const mainYtb = 'https://www.youtube.com/watch?v=BLa_1fw-pQA';
 
@@ -41,6 +43,18 @@
 	let ogTitle = $derived(projectTitle || fallbackTitle);
 	let ogDescription = $derived(project?.texts?.presentation || metaSummary || fallbackDescription);
 	let ogImage = $derived(projectId ? `${baseUrl}/og/${projectId}.jpg` : fallbackImage);
+
+	onMount(() => {
+		let lenis: any = null;
+
+		setupLenis().then((l) => {
+			lenis = l;
+		});
+
+		return () => {
+			lenis?.destroy();
+		};
+	});
 </script>
 
 <svelte:head>
@@ -58,33 +72,32 @@
 	<meta name="twitter:image" content={ogImage} />
 	<link rel="canonical" href={pageUrl} />
 </svelte:head>
-
-<div class="project_page_container">
-	<Header />
-
-	<div class="return_btn_container">
-		<Button label="← GO BACK" href="back" />
-		<Button label="COPY PAGE LINK" href="copyLink" />
-	</div>
-
+<div class="project_page_container place-self-center">
 	{#if data.project}
-		<div class="vertical_flex info_container" style="row-gap: var(--space-2xl);">
-			<div class="vertical_flex" style="background-color: var(--primary-light)">
+		<div class="col-2 row-span-1 w-full h-fit flex flex-row gap-2 justify-between">
+			<div class="flex flex-row gap-2">
+				<Button label="← GO BACK" href="back" />
+				<Button href="copyLink" img={copyIcon} imgVar={checkIcon} />
+				<Button href="/about" img={infoIcon} />
+			</div>
+		</div>
+		<div class="flex flex-col info_container gap-8">
+			<div class="vertical_flex bg-[#f5f5f5] gap-4">
 				<h1 id="pr_title">{displayTitle}</h1>
 				{#if projectYear || projectLeaders || projectResearchCenter}
-					<p class="m" style="font-weight: bold;">
+					<p style="font-weight: bold;">
 						{projectYear} | {projectLeaders} | {projectResearchCenter}
 					</p>
 				{:else}
-					<p class="m">No metadata available</p>
+					<p>No metadata available</p>
 				{/if}
 				{#if data.project.texts?.presentation}
-					<p class="m">{data.project.texts?.presentation}</p>
+					<p>{data.project.texts?.presentation}</p>
 				{:else}
-					<p class="m">No presentation text available</p>
+					<p>No presentation text available</p>
 				{/if}
 			</div>
-			<div class="vertical_flex" style="background-color: var(--primary-light)">
+			<div class="flex flex-col bg-[#f5f5f5] gap-4">
 				<Accordion text={data.project.texts?.experience} title="Experience" />
 				<Accordion text={data.project.texts?.concept} title="Concept" />
 				{#if hasSegments}
@@ -93,7 +106,10 @@
 			</div>
 		</div>
 
-		<div class="media_cont" transition:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}>
+		<div
+			class="media_cont grid-cols-2 grid-rows-3"
+			transition:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}
+		>
 			<Vid title={projectTitle || fallbackTitle} src={data.project.presentationURL} />
 			<Poster
 				id={projectId}
@@ -108,7 +124,7 @@
 				style="padding: var(--space-xl); background-color: var(--primary-light)"
 			>
 				<h1 id="pr_title">Project Not Found</h1>
-				<p class="m">We couldn't find the project you're looking for.</p>
+				<p>We couldn't find the project you're looking for.</p>
 				<div style="margin-top: var(--space-xl); pointer-events: auto;">
 					<Button label="← BACK TO PROJECTS" href="/projects" />
 				</div>
@@ -123,22 +139,18 @@
 
 <style>
 	.project_page_container {
-		width: auto;
 		position: relative;
-		height: fit-content;
-		min-height: 100vh;
 		display: grid;
-		grid-template-columns: repeat(20, 1fr);
+		height: max-content;
+		grid-template-columns: 1fr 2fr 1fr;
+		grid-template-rows: auto auto auto;
+		grid-gap: var(--space-xl);
 		grid-column-gap: var(--space-m);
-		margin: 0px auto var(--space-6xl) auto;
-		padding-left: var(--space-l);
-		padding-right: var(--space-l);
+		place-items: center;
+		padding: var(--space-4xl) var(--space-l);
 		width: 100%;
 		max-width: var(--page-max-width);
-		padding-top: var(--space-6xl);
 		background-color: transparent;
-		place-self: center;
-		align-self: center;
 		z-index: 15;
 	}
 
@@ -147,18 +159,26 @@
 	}
 
 	.info_container {
-		grid-column: 1 / 10;
+		grid-column: 2;
+		grid-row: 2;
 		width: 100%;
 		height: fit-content;
-		overflow: scroll;
+		overflow-y: scroll;
+		overflow-x: visible;
 	}
 
 	.media_cont {
-		grid-column: 12 / 22;
+		grid-column: 2;
+		grid-row: 3;
 		position: relative;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 		height: fit-content;
+		width: 80%;
+		padding: 0;
+		margin: 0;
 	}
 
 	:global(.media_cont > :nth-child(1)) {
@@ -166,9 +186,6 @@
 		align-self: flex-start;
 		mix-blend-mode: normal;
 		max-width: 90%;
-		/* Overlap with the poster above by approximately half of the video's height */
-		/* Since the video is 16:9, half of its height is roughly 28% of its width. */
-		/* adjusted to account for the 90% max-width. */
 		margin-top: -26%;
 		z-index: 2;
 	}
@@ -192,16 +209,6 @@
 		z-index: 1;
 	}
 
-	@media (max-width: 1780px) {
-		:global(.media_cont) {
-			grid-column: 13 / 22 !important;
-		}
-
-		:global(.info_container) {
-			grid-column: 1 / 9 !important;
-		}
-	}
-
 	@media (max-width: 768px) {
 		.project_page_container {
 			width: 100%;
@@ -209,7 +216,7 @@
 			display: flex;
 			flex-direction: column;
 			margin: 0px;
-			padding: var(--space-6xl) var(--space-xl);
+			padding: var(--space-2xl) var(--space-xl);
 			row-gap: var(--space-xl);
 			overflow: scroll;
 			background-color: transparent;

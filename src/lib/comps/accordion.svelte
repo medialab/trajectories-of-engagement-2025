@@ -28,11 +28,13 @@
 	.accordion_header,
 	.accordion_header > :global(button) {
 		width: 100%;
+		overflow-x: visible;
 	}
 
 	.vertical_flex {
 		display: flex;
 		flex-direction: column;
+		overflow-x: visible;
 	}
 
 	p {

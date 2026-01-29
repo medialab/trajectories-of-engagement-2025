@@ -1,5 +1,8 @@
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
+import Lenis from 'lenis';
+import { cubicOut } from 'svelte/easing';
+import { tick } from 'svelte';
 
 export let currentTag = writable(undefined);
 export let currentAuthor = writable('');
@@ -12,7 +15,28 @@ export const isMobile = () => {
 	return window.innerWidth < 768;
 };
 
-// Centralized configuration for the carousel component
+export const setupLenis = async (scrollContainer?: HTMLElement): Promise<Lenis | null> => {
+	if (!browser) return null;
+
+	const lenis = new Lenis({
+		autoRaf: true,
+		smoothWheel: true,
+		orientation: 'vertical',
+		easing: cubicOut,
+		lerp: 0.5,
+		syncTouch: true,
+		touchMultiplier: 2,
+		wrapper: scrollContainer ? scrollContainer : window,
+		content: scrollContainer ? undefined : document.body
+	});
+
+	lenis.start();
+	await tick();
+	lenis.resize();
+
+	return lenis;
+};
+
 export const carouselConfig = {
 	// Spacing between cards along the Z axis and starting Z
 	spacing: 7,
@@ -75,6 +99,5 @@ export const carouselConfig = {
 
 export let baseUrl = 'https://trajectories.sciencespo.fr';
 
-export let ogDescription =
-	`Participatory research is no longer an option; it’s an injunction. While the social consequences of this approach are often described through their effects on so-called participants, what happens to the scholars themselves, those who are moved, reshaped, or even implicated in these processes? And how do they navigate the constraints of a research model that has become both fashionable and mandatory? This work brings together more than twenty research projects from across diverse disciplines, each experimenting with participatory and collaborative forms of inquiry. Rather than prescribing what engagement should be, it investigates how it happens: the sparks that ignite it, the frictions that sustain or destabilise it, and the material and institutional conditions that make it possible or constrain it. Research projects are described through open-ended trajectories, negotiated in the heat of genuine encounters between institutions, publics, and material infrastructures. Born from an international meeting held at the University Paris Nanterre in September 2023, this collective work extends a shared effort to think through the trajectories of engagement that characterise today’s research landscape. Combining conceptual reflection with diagrammatic elicitation methodologies, it maps how researchers and non-academic actors move, connect, and transform one another throughout the research process. At once analytical and experimental, this volume invites readers to question the forms, ethics, and politics of participation. Rather than approaching engagement as a fixed model or moral ideal, it proposes reframing it as a dynamic, situated practice.`;
+export let ogDescription = `Participatory research is no longer an option; it’s an injunction. While the social consequences of this approach are often described through their effects on so-called participants, what happens to the scholars themselves, those who are moved, reshaped, or even implicated in these processes? And how do they navigate the constraints of a research model that has become both fashionable and mandatory? This work brings together more than twenty research projects from across diverse disciplines, each experimenting with participatory and collaborative forms of inquiry. Rather than prescribing what engagement should be, it investigates how it happens: the sparks that ignite it, the frictions that sustain or destabilise it, and the material and institutional conditions that make it possible or constrain it. Research projects are described through open-ended trajectories, negotiated in the heat of genuine encounters between institutions, publics, and material infrastructures. Born from an international meeting held at the University Paris Nanterre in September 2023, this collective work extends a shared effort to think through the trajectories of engagement that characterise today’s research landscape. Combining conceptual reflection with diagrammatic elicitation methodologies, it maps how researchers and non-academic actors move, connect, and transform one another throughout the research process. At once analytical and experimental, this volume invites readers to question the forms, ethics, and politics of participation. Rather than approaching engagement as a fixed model or moral ideal, it proposes reframing it as a dynamic, situated practice.`;
 export let ogTitle = 'Trajectories of Engagement';

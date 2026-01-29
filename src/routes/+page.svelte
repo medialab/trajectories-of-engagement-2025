@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import Button from '$lib/comps/btn.svelte';
-	import Header from '$lib/comps/header.svelte';
 	import BezierCanvas from '$lib/comps/canvas.svelte';
 	import { currentTag, currentAuthor, currentResearchCenter } from '$lib/utils';
 	import { slide, fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import infoIcon from '$lib/assets/icons/info.svg';
 
 	import Info from '$lib/comps/info.svelte';
 	import Carousel from '$lib/comps/carousel.svelte';
@@ -13,7 +13,6 @@
 	import { NoToneMapping } from 'three';
 	import { afterNavigate } from '$app/navigation';
 	import { isTextureReady } from '$lib/utils';
-	import { marked } from 'marked';
 	import { baseUrl, ogDescription, ogTitle } from '$lib/utils';
 	import Footer from '$lib/comps/footer.svelte';
 
@@ -44,96 +43,89 @@
 	<link rel="canonical" href={baseUrl} />
 </svelte:head>
 
-<Header />
-
-{#if !$isTextureReady}
-	<section class="loader_screen" out:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}>
-		<p out:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 200 }} class="m">
-			Loading...
-		</p>
-	</section>
-{/if}
-
-{#if loadElements}
-	<div
-		class="hero_container vertical_flex"
-		transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}
-	>
-		<div class="vertical_flex">
-			<h1>Trajectories<br />of engagement</h1>
-			{#if data.abstract}
-				<p class="m line_clamp">
-					{@html data.abstract}
-				</p>
-			{/if}
-			<div class="horizontal_flex" style="column-gap: 6px">
-				{#each data.authors as author}
-					<p class="s">
-						{#if author.role === 'creator'}
-							{author.firstName} {author.lastName}
-						{/if}
-					</p>
-				{/each}
-			</div>
-		</div>
-
-		<div class="landing_btn horizontal_flex">
-			<Button label="Read more" href="/about" />
-			<Button label="Read the book" href="https://hal.science/hal-05459145v1" />
-			<Button label="Access the archive" href="/archive" />
-			<!-- <Button label="Get this bezier" onClick={() => bezRef?.downloadSvg()} /> -->
-		</div>
-	</div>
-{/if}
-
-{#if $currentTag}
-	<div class="tag_container align_right vertical_flex">
-		{#if $currentAuthor}
-			<Info label="Leader	" value={$currentAuthor} />
-		{/if}
-		{#if $currentResearchCenter}
-			<Info label="Research center" value={$currentResearchCenter} />
-		{/if}
-		{#if $currentTag}
-			<Info label="Title" value={$currentTag} />
-		{/if}
-	</div>
-{/if}
-
-{#if loadElements}
-	{#key data.posters}
-		<div
-			class="carousel_container"
-			bind:this={containerEl}
-			style="pointer-events: {$isTextureReady ? 'all' : 'none'};"
+<main class="main_container h-screen">
+	{#if !$isTextureReady}
+		<section
+			class="loader_screen w-full h-full fixed z-100"
+			out:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}
 		>
-			<div>
-				<Canvas toneMapping={NoToneMapping}>
-					<Carousel
-						{containerEl}
-						onHoverPoster={() => bezRef?.triggerRegeneration?.()}
-						projects={data.projects}
-						posters={data.posters}
-					/>
-				</Canvas>
+			<p out:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 200 }}>Loading...</p>
+		</section>
+	{/if}
+
+	{#if loadElements}
+		<div
+			class="relative flex flex-col gap-2 md:w-fit w-full p-4 z-20 h-fit"
+			transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}
+		>
+			<div class="flex flex-col gap-2 bg-[#f5f5f5] p-2">
+				<h1>Trajectories<br />of engagement</h1>
+				{#if data.abstract}
+					<p class="line-clamp-5 w-[90%] md:w-[50ch]">
+						{@html data.abstract}
+					</p>
+				{/if}
+				<div class="flex flex-row gap-2">
+					{#each data.authors as author}
+						<p class="text-nowrap">
+							{#if author.role === 'creator'}
+								{author.firstName} {author.lastName}
+							{/if}
+						</p>
+					{/each}
+				</div>
+			</div>
+
+			<div class="flex flex-row flex-wrap gap-2 w-fit z-30 p-2">
+				<Button href="/about" img={infoIcon} />
+				<Button label="Read the book" href="https://hal.science/hal-05459145v1" />
+				<Button label="Access the archive" href="/archive" />
+				<!-- <Button label="Get this bezier" onClick={() => bezRef?.downloadSvg()} /> -->
 			</div>
 		</div>
-	{/key}
-{/if}
+	{/if}
 
-<Footer />
-<BezierCanvas bind:this={bezRef} />
+	{#if $currentTag}
+		<div class="md:flex hidden flex-col items-end gap-2 fixed right-4 bottom-16 z-50">
+			{#if $currentAuthor}
+				<Info label="Leader	" value={$currentAuthor} />
+			{/if}
+			{#if $currentResearchCenter}
+				<Info label="Research center" value="{$currentResearchCenter.slice(0, 50)}..." />
+			{/if}
+			{#if $currentTag}
+				<Info label="Title" value={$currentTag} />
+			{/if}
+		</div>
+	{/if}
+
+	{#if loadElements}
+		{#key data.posters}
+			<div
+				class="carousel_container w-full h-full absolute max-w-[1920px] md:top-0 top-1/5"
+				bind:this={containerEl}
+				style="pointer-events: {$isTextureReady ? 'all' : 'none'};"
+			>
+				<div>
+					<Canvas toneMapping={NoToneMapping}>
+						<Carousel
+							{containerEl}
+							onHoverPoster={() => bezRef?.triggerRegeneration?.()}
+							projects={data.projects}
+							posters={data.posters}
+							loadstatus={loadElements}
+						/>
+					</Canvas>
+				</div>
+			</div>
+		{/key}
+	{/if}
+
+	<Footer />
+	<BezierCanvas bind:this={bezRef} />
+</main>
 
 <style>
-	h1 {
-		text-transform: uppercase;
-		background-color: var(--primary-light);
-	}
-
-	p {
-		background-color: var(--primary-light);
-	}
-
 	.line_clamp {
 		display: -webkit-box;
 		-webkit-line-clamp: 5;
@@ -154,32 +146,9 @@
 		font-size: 16px;
 		font-weight: unset;
 	}
-
-	.hero_container {
-		left: calc(var(--page-gutter) + var(--page-inset));
-		top: var(--space-xl);
-		width: 50ch;
-		row-gap: var(--space-xl);
-		position: fixed;
-		z-index: 5;
-	}
-
-	.tag_container {
-		position: fixed;
-		right: calc(var(--page-gutter) + var(--page-inset));
-		bottom: calc(var(--space-xl) + 40px);
-		z-index: 10;
-	}
-
 	.carousel_container {
-		display: block;
-		position: fixed;
-		top: 0;
 		left: 50%;
 		transform: translateX(-50%);
-		width: 100%;
-		max-width: var(--page-max-width);
-		height: 100vh;
 		overflow: hidden;
 		place-items: start;
 		z-index: 1;
@@ -208,10 +177,7 @@
 	}
 
 	.loader_screen {
-		width: 100vw;
-		height: 100%;
 		background-color: var(--primary-light);
-		position: fixed;
 		top: 0;
 		left: 0;
 		z-index: 300;
@@ -238,38 +204,5 @@
 
 	.loader_screen::-webkit-scrollbar {
 		display: none;
-	}
-
-	@media (max-width: 768px) {
-		.hero_container {
-			top: var(--space-4xl);
-			width: 90%;
-		}
-
-		.carousel_container {
-			left: 0;
-			transform: none;
-			width: 100vw;
-			max-width: none;
-			margin-top: var(--space-huge);
-			overflow: hidden !important;
-			border-left: none;
-			border-right: none;
-		}
-
-		.carousel_container > * {
-			position: relative !important;
-		}
-
-		.landing_btn {
-			flex-direction: column;
-			row-gap: var(--space-s);
-		}
-	}
-
-	@media (min-width: 1780px) {
-		.hero_container {
-			width: 60ch;
-		}
 	}
 </style>

@@ -1,0 +1,45 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+@import 'lenis/dist/lenis.css';
+
+* {
+	-webkit-user-drag: none;
+	-khtml-user-drag: none;
+	-moz-user-drag: none;
+	-o-user-drag: none;
+	user-drag: none;
+}
+
+html,
+body {
+	overflow-x: hidden;
+}
+
+p {
+	@apply text-base md:text-base lg:text-sm leading-tight text-left;
+}
+
+h1 {
+	@apply text-xl md:text-2xl lg:text-3xl uppercase font-bold leading-none tracking-tight;
+}
+
+h2 {
+	@apply text-lg md:text-lg lg:text-xl uppercase font-medium leading-none tracking-tighter;
+}
+
+b {
+	@apply font-medium;
+}
+
+i {
+	@apply italic;
+}
+
+.main_container {
+	@apply flex flex-col w-screen  overflow-clip max-w-[1920px] place-self-center relative;
+}
+
+button,
+a {
+	@apply uppercase min-h-[38px] p-2 h-fit w-fit flex flex-row;
+}

@@ -1,6 +1,7 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
+	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
@@ -22,6 +23,7 @@
 <svelte:head>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="icon" href={favicon} />
+
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link

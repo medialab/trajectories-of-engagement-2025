@@ -126,26 +126,6 @@
 </main>
 
 <style>
-	.line_clamp {
-		display: -webkit-box;
-		-webkit-line-clamp: 5;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-		line-clamp: 5;
-	}
-
-	@supports not (-webkit-line-clamp: 1) {
-		.line_clamp {
-			display: block;
-			line-height: 1.2;
-			max-height: calc(1.2em * 5);
-		}
-	}
-
-	:global(.line_clamp h2) {
-		font-size: 16px;
-		font-weight: unset;
-	}
 	.carousel_container {
 		left: 50%;
 		transform: translateX(-50%);

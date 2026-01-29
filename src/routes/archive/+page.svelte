@@ -239,16 +239,6 @@
 		white-space: nowrap;
 	}
 
-	.title_container {
-		position: relative;
-		top: var(--space-xl);
-		left: var(--page-gutter);
-		width: fit-content;
-		height: fit-content;
-		background-color: var(--primary-light);
-		z-index: 2;
-	}
-
 	td {
 		vertical-align: top;
 		justify-items: start;
@@ -256,17 +246,6 @@
 	}
 
 	@media (max-width: 768px) {
-		.title_container {
-			position: static;
-			top: unset;
-			left: unset;
-			transform: unset;
-			width: 100%;
-			height: fit-content;
-			background-color: unset;
-			margin-top: var(--space-6xl);
-			padding: var(--space-xl) var(--space-xl) 0px var(--space-xl);
-		}
 		.t_header {
 			display: none;
 		}

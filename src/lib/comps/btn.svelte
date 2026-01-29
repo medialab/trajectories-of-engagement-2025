@@ -113,7 +113,7 @@
 		color: var(--primary-color);
 	}
 
-	.generic_btn:active > img {
+	.generic_btn:active img {
 		filter: invert(1) brightness(10);
 	}
 

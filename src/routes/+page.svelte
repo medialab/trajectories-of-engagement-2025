@@ -55,7 +55,8 @@
 
 	{#if loadElements}
 		<div
-			class="relative flex flex-col gap-2 md:w-fit w-full p-4 z-20 h-fit"
+			id="title_container"
+			class="fixed flex flex-col gap-2 md:w-fit w-full p-4 z-20 h-fit top-0 left-0"
 			transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}
 		>
 			<div class="flex flex-col gap-2 bg-[#f5f5f5] p-2">

@@ -41,5 +41,5 @@ i {
 
 button,
 a {
-	@apply uppercase min-h-[38px] p-2 h-fit w-fit flex flex-row;
+	@apply uppercase p-2 h-fit w-fit flex flex-row;
 }

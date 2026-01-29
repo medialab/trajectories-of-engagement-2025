@@ -9,7 +9,8 @@
 	import { afterNavigate } from '$app/navigation';
 	import { fade, slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
-	import Footer from '$lib/comps/footer.svelte';
+	import { onMount } from 'svelte';
+	import { setupLenis } from '$lib/utils';
 
 	let { data }: PageProps = $props();
 
@@ -60,6 +61,18 @@
 			});
 		});
 	});
+
+	onMount(() => {
+		let lenis: any = null;
+
+		setupLenis().then((l) => {
+			lenis = l;
+		});
+
+		return () => {
+			lenis?.destroy();
+		};
+	});
 </script>
 
 <svelte:head>
@@ -77,88 +90,96 @@
 	<meta property="og:url" content={baseUrl} />
 	<link rel="canonical" href={baseUrl} />
 </svelte:head>
+<main class="main_container h-fit">
+	<Header />
+	{#if isPageLoaded}
+		<div
+			class="relative w-fit p-4 mt-16"
+			transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 100 }}
+		>
+			{#if !isMobileFlag}
+				<h1 style="text-transform: uppercase;">Trajectories of engagement</h1>
+			{:else}
+				<h1>ARCHIVE</h1>
+			{/if}
+		</div>
 
-<Header />
-
-{#if isPageLoaded}
-	<div
-		class="title_container"
-		transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 100 }}
-	>
-		{#if !isMobileFlag}
-			<h1 style="text-transform: uppercase;">Trajectories of engagement</h1>
-		{:else}
-			<h1>ARCHIVE</h1>
-		{/if}
-	</div>
-
-	<div class="t_container">
-		<table class="archive_table" transition:fade={{ duration: 1000, easing: cubicOut, delay: 200 }}>
-			<thead class="t_header">
-				<tr>
-					<th scope="col" style="width: 5%;"
-						><button>(N) {sortedBy === 'index' ? '↑' : ''}</button></th
-					>
-					<th scope="col" style="width: 10%;" id="year"
-						><button onclick={() => (sortedBy = 'year')}
-							>Dates {sortedBy === 'year' ? '↑' : ''}</button
-						></th
-					>
-					<th scope="col" style="width: 30%;" id="title"
-						><button onclick={() => (sortedBy = 'title')}
-							>Title {sortedBy === 'title' ? '↑' : ''}</button
-						></th
-					>
-					<th scope="col" style="width: 15%;" id="project_leaders"
-						><button onclick={() => (sortedBy = 'project_leaders')}
-							>Author {sortedBy === 'project_leaders' ? '↑' : ''}</button
-						></th
-					>
-					<th scope="col" style="width: 25%;" id="research_center"
-						><button onclick={() => (sortedBy = 'research_center')}
-							>University {sortedBy === 'research_center' ? '↑' : ''}</button
-						></th
-					>
-					<th scope="col" style="width: 15%;" id="link"
-						><button onclick={() => (sortedBy = 'presentationURL')}
-							>Link {sortedBy === 'presentationURL' ? '↑' : ''}</button
-						></th
-					>
-				</tr>
-			</thead>
-			<tbody class="t_body">
-				{#each sortedProjects() as project, index}
-					<tr
-						id="row"
-						onclick={(e) => {
-							e.stopPropagation();
-							const resolvedPath = resolve(`/projects/${project.metadata.id}`);
-							goto(resolvedPath);
-						}}
-					>
-						<th scope="row" class="t_num">({index + 1})</th>
-						<td id="year">{safeTrim(project.metadata?.year)}</td>
-						<td id="title">{safeTrim(project.metadata?.title)}</td>
-						<td id="project_leaders">{safeTrim(project.metadata?.project_leaders)}</td>
-						<td id="research_center">{safeTrim(project.metadata?.research_center)}</td>
-						<td id="link">{safeTrim(project.presentationURL)}</td>
+		<div class="t_container w-full px-4">
+			<table
+				class="archive_table"
+				transition:fade={{ duration: 1000, easing: cubicOut, delay: 200 }}
+			>
+				<thead class="t_header">
+					<tr>
+						<th scope="col" style="width: 5%;" onclick={() => (sortedBy = 'index')}
+							><button class="cursor-pointer"><p>(N) {sortedBy === 'index' ? '↑' : ''}</p></button
+							></th
+						>
+						<th scope="col" style="width: 10%;" id="year" onclick={() => (sortedBy = 'year')}
+							><button class="cursor-pointer"><p>Dates {sortedBy === 'year' ? '↑' : ''}</p></button
+							></th
+						>
+						<th scope="col" style="width: 30%;" id="title" onclick={() => (sortedBy = 'title')}
+							><button class="cursor-pointer"><p>Title {sortedBy === 'title' ? '↑' : ''}</p></button
+							></th
+						>
+						<th
+							scope="col"
+							style="width: 15%;"
+							id="project_leaders"
+							onclick={() => (sortedBy = 'project_leaders')}
+							><button class="cursor-pointer"
+								><p>Author {sortedBy === 'project_leaders' ? '↑' : ''}</p></button
+							></th
+						>
+						<th
+							scope="col"
+							style="width: 25%;"
+							id="research_center"
+							onclick={() => (sortedBy = 'research_center')}
+							><button class="cursor-pointer"
+								><p>University {sortedBy === 'research_center' ? '↑' : ''}</p></button
+							></th
+						>
+						<th
+							scope="col"
+							style="width: 15%;"
+							id="link"
+							onclick={() => (sortedBy = 'presentationURL')}
+							><button class="cursor-pointer"
+								><p>Link {sortedBy === 'presentationURL' ? '↑' : ''}</p></button
+							></th
+						>
 					</tr>
-				{/each}
-			</tbody>
-		</table>
-	</div>
-{/if}
-
+				</thead>
+				<tbody class="t_body">
+					{#each sortedProjects() as project, index}
+						<tr
+							id="row"
+							class="cursor-pointer"
+							onclick={(e) => {
+								e.stopPropagation();
+								const resolvedPath = resolve(`/projects/${project.metadata.id}`);
+								goto(resolvedPath);
+							}}
+						>
+							<th scope="row" class="t_num"><p>({index + 1})</p></th>
+							<td id="year"><p>{safeTrim(project.metadata?.year)}</p></td>
+							<td id="title"><p>{safeTrim(project.metadata?.title)}</p></td>
+							<td id="project_leaders"><p>{safeTrim(project.metadata?.project_leaders)}</p></td>
+							<td id="research_center"><p>{safeTrim(project.metadata?.research_center)}</p></td>
+							<td id="link"><p>{safeTrim(project.presentationURL)}</p></td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{/if}
+</main>
 <BezierCanvas />
 
 <style>
 	.t_container {
-		position: absolute;
-		top: var(--space-7xl);
-		left: 50%;
-		transform: translateX(-50%);
-		width: 100%;
-		max-width: var(--page-max-width);
 		z-index: 10;
 		background-color: var(--primary-light);
 		background-color: color-mix(in srgb, var(--primary-light) 95%, transparent);
@@ -200,6 +221,7 @@
 	.t_num {
 		color: #949494;
 		font-weight: 400;
+		vertical-align: top;
 	}
 
 	#row:hover {
@@ -218,7 +240,7 @@
 	}
 
 	.title_container {
-		position: fixed;
+		position: relative;
 		top: var(--space-xl);
 		left: var(--page-gutter);
 		width: fit-content;
@@ -228,8 +250,9 @@
 	}
 
 	td {
-		align-items: start;
+		vertical-align: top;
 		justify-items: start;
+		text-align: start;
 	}
 
 	@media (max-width: 768px) {
@@ -256,10 +279,9 @@
 			transform: none;
 			width: 100%;
 			max-width: none;
-			height: fit-content;
+			height: max-content;
 			background-color: unset;
 			margin-top: 0px;
-			padding: 0px var(--space-xl);
 			margin-bottom: var(--space-xl);
 			background-color: var(--primary-light);
 			z-index: 10;

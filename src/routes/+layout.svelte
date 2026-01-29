@@ -36,8 +36,6 @@
 
 <style>
 	:global(*) {
-		margin: 0;
-		padding: 0;
 		box-sizing: border-box;
 		-webkit-tap-highlight-color: transparent;
 		border-style: none;
@@ -84,37 +82,11 @@
 		color: #fff;
 	}
 
-	:global(h1) {
-		font-size: 36px;
-		font-weight: 600;
-		line-height: 1.1;
-		letter-spacing: -0.05em;
-	}
-
-	:global(p) {
-		letter-spacing: -0.05em;
-	}
-
-	:global(.s) {
-		font-size: 14px;
-	}
-
-	:global(.m) {
-		font-size: 16px;
-	}
-
-	:global(.l) {
-		font-size: 26px;
-	}
-
-	:global(.xl) {
-		font-size: 32px;
-	}
-
 	:global(.vertical_flex) {
 		display: flex;
 		flex-direction: column;
 		row-gap: var(--space-m);
+		overflow-x: visible;
 	}
 
 	:global(.narrow) {

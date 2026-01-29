@@ -10,6 +10,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import { setupLenis } from '$lib/utils';
 
 	let { data } = $props();
 
@@ -26,6 +27,16 @@
 
 	onMount(() => {
 		isMobileFlag = isMobile();
+
+		let lenis: any = null;
+
+		setupLenis().then((l) => {
+			lenis = l;
+		});
+
+		return () => {
+			lenis?.destroy();
+		};
 	});
 
 	afterNavigate(() => {
@@ -49,61 +60,50 @@
 	<link rel="canonical" href={baseUrl} />
 </svelte:head>
 
-<Header />
-<div class="return_btn_container">
-	<Button label="← GO BACK" href="back" />
-</div>
-
-{#if loadElements}
-	<div
-		class="about_container vertical_flex"
-		transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 300 }}
-	>
-		{#if !isMobileFlag}
-			<p>Trajectories of Engagement</p>
-		{:else}
-			<h1>ABOUT</h1>
-		{/if}
-		{#await aboutText then text}
-			<p class="m" transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}>
-				{@html text}
-			</p>
-		{/await}
-		<Button label="Get in touch with us" href="mailto:trajectoriesofengagement@sciencespo.fr" />
-		<div class="credits vertical_flex">
-			<p class="m"><b>Credits</b></p>
-			<p class="m"><span>Project design:</span>Marta Severo, Donato Ricci, Robin de Mourat</p>
-			<p class="m"><span>Chapters editing:</span>Élie Petit, Marta Severo, Donato Ricci</p>
-			<p class="m"><span>Book design:</span>Donato Ricci</p>
-			<p class="m"><span>Website design & development:</span>Tommaso Prinetti</p>
-			<p class="m"><span>Preliminary inquiries and workshop preparation:</span> Alex Pellier</p>
-			<p class="m"><span>Posters design:</span> Alex Pellier, Donato Ricci, Robin de Mourat</p>
-			<p class="m">
-				<span>Workshop design and animation:</span> Robin de Mourat, Marta Severo, Alex Pellier
-			</p>
-			<p class="m"><span>Videos captation and editing:</span> la SCOP des sales gosses</p>
+<main class="main_container justify-center">
+	{#if loadElements}
+		<Header />
+		<div
+			class="about_container vertical_flex relative w-1/2 px-4 pt-4 mt-16 z-10 place-self-center"
+			transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 300 }}
+		>
+			<h1>About this project</h1>
+			{#await aboutText then text}
+				<p transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}>
+					{@html text}
+				</p>
+			{/await}
+			<Button label="Get in touch with us" href="mailto:trajectoriesofengagement@sciencespo.fr" />
+			<div class="credits vertical_flex">
+				<p><b>Credits</b></p>
+				<p><span>Project design:</span>Marta Severo, Donato Ricci, Robin de Mourat</p>
+				<p><span>Chapters editing:</span>Élie Petit, Marta Severo, Donato Ricci</p>
+				<p><span>Book design:</span>Donato Ricci</p>
+				<p><span>Website design & development:</span>Tommaso Prinetti</p>
+				<p><span>Preliminary inquiries and workshop preparation:</span> Alex Pellier</p>
+				<p><span>Posters design:</span> Alex Pellier, Donato Ricci, Robin de Mourat</p>
+				<p>
+					<span>Workshop design and animation:</span> Robin de Mourat, Marta Severo, Alex Pellier
+				</p>
+				<p><span>Videos captation and editing:</span> la SCOP des sales gosses</p>
+			</div>
+			<Footer />
 		</div>
-	</div>
-{/if}
+	{/if}
 
-{#if !isMobileFlag}
-	<BezierCanvas />
-	<BezierCanvas />
-{/if}
-
-<Footer />
+	{#if !isMobileFlag}
+		<BezierCanvas />
+		<BezierCanvas />
+	{/if}
+</main>
 
 <style>
 	.about_container {
-		position: absolute;
+		position: relative;
+		height: max-content;
 		top: 10%;
-		left: 50%;
-		transform: translate(-50%);
-		width: 95ch;
 		row-gap: var(--space-xl);
 		background-color: var(--primary-light);
-		padding: var(--space-xl);
-		padding-bottom: var(--space-5xl);
 		white-space: pre-line;
 		justify-content: flex-start;
 		align-items: center;

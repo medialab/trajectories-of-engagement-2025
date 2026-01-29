@@ -82,7 +82,7 @@
 
 {#if !hasVideo}
 	<div class="vid_empty">
-		<p class="s">No video available</p>
+		<p>No video available</p>
 	</div>
 {:else}
 	{#await youtubeId}
@@ -96,14 +96,14 @@
 						onclick={() => goToNextSegment()}
 						transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y' }}
 					>
-						<p class="s">NEXT SEGMENT →</p>
+						<p>NEXT SEGMENT →</p>
 					</button>
 					<button
 						class="prev_vid horizontal_flex"
 						onclick={() => goToPreviousSegment()}
 						transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y' }}
 					>
-						<p class="s">PREVIOUS SEGMENT ←</p>
+						<p>PREVIOUS SEGMENT ←</p>
 					</button>
 				{/if}
 
@@ -136,7 +136,7 @@
 			</div>
 		{:else}
 			<div class="vid_empty">
-				<p class="s">No video available</p>
+				<p>No video available</p>
 			</div>
 		{/if}
 	{/await}

@@ -7,8 +7,8 @@
 	export let stroke = '#000';
 	export let strokeWidth = 4;
 	export let opacity = 1;
-	export let edgeMargin = 100; // how far outside edges the curves start/end
-	// transition timings (ms)
+	export let edgeMargin = 100;
+
 	const IN_MS = 1200;
 	const OUT_MS = 600;
 

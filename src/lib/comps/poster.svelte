@@ -67,10 +67,10 @@
 {#if hasPosters}
 	<div class="post_img">
 		<p
-			class="mix_value"
+			class="mix_value cursor-grab text-base!"
 			style="left: {Math.max(12, Math.min(88, Math.round(mixValue)))}%; white-space: nowrap"
 		>
-			← Grab here to slide! →
+			← Grab me →
 		</p>
 		<div class="slid_cont horizontal_flex">
 			<input
@@ -118,7 +118,7 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		padding: var(--space-3xs) var(--space-xs);
+		padding: 1px var(--space-xs);
 		background-color: var(--primary-color);
 		border: 2px solid black;
 		transform-origin: center;

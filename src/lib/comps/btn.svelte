@@ -35,9 +35,8 @@
 			}
 			return;
 		}
-		// @ts-ignore
-		const resolvedPath = resolve(`${ref}`);
-		goto(resolvedPath);
+		const resolvedPath = (resolve as any)(`${ref}`);
+		(goto as any)(resolvedPath);
 	};
 
 	let hasBeenClicked = $state(false);

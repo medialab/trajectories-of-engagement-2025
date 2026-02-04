@@ -3,7 +3,7 @@
 	import { draw, fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 
-	export let numCurves: number = 2; // up to 3
+export let numCurves: number = 2;
 	export let stroke = '#000';
 	export let strokeWidth = 4;
 	export let opacity = 1;
@@ -26,20 +26,19 @@
 
 	function edgePoint(edge: number): [number, number] {
 		switch (edge) {
-			case 0: // top
+			case 0:
 				return [rand(width), -edgeMargin];
-			case 1: // right
+			case 1:
 				return [width + edgeMargin, rand(height)];
-			case 2: // bottom
+			case 2:
 				return [rand(width), height + edgeMargin];
-			case 3: // left
+			case 3:
 			default:
 				return [-edgeMargin, rand(height)];
 		}
 	}
 
 	function genCurve(): string {
-		// pick distinct start/end edges
 		const startEdge = Math.floor(rand(4));
 		let endEdge = Math.floor(rand(4));
 		if (endEdge === startEdge) endEdge = (endEdge + 1 + Math.floor(rand(3))) % 4;
@@ -47,7 +46,6 @@
 		const [x0, y0] = edgePoint(startEdge);
 		const [x3, y3] = edgePoint(endEdge);
 
-		// control points mostly inside the viewBox for nice flow
 		const insetX = width * 0.15;
 		const insetY = height * 0.15;
 		const x1 = insetX + rand(Math.max(1, width - insetX * 2));
@@ -61,21 +59,17 @@
 	function regenerate() {
 		const n = Math.min(3, Math.max(1, Math.round(numCurves)));
 		paths = Array.from({ length: n }, genCurve);
-		// wait for DOM to render paths, then place markers
 		queueMarkersPlacement();
 	}
 
 	function startFadeOutAndRegen() {
-		// trigger out transitions by removing paths
 		paths = [];
 		markers = [];
-		// after out transition completes, regenerate once (no auto-loop)
 		loopTimeout = window.setTimeout(() => {
 			regenerate();
 		}, OUT_MS + 50);
 	}
 
-	// Exposed API: call from parent to force fade-out + regenerate cycle now
 	export function triggerRegeneration(): void {
 		if (loopTimeout !== null) {
 			clearTimeout(loopTimeout);
@@ -107,7 +101,6 @@
 	}
 
 	function queueMarkersPlacement() {
-		// next microtask + frame to ensure pathEls are bound
 		Promise.resolve().then(async () => {
 			await tick();
 			placeRandomMarkers();
@@ -115,8 +108,7 @@
 	}
 
 	function placeRandomMarkers() {
-		// Drop 2–3 squares at random points along random paths
-		const count = 2 + Math.floor(Math.random() * 2); // 2 or 3
+		const count = 2 + Math.floor(Math.random() * 2);
 		const next: { x: number; y: number }[] = [];
 		if (!pathEls || pathEls.length === 0) {
 			markers = next;

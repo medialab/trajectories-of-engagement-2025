@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://trajectories.sciencespo.fr/sitemap.xml
+
+https://trajectories.sciencespo.fr/
+https://trajectories.sciencespo.fr/about/
+https://trajectories.sciencespo.fr/archive/

@@ -13,7 +13,7 @@
 	import { NoToneMapping } from 'three';
 	import { afterNavigate } from '$app/navigation';
 	import { isTextureReady } from '$lib/utils';
-	import { baseUrl, ogDescription, ogTitle } from '$lib/utils';
+	import { pageMeta, siteName } from '$lib/seo';
 	import Footer from '$lib/comps/footer.svelte';
 
 	let loadElements = $state(false);
@@ -21,6 +21,7 @@
 	let bezRef: any;
 
 	let { data }: PageProps = $props();
+	const meta = pageMeta.home;
 
 	afterNavigate(() => {
 		loadElements = true;
@@ -28,19 +29,19 @@
 </script>
 
 <svelte:head>
-	<title>{ogTitle}</title>
-	<meta property="og:title" content={ogTitle} />
-	<meta property="og:site_name" content={ogTitle} />
-	<meta name="twitter:card" content={ogTitle} />
-	<meta name="twitter:title" content={ogTitle} />
-	<meta property="og:image" content={`${baseUrl}/Thumb.jpg`} />
-	<meta name="twitter:image" content={`${baseUrl}/Thumb.jpg`} />
-	<meta name="description" content={ogDescription} />
-	<meta property="og:description" content={ogDescription} />
-	<meta name="twitter:description" content={ogDescription} />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content={baseUrl} />
-	<link rel="canonical" href={baseUrl} />
+	<title>{meta.title}</title>
+	<meta property="og:title" content={meta.title} />
+	<meta property="og:site_name" content={siteName} />
+	<meta name="twitter:card" content={meta.twitterCard} />
+	<meta name="twitter:title" content={meta.title} />
+	<meta property="og:image" content={meta.image} />
+	<meta name="twitter:image" content={meta.image} />
+	<meta name="description" content={meta.description} />
+	<meta property="og:description" content={meta.description} />
+	<meta name="twitter:description" content={meta.description} />
+	<meta property="og:type" content={meta.type} />
+	<meta property="og:url" content={meta.url} />
+	<link rel="canonical" href={meta.url} />
 </svelte:head>
 
 <main class="main_container h-screen">
@@ -81,7 +82,6 @@
 				<Button href="/about" img={infoIcon} />
 				<Button label="Read the book" href="https://hal.science/hal-05459145v1" />
 				<Button label="Access the archive" href="/archive" />
-				<!-- <Button label="Get this bezier" onClick={() => bezRef?.downloadSvg()} /> -->
 			</div>
 		</div>
 	{/if}
@@ -115,6 +115,7 @@
 							projects={data.projects}
 							posters={data.posters}
 							loadstatus={loadElements}
+							introDelayMs={1000}
 						/>
 					</Canvas>
 				</div>
@@ -151,7 +152,6 @@
 		width: 100%;
 		height: 100%;
 		user-select: none;
-		/* Add these to prevent image dragging */
 		-webkit-user-drag: none;
 		user-select: none;
 		cursor: grab;

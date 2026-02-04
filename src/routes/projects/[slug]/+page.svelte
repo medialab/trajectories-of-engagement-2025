@@ -12,6 +12,7 @@
 	import infoIcon from '$lib/assets/icons/info.svg';
 	import checkIcon from '$lib/assets/icons/check.svg';
 	import { setupLenis, baseUrl } from '$lib/utils';
+	import { getProjectMeta, getProjectJsonLdScript, siteName } from '$lib/seo';
 	import { onMount } from 'svelte';
 
 	const mainYtb = 'https://www.youtube.com/watch?v=BLa_1fw-pQA';
@@ -39,10 +40,14 @@
 		[projectLeaders, projectResearchCenter].filter((value) => value.trim().length > 0).join(' | ')
 	);
 
+	let projectMeta = $derived(getProjectMeta(project));
 	let pageUrl = $derived(projectId ? `${baseUrl}/projects/${projectId}/` : baseUrl);
-	let ogTitle = $derived(projectTitle || fallbackTitle);
-	let ogDescription = $derived(project?.texts?.presentation || metaSummary || fallbackDescription);
+	let ogTitle = $derived(projectMeta.title || projectTitle || fallbackTitle);
+	let ogDescription = $derived(
+		projectMeta.description || project?.texts?.presentation || metaSummary || fallbackDescription
+	);
 	let ogImage = $derived(projectId ? `${baseUrl}/og/${projectId}.jpg` : fallbackImage);
+	let projectJsonLdScript = $derived(getProjectJsonLdScript(project));
 
 	onMount(() => {
 		let lenis: any = null;
@@ -65,12 +70,13 @@
 	<meta property="og:type" content="article" />
 	<meta property="og:image" content={ogImage} />
 	<meta property="og:url" content={pageUrl} />
-	<meta property="og:site_name" content={`Trajectories of Engagement - ${ogTitle}`} />
-	<meta name="twitter:card" content="summary_large_image" />
+	<meta property="og:site_name" content={`${siteName} - ${ogTitle}`} />
+	<meta name="twitter:card" content={projectMeta.twitterCard} />
 	<meta name="twitter:title" content={ogTitle} />
 	<meta name="twitter:description" content={ogDescription} />
 	<meta name="twitter:image" content={ogImage} />
 	<link rel="canonical" href={pageUrl} />
+	{@html projectJsonLdScript}
 </svelte:head>
 <div class="project_page_container place-self-center">
 	{#if data.project}

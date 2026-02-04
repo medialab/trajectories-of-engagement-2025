@@ -1,5 +1,4 @@
 <script lang="ts">
-	// @ts-ignore
 	import { Youtube } from 'svelte-youtube-embed';
 	import { fade, slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
@@ -10,7 +9,6 @@
 
 	const toStringValue = (value: unknown) => (typeof value === 'string' ? value : '');
 
-	// Bindable playback state exposed to parents and wired to <Youtube>
 	let play: boolean = $state(false);
 	let isPlaying: boolean = $state(false);
 	let currentTime: number = $state(0);
@@ -31,12 +29,10 @@
 			}
 
 			if (videoUrl.includes('youtu.be/')) {
-				// Handle youtu.be/VIDEO_ID format
 				const videoId = videoUrl.split('youtu.be/')[1].split('?')[0];
 
 				resolve(videoId);
 			} else if (videoUrl.includes('youtube.com/watch?v=')) {
-				// Handle youtube.com/watch?v=VIDEO_ID format
 				const videoId = videoUrl.split('v=')[1].split('&')[0];
 
 				resolve(videoId);
@@ -128,11 +124,6 @@
 					{/snippet}
 				</Youtube>
 
-				<!--{#if props.title}
-					<footer>
-						<p>{props.title.slice(0, 20)}</p>
-					</footer>
-				{/if}-->
 			</div>
 		{:else}
 			<div class="vid_empty">

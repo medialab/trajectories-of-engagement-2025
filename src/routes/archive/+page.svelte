@@ -4,7 +4,8 @@
 	import Header from '$lib/comps/header.svelte';
 	import BezierCanvas from '$lib/comps/canvas.svelte';
 	import { goto } from '$app/navigation';
-	import { isMobile, baseUrl, ogTitle, ogDescription } from '$lib/utils';
+	import { isMobile } from '$lib/utils';
+	import { pageMeta, siteName } from '$lib/seo';
 	import { resolve } from '$app/paths';
 	import { afterNavigate } from '$app/navigation';
 	import { fade, slide } from 'svelte/transition';
@@ -18,6 +19,7 @@
 
 	let sortedBy = $state('year');
 	let isPageLoaded = $state(false);
+	const meta = pageMeta.archive;
 
 	const toText = (value: unknown) => (value == null ? '' : String(value));
 	const safeTrim = (value: unknown) => toText(value).trim();
@@ -76,19 +78,19 @@
 </script>
 
 <svelte:head>
-	<title>{ogTitle}</title>
-	<meta property="og:title" content={ogTitle} />
-	<meta property="og:site_name" content={ogTitle} />
-	<meta name="twitter:card" content={ogTitle} />
-	<meta name="twitter:title" content={ogTitle} />
-	<meta property="og:image" content={`${baseUrl}/Thumb.jpg`} />
-	<meta name="twitter:image" content={`${baseUrl}/Thumb.jpg`} />
-	<meta name="description" content={ogDescription} />
-	<meta property="og:description" content={ogDescription} />
-	<meta name="twitter:description" content={ogDescription} />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content={baseUrl} />
-	<link rel="canonical" href={baseUrl} />
+	<title>{meta.title}</title>
+	<meta property="og:title" content={meta.title} />
+	<meta property="og:site_name" content={siteName} />
+	<meta name="twitter:card" content={meta.twitterCard} />
+	<meta name="twitter:title" content={meta.title} />
+	<meta property="og:image" content={meta.image} />
+	<meta name="twitter:image" content={meta.image} />
+	<meta name="description" content={meta.description} />
+	<meta property="og:description" content={meta.description} />
+	<meta name="twitter:description" content={meta.description} />
+	<meta property="og:type" content={meta.type} />
+	<meta property="og:url" content={meta.url} />
+	<link rel="canonical" href={meta.url} />
 </svelte:head>
 <main class="main_container h-fit">
 	<Header />
@@ -190,14 +192,13 @@
 		width: 100%;
 		font-weight: 400;
 		border-collapse: separate;
-		border-spacing: 0 var(--space-m); /* row gap */
+		border-spacing: 0 var(--space-m);
 	}
 
-	/* add vertical gap between header and first data row */
 	.archive_table tbody::before {
 		content: '';
 		display: block;
-		height: var(--space-m); /* adjust gap size */
+		height: var(--space-m);
 	}
 
 	.t_header {
@@ -274,7 +275,7 @@
 		}
 
 		.archive_table tbody::before {
-			height: 0px; /* adjust gap size */
+			height: 0px;
 		}
 
 		.t_num {

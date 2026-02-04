@@ -5,8 +5,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { baseUrl } from '$lib/utils';
-	// @ts-ignore - types provided via ambient module until package is installed
+	import { orgJsonLdScript, websiteJsonLdScript } from '$lib/seo';
 	import Tempus from 'tempus';
 
 	let { children } = $props();
@@ -32,6 +31,8 @@
 	/>
 
 	<meta name="theme-color" content="#111111" />
+	{@html orgJsonLdScript}
+	{@html websiteJsonLdScript}
 </svelte:head>
 
 {@render children?.()}
@@ -51,7 +52,6 @@
 		--page-max-width: 1600px;
 		--page-inset: 0px;
 
-		/* Spacing System */
 		--space-3xs: 2px;
 		--space-2xs: 4px;
 		--space-xs: 5px;

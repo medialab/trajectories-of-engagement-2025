@@ -5,7 +5,8 @@
 	import { marked } from 'marked';
 	import Footer from '$lib/comps/footer.svelte';
 
-	import { isMobile, baseUrl, ogTitle, ogDescription } from '$lib/utils';
+	import { isMobile } from '$lib/utils';
+	import { pageMeta, siteName } from '$lib/seo';
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
 	import { slide } from 'svelte/transition';
@@ -16,6 +17,7 @@
 
 	let isMobileFlag = $state(isMobile());
 	let loadElements = $state(false);
+	const meta = pageMeta.about;
 
 	const getIntroMarkdown = (intro: unknown) => {
 		const fromBook = intro && typeof intro === 'object' ? (intro as any).fromBook : null;
@@ -45,19 +47,19 @@
 </script>
 
 <svelte:head>
-	<title>{ogTitle}</title>
-	<meta property="og:title" content={ogTitle} />
-	<meta property="og:site_name" content={ogTitle} />
-	<meta name="twitter:card" content={ogTitle} />
-	<meta name="twitter:title" content={ogTitle} />
-	<meta property="og:image" content={`${baseUrl}/Thumb.jpg`} />
-	<meta name="twitter:image" content={`${baseUrl}/Thumb.jpg`} />
-	<meta name="description" content={ogDescription} />
-	<meta property="og:description" content={ogDescription} />
-	<meta name="twitter:description" content={ogDescription} />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content={baseUrl} />
-	<link rel="canonical" href={baseUrl} />
+	<title>{meta.title}</title>
+	<meta property="og:title" content={meta.title} />
+	<meta property="og:site_name" content={siteName} />
+	<meta name="twitter:card" content={meta.twitterCard} />
+	<meta name="twitter:title" content={meta.title} />
+	<meta property="og:image" content={meta.image} />
+	<meta name="twitter:image" content={meta.image} />
+	<meta name="description" content={meta.description} />
+	<meta property="og:description" content={meta.description} />
+	<meta name="twitter:description" content={meta.description} />
+	<meta property="og:type" content={meta.type} />
+	<meta property="og:url" content={meta.url} />
+	<link rel="canonical" href={meta.url} />
 </svelte:head>
 
 <main class="main_container justify-center">

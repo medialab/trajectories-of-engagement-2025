@@ -13,16 +13,12 @@
 	import { resolve } from '$app/paths';
 	import { Tween } from 'svelte/motion';
 	import Lenis from 'lenis';
-	// @ts-ignore - types provided via ambient module until package is installed
 	import Tempus from 'tempus';
 
 	import { isMobile, isTextureReady } from '$lib/utils';
 	import { fly } from 'svelte/transition';
-	import { render } from 'svelte/server';
 
 	const { invalidate } = useThrelte();
-
-	// Removed LocomotiveScroll; we drive scroll from wheel/touch directly
 
 	let scrollY = $state(0);
 
@@ -33,11 +29,15 @@
 	let isMobileFlag = $derived.by(() => isMobile());
 
 	let isIntroTweening = $state(false);
+	let hasIntroPlayed = $state(false);
 
-	// Smoothed wind velocity for visible curl/lerp, esp. on mobile
-	let windVelocity = $state(0); // not reactive on purpose
+	let windVelocity = $state(0);
 	const windDamping = (carouselConfig.wind as any)?.damping ?? 0.92;
 	const windEpsilon = 0.0005;
+
+	const introDelayMs = $derived.by(() =>
+		typeof (props as any)?.introDelayMs === 'number' ? (props as any).introDelayMs : 0
+	);
 
 	$effect(() => {
 		if ((props as any)?.deformationStrength !== undefined) {
@@ -109,10 +109,9 @@
 			edgePower: number;
 			dirScale: number;
 			windScale: number;
-			// additional per-mesh variance
-			oscAmp: number; // 0..~0.2
-			oscFreq: number; // small frequency factor applied to scrollY
-			oscPhase: number; // 0..2PI
+			oscAmp: number;
+			oscFreq: number;
+			oscPhase: number;
 		}
 	>();
 
@@ -181,25 +180,22 @@
 				originalZByMesh.set(mesh, baseZ);
 			}
 
-			// Geometry parameters to normalize coordinates
 			const geomParams = (mesh.geometry as any)?.parameters ?? {};
 			const width = typeof geomParams.width === 'number' ? geomParams.width : 1;
 			const height = typeof geomParams.height === 'number' ? geomParams.height : 1;
 			const halfW = width / 2;
 			const halfH = height / 2;
 
-			// Bottom-edge bend with half-parabola vertical falloff
 			const maxBend = carouselConfig.wind.maxCurl * Math.max(0, deformationStrength);
-			const verticalCurvePower = 2.0; // 1.5..3.0: higher -> more concentrated near bottom
+			const verticalCurvePower = 2.0;
 
 			const vertexCount = position.count;
 			for (let i = 0; i < vertexCount; i++) {
 				const x = position.getX(i);
 				const y = position.getY(i);
-				const ny = y / Math.max(1e-6, halfH); // -1 bottom .. 1 top
+				const ny = y / Math.max(1e-6, halfH);
 
-				// Vertical half-parabola: uniform across X
-				const t = Math.min(1, Math.max(0, (ny + 1) * 0.5)); // bottom=0 .. top=1
+				const t = Math.min(1, Math.max(0, (ny + 1) * 0.5));
 				const weight = -Math.pow(1 - t, verticalCurvePower);
 
 				const bend = weight * maxBend * r.windScale * windStrength;
@@ -214,8 +210,24 @@
 	interactivity({ target: props.containerEl });
 
 	$effect(() => {
-		if ($isTextureReady && !isIntroTweening) {
-			scheduleApply();
+		if (!$isTextureReady || !props.loadstatus) {
+			hasIntroPlayed = false;
+			if (introTimer !== null) {
+				clearTimeout(introTimer);
+				introTimer = null;
+			}
+			if ($isTextureReady) scheduleApply();
+			return;
+		}
+		scheduleApply();
+		if (!hasIntroPlayed) {
+			hasIntroPlayed = true;
+			if (introTimer !== null) clearTimeout(introTimer);
+			introTimer = window.setTimeout(() => {
+				introTimer = null;
+				if (!$isTextureReady || !props.loadstatus) return;
+				startIntroNudge();
+			}, Math.max(0, introDelayMs));
 		}
 	});
 
@@ -224,6 +236,31 @@
 
 	let pendingDelta = $state(0);
 	let scrollRAF: number | null = $state(null);
+	let introTimer: number | null = null;
+
+	const startIntroNudge = () => {
+		if (isIntroTweening) return;
+		isIntroTweening = true;
+		const duration = 800;
+		const amplitude = 140;
+		let last = 0;
+		const start = performance.now();
+		const step = (now: number) => {
+			const t = Math.min(1, (now - start) / duration);
+			const eased = cubicOut(t);
+			const target = eased * amplitude;
+			const delta = target - last;
+			last = target;
+			pendingDelta += delta;
+			scheduleApply();
+			if (t < 1) {
+				requestAnimationFrame(step);
+			} else {
+				isIntroTweening = false;
+			}
+		};
+		requestAnimationFrame(step);
+	};
 
 	const scheduleApply = () => {
 		if (scrollRAF !== null) return;
@@ -276,6 +313,7 @@
 		if (unsubscribeLenis) unsubscribeLenis();
 		if (scrollRAF !== null) cancelAnimationFrame(scrollRAF);
 		if (hoverAnimFrame !== null) cancelAnimationFrame(hoverAnimFrame);
+		if (introTimer !== null) clearTimeout(introTimer);
 	});
 </script>
 

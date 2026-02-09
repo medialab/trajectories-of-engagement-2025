@@ -53,7 +53,8 @@
 <button
 	type="button"
 	data-sveltekit-reload
-	class="generic_btn active:scale-[98%] focus:scale-[98%] transition-all ease-in-out duration-125"
+	class="generic_btn active:scale-[98%] focus:scale-[98%] transition-all ease-in-out duration-125
+	min-h-[40px] max-h-[40px] 2xl:min-h-[80px] 2xl:max-h-[80px]"
 	class:disabled={props?.disabled === true}
 	onclick={() => {
 		if (props.onClick) {
@@ -66,14 +67,14 @@
 	style={props?.img ? 'background-color: white' : ''}
 >
 	{#if props?.label}
-		<p>
+		<p class="mx-2 2xl:mx-4">
 			{props.label}
 		</p>
 	{/if}
 
 	{#if props?.img && !hasBeenClicked}
 		<div
-			class="img_container"
+			class="aspect-square 2xl:mx-4"
 			out:slide={{ duration: 350, easing: cubicInOut, axis: 'y' }}
 			in:slide={{ duration: 350, easing: cubicInOut, axis: 'y', delay: 1200 }}
 		>
@@ -81,7 +82,7 @@
 		</div>
 	{:else if props?.imgVar && hasBeenClicked}
 		<div
-			class="img_container"
+			class="aspect-square 2xl:mx-4"
 			in:slide={{ duration: 350, easing: cubicInOut, axis: 'y' }}
 			out:slide={{ duration: 350, easing: cubicInOut, axis: 'y', delay: 1200 }}
 		>
@@ -92,19 +93,7 @@
 
 <style>
 	.generic_btn {
-		border-radius: var(--space-xs);
 		background-color: var(--primary-color);
-		color: var(--primary-dark);
-		cursor: pointer;
-		border: 2px solid var(--primary-dark);
-		font-weight: 500;
-		align-items: center;
-		pointer-events: all !important;
-	}
-
-	.generic_btn:hover {
-		background-color: var(--primary-color);
-		filter: invert(0.1);
 	}
 
 	.generic_btn:active {
@@ -118,17 +107,5 @@
 
 	.disabled {
 		opacity: 0.3;
-	}
-
-	.img_container {
-		height: 20px;
-		width: auto;
-		aspect-ratio: 1/1;
-		place-items: center;
-	}
-
-	img {
-		width: auto;
-		object-fit: contain;
 	}
 </style>

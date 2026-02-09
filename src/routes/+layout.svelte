@@ -134,31 +134,6 @@
 		text-wrap: nowrap;
 	}
 
-	@media (max-width: 768px) {
-		:global(h1) {
-			font-size: 32px;
-		}
-
-		:global(.l) {
-			font-size: 16px;
-		}
-
-		:global(body) {
-			max-width: 100vw !important;
-			overflow-x: hidden !important;
-		}
-
-		:global(.return_btn_container) {
-			display: none !important;
-		}
-	}
-
-	@media (min-width: 1780px) {
-		:global(h1) {
-			font-size: 48px;
-		}
-	}
-
 	@media (min-width: 1921px) {
 		:root {
 			--page-gutter: max(var(--space-xl), calc((100vw - var(--page-max-width)) / 2));
@@ -177,11 +152,5 @@
 		top: 0;
 		z-index: 41;
 		pointer-events: none;
-	}
-
-	@media (min-width: 1780px) {
-		:global(.return_btn_container) {
-			padding: var(--space-xl) 0px;
-		}
 	}
 </style>

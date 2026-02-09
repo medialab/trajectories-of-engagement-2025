@@ -3,7 +3,7 @@
 	import { draw, fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 
-export let numCurves: number = 2;
+	export let numCurves: number = 2;
 	export let stroke = '#000';
 	export let strokeWidth = 4;
 	export let opacity = 1;
@@ -189,7 +189,6 @@ export let numCurves: number = 2;
 <style>
 	svg {
 		width: 100%;
-		max-width: var(--page-max-width);
 		height: 100vh;
 		pointer-events: none;
 		display: block;

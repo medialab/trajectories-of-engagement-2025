@@ -120,7 +120,7 @@
 		transform: translate(-50%, -50%);
 		padding: 1px var(--space-xs);
 		background-color: var(--primary-color);
-		border: 2px solid black;
+		border: 1px solid black;
 		transform-origin: center;
 	}
 
@@ -130,7 +130,7 @@
 		position: absolute;
 		background-color: transparent;
 		z-index: 10;
-		border: 2px solid black;
+		border: 1px solid black;
 		justify-content: space-between;
 		align-items: center;
 		padding: 0px;
@@ -163,7 +163,7 @@
 		background: var(--primary-color);
 		cursor: inherit;
 		border-radius: var(--space-xs);
-		border: 2px solid black;
+		border: 1px solid black;
 	}
 
 	.mix_slider::-moz-range-thumb {
@@ -172,7 +172,7 @@
 		background: var(--primary-color);
 		cursor: inherit;
 		border-radius: var(--space-xs);
-		border: 2px solid black;
+		border: 1px solid black;
 	}
 
 	.mix_slider::-webkit-slider-thumb:active {
@@ -250,7 +250,7 @@
 		z-index: 12;
 		padding: var(--space-xs);
 		background-color: var(--primary-color);
-		border: 2px solid var(--primary-dark);
+		border: 1px solid var(--primary-dark);
 		pointer-events: all;
 		border-radius: var(--space-xs) 0px 0px 0px;
 	}
@@ -261,7 +261,7 @@
 
 	.download_btn svg {
 		width: 25px;
-		height: 22px;
+		height: 21px;
 		fill: var(--primary-dark);
 	}
 

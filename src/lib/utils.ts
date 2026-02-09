@@ -16,6 +16,18 @@ export const isMobile = () => {
 	return window.innerWidth < 768;
 };
 
+export const getDeviceType = () => {
+	if (!browser) return false;
+
+	if (window.innerWidth < 768) {
+		return 'small';
+	} else if (window.innerWidth > 768 && window.innerWidth < 1920) {
+		return 'medium';
+	} else {
+		return 'big';
+	}
+};
+
 export const setupLenis = async (scrollContainer?: HTMLElement): Promise<Lenis | null> => {
 	if (!browser) return null;
 
@@ -39,7 +51,6 @@ export const setupLenis = async (scrollContainer?: HTMLElement): Promise<Lenis |
 };
 
 export const carouselConfig = {
-	spacing: 7,
 	startZ: 5,
 
 	scrollFactor: 0.01,

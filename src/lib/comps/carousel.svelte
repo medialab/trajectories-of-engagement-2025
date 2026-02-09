@@ -2,7 +2,7 @@
 	let props = $props();
 
 	import { T, useThrelte } from '@threlte/core';
-	import { useTexture, transitions } from '@threlte/extras';
+	import { useTexture, transitions, onReveal } from '@threlte/extras';
 	import { onMount, onDestroy } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
 	import { interactivity, useCursor } from '@threlte/extras';
@@ -11,12 +11,12 @@
 	import { currentTag, currentAuthor, currentResearchCenter, carouselConfig } from '$lib/utils';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { Tween } from 'svelte/motion';
 	import Lenis from 'lenis';
 	import Tempus from 'tempus';
 
-	import { isMobile, isTextureReady } from '$lib/utils';
+	import { isMobile, isTextureReady, getDeviceType } from '$lib/utils';
 	import { fly } from 'svelte/transition';
+	import { on } from 'svelte/events';
 
 	const { invalidate } = useThrelte();
 
@@ -27,6 +27,8 @@
 	let deformationStrength = $state(2);
 
 	let isMobileFlag = $derived.by(() => isMobile());
+
+	let deviceType = $derived.by(() => getDeviceType());
 
 	let isIntroTweening = $state(false);
 	let hasIntroPlayed = $state(false);
@@ -56,14 +58,23 @@
 		$currentResearchCenter = typeof d?.research_center === 'string' ? d.research_center : '';
 	};
 
-	let spacing = carouselConfig.spacing;
+	let spacing = $state(10);
 	let baseScale = $state(0.9);
+	let baseFar = $state(10000);
+	let baseNear = $state(0.001);
+	let xOffset = $state(0);
 
 	$effect(() => {
-		if (isMobileFlag) {
+		if (deviceType === 'small') {
 			baseScale = 0.7;
-		} else {
+			spacing = 5;
+		} else if (deviceType === 'medium') {
 			baseScale = 0.9;
+			spacing = 8;
+		} else {
+			baseScale = 2;
+			spacing = 20;
+			xOffset = -10;
 		}
 	});
 
@@ -223,11 +234,14 @@
 		if (!hasIntroPlayed) {
 			hasIntroPlayed = true;
 			if (introTimer !== null) clearTimeout(introTimer);
-			introTimer = window.setTimeout(() => {
-				introTimer = null;
-				if (!$isTextureReady || !props.loadstatus) return;
-				startIntroNudge();
-			}, Math.max(0, introDelayMs));
+			introTimer = window.setTimeout(
+				() => {
+					introTimer = null;
+					if (!$isTextureReady || !props.loadstatus) return;
+					startIntroNudge();
+				},
+				Math.max(0, introDelayMs)
+			);
 		}
 	});
 
@@ -410,13 +424,13 @@
 {/if}
 
 <T.OrthographicCamera
-	position={[-20, -6, middleZ + 15]}
+	position={[-20 + xOffset, -6, middleZ + 15]}
 	rotation={[-0.1, 0.1, 0]}
 	zoom={40}
 	makeDefault
-	far={10000}
-	near={0.001}
-	fov={10}
+	far={baseFar}
+	near={baseNear}
+	fov={1}
 ></T.OrthographicCamera>
 
 <T.AmbientLight intensity={1000} color="white" />

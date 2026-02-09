@@ -16,15 +16,15 @@ body {
 }
 
 p {
-	@apply text-base md:text-base lg:text-sm leading-tight text-left;
+	@apply text-base md:text-base xl:text-sm 2xl:text-4xl leading-tight text-left;
 }
 
 h1 {
-	@apply text-xl md:text-2xl lg:text-3xl uppercase font-bold leading-none tracking-tight;
+	@apply text-3xl md:text-4xl xl:text-3xl 2xl:text-8xl uppercase font-semibold leading-none tracking-tight;
 }
 
 h2 {
-	@apply text-lg md:text-lg lg:text-xl uppercase font-medium leading-none tracking-tighter;
+	@apply text-lg md:text-lg xl:text-xl 2xl:text-2xl uppercase font-medium leading-none tracking-tighter;
 }
 
 b {
@@ -36,10 +36,14 @@ i {
 }
 
 .main_container {
-	@apply flex flex-col w-screen  overflow-clip max-w-[1920px] place-self-center relative;
+	@apply flex flex-col w-screen  overflow-clip place-self-center relative;
 }
 
 button,
 a {
 	@apply uppercase p-2 h-fit w-fit flex flex-row;
+}
+
+.generic_btn {
+	@apply rounded-md border-solid border-[1.5] 2xl:border-[2.5] border-black items-center flex justify-center font-medium 2xl:font-normal transition-all duration-75 ease-in-out hover:invert-100 hover:saturate-0 hover:border-white;
 }

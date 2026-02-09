@@ -100,7 +100,7 @@
 			transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 100 }}
 		>
 			{#if !isMobileFlag}
-				<h1 style="text-transform: uppercase;">Trajectories of engagement</h1>
+				<h1 class="uppercase">Trajectories of engagement</h1>
 			{:else}
 				<h1>ARCHIVE</h1>
 			{/if}

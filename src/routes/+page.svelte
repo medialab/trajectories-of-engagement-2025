@@ -61,7 +61,7 @@
 			transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}
 		>
 			<div class="flex flex-col gap-2 2xl:gap-6 bg-[#f5f5f5] p-2">
-				<h1>Trajectories<br />of engagement</h1>
+				<h1 class="uppercase">Trajectories<br />of engagement</h1>
 				{#if data.abstract}
 					<p class="line-clamp-5 md:line-clamp-12 w-[90%] md:w-[50ch]">
 						{@html data.abstract}

@@ -19,12 +19,11 @@ p {
 	@apply text-base md:text-base xl:text-sm 2xl:text-lg leading-tight text-left;
 }
 
-h1 {
-	@apply text-3xl md:text-4xl xl:text-3xl 2xl:text-4xl uppercase font-semibold leading-none tracking-tight;
+	@apply text-3xl md:text-4xl xl:text-3xl 2xl:text-8xl font-semibold leading-none tracking-tight;
 }
 
 h2 {
-	@apply text-lg md:text-lg xl:text-xl uppercase font-medium leading-none tracking-tighter;
+	@apply text-lg md:text-lg xl:text-xl 2xl:text-2xl font-medium leading-none tracking-tighter;
 }
 
 b {

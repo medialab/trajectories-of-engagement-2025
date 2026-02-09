@@ -57,7 +57,7 @@
 	{#if loadElements}
 		<div
 			id="title_container"
-			class="fixed flex flex-col gap-2 2xl:gap-6 md:w-fit w-full p-4 2xl:p-12 z-20 h-fit top-0 left-0"
+			class="fixed flex flex-col gap-2 md:w-fit w-full p-4 2xl:p-6 z-20 h-fit top-0 left-0"
 			transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}
 		>
 			<div class="flex flex-col gap-2 2xl:gap-6 bg-[#f5f5f5] p-2">

@@ -66,7 +66,7 @@
 	{#if loadElements}
 		<Header />
 		<div
-			class="about_container vertical_flex relative w-1/2 px-4 pt-4 mt-16 z-10 place-self-center"
+			class="about_container vertical_flex relative w-1/2 px-4 pt-4 my-16 z-10 place-self-center"
 			transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 300 }}
 		>
 			<h1>About this project</h1>
@@ -75,7 +75,7 @@
 					{@html text}
 				</p>
 			{/await}
-			<Button label="Get in touch with us" href="mailto:trajectoriesofengagement@sciencespo.fr" />
+
 			<div class="credits vertical_flex">
 				<p><b>Credits</b></p>
 				<p><span>Project design:</span>Marta Severo, Donato Ricci, Robin de Mourat</p>
@@ -89,8 +89,9 @@
 				</p>
 				<p><span>Videos captation and editing:</span> la SCOP des sales gosses</p>
 			</div>
-			<Footer />
+			<Button label="Get in touch with us" href="mailto:trajectoriesofengagement@sciencespo.fr" />
 		</div>
+		<Footer />
 	{/if}
 
 	{#if !isMobileFlag}

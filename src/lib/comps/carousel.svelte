@@ -72,9 +72,8 @@
 			baseScale = 0.9;
 			spacing = 8;
 		} else {
-			baseScale = 2;
-			spacing = 20;
-			xOffset = -10;
+			baseScale = 1.1;
+			spacing = 10;
 		}
 	});
 

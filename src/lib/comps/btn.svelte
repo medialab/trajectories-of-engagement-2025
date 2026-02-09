@@ -54,7 +54,7 @@
 	type="button"
 	data-sveltekit-reload
 	class="generic_btn active:scale-[98%] focus:scale-[98%] transition-all ease-in-out duration-125
-	min-h-[40px] max-h-[40px] 2xl:min-h-[80px] 2xl:max-h-[80px]"
+	min-h-[40px] max-h-[40px] 2xl:min-h-[50px] 2xl:max-h-[50px]"
 	class:disabled={props?.disabled === true}
 	onclick={() => {
 		if (props.onClick) {

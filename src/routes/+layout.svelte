@@ -134,13 +134,6 @@
 		text-wrap: nowrap;
 	}
 
-	@media (min-width: 1921px) {
-		:root {
-			--page-gutter: max(var(--space-xl), calc((100vw - var(--page-max-width)) / 2));
-			--page-inset: var(--space-m);
-		}
-	}
-
 	:global(.return_btn_container) {
 		position: fixed;
 		display: flex;

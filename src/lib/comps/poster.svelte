@@ -212,12 +212,6 @@
 		mix-blend-mode: normal;
 	}
 
-	@supports (mix-blend-mode: color-burn) {
-		.post_img {
-			mix-blend-mode: color-burn;
-		}
-	}
-
 	.post_img > img {
 		height: 100%;
 		width: auto;

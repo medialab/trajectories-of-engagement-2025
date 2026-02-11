@@ -41,7 +41,7 @@ i {
 
 button,
 a {
-	@apply uppercase p-2 h-fit w-fit flex flex-row cursor-pointer ! hover:cursor-pointer !;
+	@apply uppercase p-2 h-fit w-fit flex flex-row cursor-pointer hover:cursor-pointer;
 }
 
 .generic_btn {

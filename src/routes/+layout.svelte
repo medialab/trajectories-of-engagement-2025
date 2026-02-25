@@ -3,12 +3,20 @@
 <script lang="ts">
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import { onMount } from 'svelte';
+	import BezierCanvas from '$lib/comps/canvas.svelte';
+	import { page } from '$app/state';
+	import { fade } from 'svelte/transition';
+	import { onMount, setContext } from 'svelte';
 	import { browser } from '$app/environment';
 	import { orgJsonLdScript, websiteJsonLdScript } from '$lib/seo';
 	import Tempus from 'tempus';
 
 	let { children } = $props();
+	let bezierRef: { triggerRegeneration?: () => void } | null = $state(null);
+
+	setContext('trigger-bezier-regeneration', () => {
+		bezierRef?.triggerRegeneration?.();
+	});
 
 	onMount(() => {
 		if (!browser) return;
@@ -35,7 +43,13 @@
 	{@html websiteJsonLdScript}
 </svelte:head>
 
-{@render children?.()}
+{#key page.url.pathname}
+	<main class="min-h-screen min-h-dvh relative z-30">
+		{@render children?.()}
+	</main>
+{/key}
+
+<BezierCanvas bind:this={bezierRef} />
 
 <style>
 	:global(*) {
@@ -121,7 +135,7 @@
 
 	:global(button, a) {
 		background-color: unset;
-		border: unset;
+		outline: unset;
 		color: unset;
 		font-weight: unset;
 		font-size: unset;

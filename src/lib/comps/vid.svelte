@@ -1,61 +1,58 @@
 <script lang="ts">
 	import { Youtube } from 'svelte-youtube-embed';
-	import { fade, slide } from 'svelte/transition';
+	import type { ProjectExcerpt } from '$lib/datasource';
+	import { slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
-	import { onMount } from 'svelte';
 	import { timecodeToSeconds } from 'timecode-converter';
 
-	let props = $props();
+	type VidProps = {
+		src?: string;
+		excerpts?: ProjectExcerpt[];
+		title?: string;
+	};
 
 	const toStringValue = (value: unknown) => (typeof value === 'string' ? value : '');
+	const toYoutubeId = (url: string): string => {
+		if (!url) return '';
+		if (url.includes('youtu.be/')) {
+			return url.split('youtu.be/')[1]?.split('?')[0] ?? '';
+		}
+		if (url.includes('youtube.com/watch?v=')) {
+			return url.split('v=')[1]?.split('&')[0] ?? '';
+		}
+		return '';
+	};
+	const getExcerptStart = (excerpt: ProjectExcerpt): number | null => {
+		const timecode = excerpt.timecodes?.[0];
+		if (!timecode) return null;
+		const seconds = timecodeToSeconds(timecode, 25);
+		return Number.isFinite(seconds) ? seconds : null;
+	};
+
+	let { src = '', excerpts = [], title = '' }: VidProps = $props();
 
 	let play: boolean = $state(false);
 	let isPlaying: boolean = $state(false);
 	let currentTime: number = $state(0);
 	let currentTimeIndex: number = $state(0);
 
-	let videoUrl = $derived.by(() => toStringValue(props.src));
+	let videoUrl = $derived.by(() => toStringValue(src));
 	let isYouTube = $derived.by(
 		() => videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')
 	);
 	let hasVideo = $derived.by(() => videoUrl.length > 0);
-	let timestamps: number[] = $state([]);
-
-	let youtubeId: Promise<string> = $state(
-		new Promise((resolve) => {
-			if (!isYouTube || !videoUrl) {
-				resolve('');
-				return;
+	let youtubeId = $derived.by(() => (isYouTube ? toYoutubeId(videoUrl) : ''));
+	let timestamps = $derived.by(() => {
+		const parsedTimestamps: number[] = [];
+		for (const excerpt of excerpts) {
+			const start = getExcerptStart(excerpt);
+			if (start !== null) {
+				parsedTimestamps.push(start);
 			}
-
-			if (videoUrl.includes('youtu.be/')) {
-				const videoId = videoUrl.split('youtu.be/')[1].split('?')[0];
-
-				resolve(videoId);
-			} else if (videoUrl.includes('youtube.com/watch?v=')) {
-				const videoId = videoUrl.split('v=')[1].split('&')[0];
-
-				resolve(videoId);
-			} else {
-				resolve('');
-			}
-		})
-	);
-
-	const calculateSegments = () => {
-		timestamps = [];
-		if (!Array.isArray(props.excerpts)) return;
-		props.excerpts.forEach((excerpt: any) => {
-			if (excerpt.timecodes && excerpt.timecodes.length > 0) {
-				const startTime = timecodeToSeconds(excerpt.timecodes[0], 25);
-
-				timestamps.push(startTime);
-			}
-		});
-		if (timestamps.length > 0) {
-			currentTime = timestamps[0];
 		}
-	};
+		return parsedTimestamps;
+	});
+	let hasSegments = $derived.by(() => timestamps.length > 0);
 
 	const goToNextSegment = () => {
 		if (timestamps.length === 0) return;
@@ -71,8 +68,10 @@
 		play = true;
 	};
 
-	onMount(() => {
-		calculateSegments();
+	$effect(() => {
+		currentTimeIndex = 0;
+		currentTime = timestamps[0] ?? 0;
+		play = false;
 	});
 </script>
 
@@ -80,57 +79,50 @@
 	<div class="vid_empty">
 		<p>No video available</p>
 	</div>
-{:else}
-	{#await youtubeId}
-		<p>loading...</p>
-	{:then videoId}
-		{#if isYouTube && videoId}
-			<div class="vid_cont vertical_flex">
-				{#if Array.isArray(props.excerpts) && isPlaying === true}
-					<button
-						class="next_vid horizontal_flex"
-						onclick={() => goToNextSegment()}
-						transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y' }}
-					>
-						<p>NEXT SEGMENT →</p>
-					</button>
-					<button
-						class="prev_vid horizontal_flex"
-						onclick={() => goToPreviousSegment()}
-						transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y' }}
-					>
-						<p>PREVIOUS SEGMENT ←</p>
-					</button>
-				{/if}
-
-				<Youtube
-					id={videoId as string}
-					bind:play={play as boolean}
-					bind:isPlaying={isPlaying as boolean}
-					startAt={currentTime}
-					title={props.title}
-					thumbnail=""
-					--title-font-family="Inter"
-					--title-font-size="16px"
-					--title-font-weight="500"
-					--title-color="var(--primary-color)"
-					--title-text-transform="uppercase"
-					--title-letter-spacing="-0.05em"
-				>
-					{#snippet play_button()}
-						<button class="play_pause horizontal_flex">
-							<p>PLAY</p>
-						</button>
-					{/snippet}
-				</Youtube>
-
-			</div>
-		{:else}
-			<div class="vid_empty">
-				<p>No video available</p>
-			</div>
+{:else if isYouTube && youtubeId}
+	<div class="vid_cont vertical_flex">
+		{#if hasSegments && isPlaying === true}
+			<button
+				class="next_vid horizontal_flex"
+				onclick={() => goToNextSegment()}
+				transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y' }}
+			>
+				<p>NEXT SEGMENT →</p>
+			</button>
+			<button
+				class="prev_vid horizontal_flex"
+				onclick={() => goToPreviousSegment()}
+				transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y' }}
+			>
+				<p>PREVIOUS SEGMENT ←</p>
+			</button>
 		{/if}
-	{/await}
+
+		<Youtube
+			id={youtubeId}
+			bind:play
+			bind:isPlaying
+			startAt={currentTime}
+			{title}
+			thumbnail=""
+			--title-font-family="Inter"
+			--title-font-size="16px"
+			--title-font-weight="500"
+			--title-color="var(--primary-color)"
+			--title-text-transform="uppercase"
+			--title-letter-spacing="-0.05em"
+		>
+			{#snippet play_button()}
+				<div class="play_pause horizontal_flex generic_btn">
+					<p>PLAY</p>
+				</div>
+			{/snippet}
+		</Youtube>
+	</div>
+{:else}
+	<div class="vid_empty">
+		<p>No video available</p>
+	</div>
 {/if}
 
 <style>
@@ -138,7 +130,7 @@
 		height: fit-content;
 		position: relative;
 		width: 100%;
-		border: 2px solid var(--primary-dark);
+		outline: 2px solid var(--primary-dark);
 		background-color: var(--primary-light);
 		z-index: 1;
 		row-gap: 0px;
@@ -147,7 +139,7 @@
 
 	.vid_empty {
 		width: 100%;
-		border: 2px solid var(--primary-dark);
+		outline: 2px solid var(--primary-dark);
 		background-color: var(--primary-light);
 		padding: var(--space-l);
 		text-align: center;
@@ -162,7 +154,7 @@
 		width: fit-content;
 		height: fit-content;
 		background-color: var(--primary-color);
-		border: 2px solid var(--primary-dark);
+		outline: 2px solid var(--primary-dark);
 		cursor: pointer;
 		padding: var(--space-2xs) var(--space-m);
 		border-radius: 0px;

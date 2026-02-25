@@ -16,6 +16,12 @@
 
 	let maxValue = $state(100);
 	let minValue = $state(0);
+	let isDownloading = $state(false);
+	let downloadError = $state('');
+
+	const DOWNLOAD_TIMEOUT_MS = 8000;
+	const RETRY_DELAY_MS = 300;
+	const MAX_DOWNLOAD_ATTEMPTS = 2;
 
 	const mixOpacity = $derived(mixValue / 100);
 	const hasPosters = $derived.by(
@@ -30,10 +36,46 @@
 		}, 2000);
 	}
 
+	const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+	async function fetchWithTimeout(url: string, timeoutMs: number) {
+		const controller = new AbortController();
+		const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+
+		try {
+			return await fetch(url, { signal: controller.signal });
+		} finally {
+			clearTimeout(timeout);
+		}
+	}
+
+	async function fetchPosterBlob(url: string): Promise<Blob> {
+		let lastError: unknown = null;
+
+		for (let attempt = 1; attempt <= MAX_DOWNLOAD_ATTEMPTS; attempt++) {
+			try {
+				const response = await fetchWithTimeout(url, DOWNLOAD_TIMEOUT_MS);
+				if (!response.ok) {
+					throw new Error(`Poster download failed with status ${response.status}`);
+				}
+				return await response.blob();
+			} catch (error) {
+				lastError = error;
+				if (attempt < MAX_DOWNLOAD_ATTEMPTS) {
+					await wait(RETRY_DELAY_MS);
+				}
+			}
+		}
+
+		throw lastError instanceof Error ? lastError : new Error('Poster download failed');
+	}
+
 	async function downloadPoster(annotatedURl: string, originalURl: string, title: string) {
 		const safeTitle = typeof title === 'string' ? title.trim() : '';
-		if (!safeTitle) return;
+		if (!safeTitle || isDownloading) return;
 		let sourceURl: string;
+		downloadError = '';
+		isDownloading = true;
 
 		if (mixValue < 50) {
 			sourceURl = originalURl;
@@ -41,17 +83,29 @@
 			sourceURl = annotatedURl;
 		}
 
-		const response = await fetch(sourceURl);
-		const blob = await response.blob();
-		const url = URL.createObjectURL(blob);
-		const link = document.createElement('a');
-		link.href = url;
-		link.download = `${safeTitle}.png`;
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-		URL.revokeObjectURL(url);
+		try {
+			const blob = await fetchPosterBlob(sourceURl);
+			const url = URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = `${safeTitle}.png`;
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+			URL.revokeObjectURL(url);
+		} catch (error) {
+			downloadError = 'Download failed. Please try again.';
+			console.error('Poster download failed:', error);
+		} finally {
+			isDownloading = false;
+		}
 	}
+
+	onMount(() => {
+		setTimeout(() => {
+			slideAnimation();
+		}, 200);
+	});
 
 	afterNavigate(() => {
 		setTimeout(() => {
@@ -100,6 +154,8 @@
 			class="download_btn"
 			onclick={() => downloadPoster(props.annotatedPoster, props.originalPoster, safeId)}
 			aria-label="Download poster"
+			aria-busy={isDownloading}
+			disabled={isDownloading}
 		>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
 				><path
@@ -107,6 +163,9 @@
 				/></svg
 			>
 		</button>
+		{#if downloadError}
+			<p class="download_error">{downloadError}</p>
+		{/if}
 		<div class="bg_back"></div>
 	</div>
 {/if}
@@ -120,7 +179,7 @@
 		transform: translate(-50%, -50%);
 		padding: 1px var(--space-xs);
 		background-color: var(--primary-color);
-		border: 1px solid black;
+		outline: 1px solid black;
 		transform-origin: center;
 	}
 
@@ -130,7 +189,7 @@
 		position: absolute;
 		background-color: transparent;
 		z-index: 10;
-		border: 1px solid black;
+		outline: 1px solid black;
 		justify-content: space-between;
 		align-items: center;
 		padding: 0px;
@@ -142,10 +201,8 @@
 		width: 110%;
 		-webkit-appearance: none;
 		appearance: none;
-		height: var(--space-s);
-		outline: none;
 		border-radius: var(--space-xs);
-		border: 0px solid black;
+		outline: 0px solid black;
 		pointer-events: all;
 		background-color: transparent;
 		cursor: grab;
@@ -163,7 +220,7 @@
 		background: var(--primary-color);
 		cursor: inherit;
 		border-radius: var(--space-xs);
-		border: 1px solid black;
+		outline: 1px solid black;
 	}
 
 	.mix_slider::-moz-range-thumb {
@@ -172,7 +229,7 @@
 		background: var(--primary-color);
 		cursor: inherit;
 		border-radius: var(--space-xs);
-		border: 1px solid black;
+		outline: 1px solid black;
 	}
 
 	.mix_slider::-webkit-slider-thumb:active {
@@ -197,25 +254,26 @@
 		width: 100%;
 		height: var(--space-2xs);
 		border-radius: var(--space-3xs);
-		border: 1px solid black;
+		outline: 1px solid black;
 	}
 
 	.post_img {
-		width: fit-content;
-		height: fit-content;
+		width: 80%;
+		max-width: 100%;
+		height: auto;
 		border-radius: 0px;
 		pointer-events: none;
 		position: relative;
 		overflow: hidden;
-		border: 0.5px solid black;
+		outline: 0.5px solid black;
 		aspect-ratio: 0.69;
 		mix-blend-mode: normal;
 	}
 
 	.post_img > img {
 		height: 100%;
-		width: auto;
-		object-fit: contain;
+		width: 100%;
+		object-fit: cover;
 		object-position: top;
 		position: absolute;
 		top: 0;
@@ -224,7 +282,7 @@
 	}
 
 	.base_img {
-		position: relative !important;
+		z-index: 1;
 	}
 
 	.bg_back {
@@ -244,7 +302,7 @@
 		z-index: 12;
 		padding: var(--space-xs);
 		background-color: var(--primary-color);
-		border: 1px solid var(--primary-dark);
+		outline: 1px solid var(--primary-dark);
 		pointer-events: all;
 		border-radius: var(--space-xs) 0px 0px 0px;
 	}
@@ -253,10 +311,25 @@
 		filter: brightness(0.9);
 	}
 
+	.download_btn:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+
 	.download_btn svg {
 		width: 25px;
 		height: 21px;
 		fill: var(--primary-dark);
+	}
+
+	.download_error {
+		position: absolute;
+		left: var(--space-xs);
+		bottom: var(--space-xs);
+		z-index: 13;
+		padding: 2px var(--space-xs);
+		background-color: var(--primary-light);
+		outline: 1px solid var(--primary-dark);
 	}
 
 	@media (max-width: 768px) {

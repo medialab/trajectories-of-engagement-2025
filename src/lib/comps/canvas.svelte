@@ -78,28 +78,6 @@
 		startFadeOutAndRegen();
 	}
 
-	export function downloadSvg() {
-		const primaryColor =
-			getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() ||
-			'#ccff00';
-
-		const svgContent = `
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
-        ${paths.map((d) => `<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round" opacity="${opacity}" />`).join('\n  ')}
-        ${markers.map((m) => `<rect x="${m.x - 11}" y="${m.y - 11}" width="22" height="22" fill="${primaryColor}" stroke="${stroke}" stroke-width="${strokeWidth}" opacity="${opacity}" />`).join('\n  ')}
-      </svg>`;
-
-		const blob = new Blob([svgContent], { type: 'image/svg+xml' });
-		const url = URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = 'trajectories-bezier.svg';
-		document.body.appendChild(a);
-		a.click();
-		document.body.removeChild(a);
-		URL.revokeObjectURL(url);
-	}
-
 	function queueMarkersPlacement() {
 		Promise.resolve().then(async () => {
 			await tick();
@@ -190,6 +168,7 @@
 	svg {
 		width: 100%;
 		height: 100vh;
+		height: 100dvh;
 		pointer-events: none;
 		display: block;
 		shape-rendering: geometricPrecision;
@@ -201,14 +180,7 @@
 		right: 0;
 		bottom: 0;
 		z-index: 0;
-		touch-action: none;
-		overscroll-behavior: contain;
-		overflow: hidden;
-		-webkit-overflow-scrolling: none;
-		-ms-overflow-style: none;
 		scrollbar-width: none;
-		-ms-touch-action: none;
-		touch-action: none;
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
 		-moz-user-select: none;

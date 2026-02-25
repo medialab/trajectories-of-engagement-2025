@@ -8,6 +8,21 @@
 	let props = $props();
 
 	const isScheme = (s: string) => /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(s);
+	const copyToClipboardFallback = (text: string) => {
+		const el = document.createElement('textarea');
+		el.value = text;
+		el.setAttribute('readonly', '');
+		el.style.position = 'absolute';
+		el.style.left = '-9999px';
+		document.body.appendChild(el);
+		el.select();
+		try {
+			document.execCommand('copy');
+		} catch (err) {
+			console.error('Fallback copy failed', err);
+		}
+		document.body.removeChild(el);
+	};
 
 	const intDecide = (ref: string) => {
 		if (!ref) return;
@@ -18,7 +33,15 @@
 		}
 
 		if (ref === 'copyLink') {
-			navigator.clipboard.writeText(window.location.href);
+			const textToCopy = window.location.href;
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(textToCopy).catch(() => {
+					// Fallback if writeText fails
+					copyToClipboardFallback(textToCopy);
+				});
+			} else {
+				copyToClipboardFallback(textToCopy);
+			}
 			return;
 		}
 
@@ -53,8 +76,7 @@
 <button
 	type="button"
 	data-sveltekit-reload
-	class="generic_btn active:scale-[98%] focus:scale-[98%] transition-all ease-in-out duration-125
-	min-h-[40px] max-h-[40px] 2xl:min-h-[50px] 2xl:max-h-[50px]"
+	class="generic_btn active:scale-[98%] focus:scale-[98%] transition-all ease-in-out duration-125 h-[40px]"
 	class:disabled={props?.disabled === true}
 	onclick={() => {
 		if (props.onClick) {
@@ -67,26 +89,22 @@
 	style={props?.img ? 'background-color: white' : ''}
 >
 	{#if props?.label}
-		<p class="mx-2 2xl:mx-4">
+		<p class="mx-2">
 			{props.label}
 		</p>
 	{/if}
 
 	{#if props?.img && !hasBeenClicked}
 		<div
-			class="aspect-square 2xl:mx-4"
+			class="aspect-square h-fill w-auto"
 			out:slide={{ duration: 350, easing: cubicInOut, axis: 'y' }}
 			in:slide={{ duration: 350, easing: cubicInOut, axis: 'y', delay: 1200 }}
 		>
-			<img src={props?.img} alt={props?.imgAlt} />
-		</div>
-	{:else if props?.imgVar && hasBeenClicked}
-		<div
-			class="aspect-square 2xl:mx-4"
-			in:slide={{ duration: 350, easing: cubicInOut, axis: 'y' }}
-			out:slide={{ duration: 350, easing: cubicInOut, axis: 'y', delay: 1200 }}
-		>
-			<img src={props?.imgVar} alt={props?.imgAlt} />
+			{#if hasBeenClicked}
+				<img src={props?.imgVar} alt={props?.imgAlt} transition:slide={{ duration: 350 }} />
+			{:else}
+				<img src={props?.img} alt={props?.imgAlt} transition:slide={{ duration: 350 }} />
+			{/if}
 		</div>
 	{/if}
 </button>

@@ -2,12 +2,11 @@
 	import type { PageProps } from './$types';
 
 	import Header from '$lib/comps/header.svelte';
-	import BezierCanvas from '$lib/comps/canvas.svelte';
+	import type { ProjectRecord } from '$lib/datasource';
 	import { goto } from '$app/navigation';
 	import { isMobile } from '$lib/utils';
 	import { pageMeta, siteName } from '$lib/seo';
 	import { resolve } from '$app/paths';
-	import { afterNavigate } from '$app/navigation';
 	import { fade, slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
@@ -18,20 +17,15 @@
 	let isMobileFlag = $state(isMobile());
 
 	let sortedBy = $state('year');
-	let isPageLoaded = $state(false);
 	const meta = pageMeta.archive;
 
 	const toText = (value: unknown) => (value == null ? '' : String(value));
 	const safeTrim = (value: unknown) => toText(value).trim();
 
-	afterNavigate(() => {
-		isPageLoaded = true;
-	});
-
-	function getKeyValue(project: any, key: string): string | number {
+	function getKeyValue(project: ProjectRecord, key: string): string | number {
 		switch (key) {
 			case 'index':
-				return (data.projects as any[]).indexOf(project) + 1;
+				return data.projects.indexOf(project) + 1;
 			case 'year': {
 				const y = project?.metadata?.year ?? '';
 				const m = String(y).match(/\d{4}/);
@@ -51,7 +45,7 @@
 	}
 
 	const sortedProjects = $derived(() => {
-		const arr = [...(data.projects as any[])];
+		const arr = [...data.projects];
 		const key = sortedBy;
 		return arr.sort((a, b) => {
 			const av = getKeyValue(a, key);
@@ -66,12 +60,18 @@
 
 	onMount(() => {
 		let lenis: any = null;
+		const controller = new AbortController();
 
-		setupLenis().then((l) => {
+		void setupLenis(undefined, controller.signal).then((l) => {
+			if (controller.signal.aborted) {
+				l?.destroy();
+				return;
+			}
 			lenis = l;
 		});
 
 		return () => {
+			controller.abort();
 			lenis?.destroy();
 		};
 	});
@@ -92,93 +92,85 @@
 	<meta property="og:url" content={meta.url} />
 	<link rel="canonical" href={meta.url} />
 </svelte:head>
+
 <main class="main_container h-fit">
 	<Header />
-	{#if isPageLoaded}
-		<div
-			class="relative w-fit p-4 mt-16"
-			transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 100 }}
-		>
-			{#if !isMobileFlag}
-				<h1 class="uppercase">Trajectories of engagement</h1>
-			{:else}
-				<h1>ARCHIVE</h1>
-			{/if}
-		</div>
+	<div class="relative w-fit p-4 mt-16">
+		{#if !isMobileFlag}
+			<h1 class="uppercase">Trajectories of engagement</h1>
+		{:else}
+			<h1>ARCHIVE</h1>
+		{/if}
+	</div>
 
-		<div class="t_container w-full px-4">
-			<table
-				class="archive_table"
-				transition:fade={{ duration: 1000, easing: cubicOut, delay: 200 }}
-			>
-				<thead class="t_header">
-					<tr>
-						<th scope="col" style="width: 5%;" onclick={() => (sortedBy = 'index')}
-							><button class="cursor-pointer"><p>(N) {sortedBy === 'index' ? '↑' : ''}</p></button
-							></th
-						>
-						<th scope="col" style="width: 10%;" id="year" onclick={() => (sortedBy = 'year')}
-							><button class="cursor-pointer"><p>Dates {sortedBy === 'year' ? '↑' : ''}</p></button
-							></th
-						>
-						<th scope="col" style="width: 30%;" id="title" onclick={() => (sortedBy = 'title')}
-							><button class="cursor-pointer"><p>Title {sortedBy === 'title' ? '↑' : ''}</p></button
-							></th
-						>
-						<th
-							scope="col"
-							style="width: 15%;"
-							id="project_leaders"
-							onclick={() => (sortedBy = 'project_leaders')}
-							><button class="cursor-pointer"
-								><p>Author {sortedBy === 'project_leaders' ? '↑' : ''}</p></button
-							></th
-						>
-						<th
-							scope="col"
-							style="width: 25%;"
-							id="research_center"
-							onclick={() => (sortedBy = 'research_center')}
-							><button class="cursor-pointer"
-								><p>University {sortedBy === 'research_center' ? '↑' : ''}</p></button
-							></th
-						>
-						<th
-							scope="col"
-							style="width: 15%;"
-							id="link"
-							onclick={() => (sortedBy = 'presentationURL')}
-							><button class="cursor-pointer"
-								><p>Link {sortedBy === 'presentationURL' ? '↑' : ''}</p></button
-							></th
-						>
+	<div class="t_container w-full px-4">
+		<table class="archive_table">
+			<thead class="t_header">
+				<tr>
+					<th scope="col" style="width: 5%;" onclick={() => (sortedBy = 'index')}
+						><button class="cursor-pointer"><p>(N) {sortedBy === 'index' ? '↑' : ''}</p></button
+						></th
+					>
+					<th scope="col" style="width: 10%;" id="year" onclick={() => (sortedBy = 'year')}
+						><button class="cursor-pointer"><p>Dates {sortedBy === 'year' ? '↑' : ''}</p></button
+						></th
+					>
+					<th scope="col" style="width: 30%;" id="title" onclick={() => (sortedBy = 'title')}
+						><button class="cursor-pointer"><p>Title {sortedBy === 'title' ? '↑' : ''}</p></button
+						></th
+					>
+					<th
+						scope="col"
+						style="width: 15%;"
+						id="project_leaders"
+						onclick={() => (sortedBy = 'project_leaders')}
+						><button class="cursor-pointer"
+							><p>Author {sortedBy === 'project_leaders' ? '↑' : ''}</p></button
+						></th
+					>
+					<th
+						scope="col"
+						style="width: 25%;"
+						id="research_center"
+						onclick={() => (sortedBy = 'research_center')}
+						><button class="cursor-pointer"
+							><p>University {sortedBy === 'research_center' ? '↑' : ''}</p></button
+						></th
+					>
+					<th
+						scope="col"
+						style="width: 15%;"
+						id="link"
+						onclick={() => (sortedBy = 'presentationURL')}
+						><button class="cursor-pointer"
+							><p>Link {sortedBy === 'presentationURL' ? '↑' : ''}</p></button
+						></th
+					>
+				</tr>
+			</thead>
+			<tbody class="t_body">
+				{#each sortedProjects() as project, index}
+					<tr
+						id="row"
+						class="cursor-pointer"
+						onclick={(e) => {
+							e.stopPropagation();
+							const resolvedPath = resolve(`/projects/${project.metadata.id}`);
+							goto(resolvedPath);
+						}}
+					>
+						<th scope="row" class="t_num"><p>({index + 1})</p></th>
+						<td id="year"><p>{safeTrim(project.metadata?.year)}</p></td>
+						<td id="title"><p>{safeTrim(project.metadata?.title)}</p></td>
+						<td id="project_leaders"><p>{safeTrim(project.metadata?.project_leaders)}</p></td>
+						<td id="research_center"><p>{safeTrim(project.metadata?.research_center)}</p></td>
+						<td id="link"><p>{safeTrim(project.presentationURL)}</p></td>
 					</tr>
-				</thead>
-				<tbody class="t_body">
-					{#each sortedProjects() as project, index}
-						<tr
-							id="row"
-							class="cursor-pointer"
-							onclick={(e) => {
-								e.stopPropagation();
-								const resolvedPath = resolve(`/projects/${project.metadata.id}`);
-								goto(resolvedPath);
-							}}
-						>
-							<th scope="row" class="t_num"><p>({index + 1})</p></th>
-							<td id="year"><p>{safeTrim(project.metadata?.year)}</p></td>
-							<td id="title"><p>{safeTrim(project.metadata?.title)}</p></td>
-							<td id="project_leaders"><p>{safeTrim(project.metadata?.project_leaders)}</p></td>
-							<td id="research_center"><p>{safeTrim(project.metadata?.research_center)}</p></td>
-							<td id="link"><p>{safeTrim(project.presentationURL)}</p></td>
-						</tr>
-					{/each}
-				</tbody>
-			</table>
-		</div>
-	{/if}
+				{/each}
+			</tbody>
+		</table>
+	</div>
 </main>
-<BezierCanvas />
 
 <style>
 	.t_container {
@@ -208,15 +200,14 @@
 
 	.t_header th {
 		padding: var(--space-xs) var(--space-xs) var(--space-xs) 0px;
-		border-top: 2px solid #000;
-		border-bottom: 2px solid #000;
+		outline: 2px solid #000;
 	}
 
 	.t_header th:first-child {
-		border-left: 2px solid #000;
+		outline: 2px solid #000;
 	}
 	.t_header th:last-child {
-		border-right: 2px solid #000;
+		outline: 2px solid #000;
 	}
 
 	.t_num {

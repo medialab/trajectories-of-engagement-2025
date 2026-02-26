@@ -16,6 +16,12 @@
 
 	let maxValue = $state(100);
 	let minValue = $state(0);
+	let isDownloading = $state(false);
+	let downloadError = $state('');
+
+	const DOWNLOAD_TIMEOUT_MS = 8000;
+	const RETRY_DELAY_MS = 300;
+	const MAX_DOWNLOAD_ATTEMPTS = 2;
 
 	const mixOpacity = $derived(mixValue / 100);
 	const hasPosters = $derived.by(
@@ -30,10 +36,46 @@
 		}, 2000);
 	}
 
+	const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+	async function fetchWithTimeout(url: string, timeoutMs: number) {
+		const controller = new AbortController();
+		const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+
+		try {
+			return await fetch(url, { signal: controller.signal });
+		} finally {
+			clearTimeout(timeout);
+		}
+	}
+
+	async function fetchPosterBlob(url: string): Promise<Blob> {
+		let lastError: unknown = null;
+
+		for (let attempt = 1; attempt <= MAX_DOWNLOAD_ATTEMPTS; attempt++) {
+			try {
+				const response = await fetchWithTimeout(url, DOWNLOAD_TIMEOUT_MS);
+				if (!response.ok) {
+					throw new Error(`Poster download failed with status ${response.status}`);
+				}
+				return await response.blob();
+			} catch (error) {
+				lastError = error;
+				if (attempt < MAX_DOWNLOAD_ATTEMPTS) {
+					await wait(RETRY_DELAY_MS);
+				}
+			}
+		}
+
+		throw lastError instanceof Error ? lastError : new Error('Poster download failed');
+	}
+
 	async function downloadPoster(annotatedURl: string, originalURl: string, title: string) {
 		const safeTitle = typeof title === 'string' ? title.trim() : '';
-		if (!safeTitle) return;
+		if (!safeTitle || isDownloading) return;
 		let sourceURl: string;
+		downloadError = '';
+		isDownloading = true;
 
 		if (mixValue < 50) {
 			sourceURl = originalURl;
@@ -41,17 +83,29 @@
 			sourceURl = annotatedURl;
 		}
 
-		const response = await fetch(sourceURl);
-		const blob = await response.blob();
-		const url = URL.createObjectURL(blob);
-		const link = document.createElement('a');
-		link.href = url;
-		link.download = `${safeTitle}.png`;
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-		URL.revokeObjectURL(url);
+		try {
+			const blob = await fetchPosterBlob(sourceURl);
+			const url = URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = `${safeTitle}.png`;
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+			URL.revokeObjectURL(url);
+		} catch (error) {
+			downloadError = 'Download failed. Please try again.';
+			console.error('Poster download failed:', error);
+		} finally {
+			isDownloading = false;
+		}
 	}
+
+	onMount(() => {
+		setTimeout(() => {
+			slideAnimation();
+		}, 200);
+	});
 
 	afterNavigate(() => {
 		setTimeout(() => {
@@ -65,14 +119,18 @@
 </script>
 
 {#if hasPosters}
-	<div class="post_img">
+	<div
+		class="max-w-full h-auto rounded-none pointer-events-none relative overflow-hidden outline aspect-[0.69] w-full md:w-[80%]"
+	>
 		<p
-			class="mix_value cursor-grab text-base!"
+			class="mix_value cursor-grab text-base! absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-[1px_5px] bg-primary outline outline-1 outline-black origin-center"
 			style="left: {Math.max(12, Math.min(88, Math.round(mixValue)))}%; white-space: nowrap"
 		>
 			← Grab me →
 		</p>
-		<div class="slid_cont horizontal_flex">
+		<div
+			class="slid_cont flex flex-row gap-[-2.5] absolute h-full w-full z-10 outline outline-1 outline-black justify-between items-center p-0 pointer-events-all mix-normal"
+		>
 			<input
 				class="mix_slider"
 				type="range"
@@ -85,21 +143,23 @@
 			<label for="fading" style="display: none">Fade</label>
 		</div>
 		<img
-			class="base_img"
+			class="h-full w-full object-cover object-top absolute top-0 left-0 z-2"
 			src={props.originalPoster}
 			alt={safeId}
 			style="opacity: {1 - mixOpacity};"
 		/>
 		<img
-			class="blend_img"
+			class="h-full w-full object-cover object-top absolute top-0 left-0 z-2"
 			src={props.annotatedPoster}
 			alt={safeId ? `${safeId}_annotated` : ''}
 			style="opacity: {mixOpacity};"
 		/>
 		<button
-			class="download_btn"
+			class="download_btn absolute bottom-0 right-0 z-12 p-[5px] bg-primary outline outline-1 outline-primary-dark pointer-events-all rounded-tl-[5px]"
 			onclick={() => downloadPoster(props.annotatedPoster, props.originalPoster, safeId)}
 			aria-label="Download poster"
+			aria-busy={isDownloading}
+			disabled={isDownloading}
 		>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
 				><path
@@ -107,45 +167,24 @@
 				/></svg
 			>
 		</button>
-		<div class="bg_back"></div>
+		{#if downloadError}
+			<p
+				class="download_error absolute left-[5px] bottom-[5px] z-13 p-[2px_5px] bg-primary-light outline outline-primary-dark"
+			>
+				{downloadError}
+			</p>
+		{/if}
+		<div class="bg_back absolute inset-0 bg-primary-dark z-0"></div>
 	</div>
 {/if}
 
 <style>
-	.mix_value {
-		position: absolute;
-		z-index: 20;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		padding: 1px var(--space-xs);
-		background-color: var(--primary-color);
-		border: 1px solid black;
-		transform-origin: center;
-	}
-
-	.slid_cont {
-		height: 100%;
-		width: 100%;
-		position: absolute;
-		background-color: transparent;
-		z-index: 10;
-		border: 1px solid black;
-		justify-content: space-between;
-		align-items: center;
-		padding: 0px;
-		pointer-events: all !important;
-		mix-blend-mode: normal;
-	}
-
 	.mix_slider {
 		width: 110%;
 		-webkit-appearance: none;
 		appearance: none;
-		height: var(--space-s);
-		outline: none;
-		border-radius: var(--space-xs);
-		border: 0px solid black;
+		border-radius: 5px;
+		outline: 0px solid black;
 		pointer-events: all;
 		background-color: transparent;
 		cursor: grab;
@@ -158,21 +197,21 @@
 	.mix_slider::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
-		width: var(--space-m);
+		width: 10px;
 		height: 2000px;
-		background: var(--primary-color);
+		background: var(--color-primary);
 		cursor: inherit;
-		border-radius: var(--space-xs);
-		border: 1px solid black;
+		border-radius: 5px;
+		outline: 1px solid black;
 	}
 
 	.mix_slider::-moz-range-thumb {
-		width: var(--space-m);
+		width: 10px;
 		height: 2000px;
-		background: var(--primary-color);
+		background: var(--color-primary);
 		cursor: inherit;
-		border-radius: var(--space-xs);
-		border: 1px solid black;
+		border-radius: 5px;
+		outline: 1px solid black;
 	}
 
 	.mix_slider::-webkit-slider-thumb:active {
@@ -195,68 +234,34 @@
 
 	.mix_slider::-webkit-slider-track {
 		width: 100%;
-		height: var(--space-2xs);
-		border-radius: var(--space-3xs);
-		border: 1px solid black;
-	}
-
-	.post_img {
-		width: fit-content;
-		height: fit-content;
-		border-radius: 0px;
-		pointer-events: none;
-		position: relative;
-		overflow: hidden;
-		border: 0.5px solid black;
-		aspect-ratio: 0.69;
-		mix-blend-mode: normal;
-	}
-
-	.post_img > img {
-		height: 100%;
-		width: auto;
-		object-fit: contain;
-		object-position: top;
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 2;
-	}
-
-	.base_img {
-		position: relative !important;
-	}
-
-	.bg_back {
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		background-color: var(--primary-dark);
-		z-index: 0;
-	}
-
-	.download_btn {
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		z-index: 12;
-		padding: var(--space-xs);
-		background-color: var(--primary-color);
-		border: 1px solid var(--primary-dark);
-		pointer-events: all;
-		border-radius: var(--space-xs) 0px 0px 0px;
+		height: 4px;
+		border-radius: 2px;
+		outline: 1px solid black;
 	}
 
 	.download_btn:hover {
 		filter: brightness(0.9);
 	}
 
+	.download_btn:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+
 	.download_btn svg {
 		width: 25px;
 		height: 21px;
-		fill: var(--primary-dark);
+		fill: var(--color-primary-dark);
+	}
+
+	.download_error {
+		position: absolute;
+		left: 5px;
+		bottom: 5px;
+		z-index: 13;
+		padding: 2px 5px;
+		background-color: var(--color-primary-light);
+		outline: 1px solid var(--color-primary-dark);
 	}
 
 	@media (max-width: 768px) {

@@ -1,25 +1,32 @@
 import { error } from '@sveltejs/kit';
+import { getDatasource } from '$lib/datasource';
 import type { EntryGenerator, PageLoad } from './$types';
 
 const posters = import.meta.glob('/src/lib/assets/posters/*.png', {
-	eager: true,
 	import: 'default'
-}) as Record<string, string>;
+}) as Record<string, () => Promise<string>>;
 
 export const load: PageLoad = async ({ params }) => {
-	const data = await import('$lib/datasource.json');
-
-	const projects = (data as any).default?.projects ?? (data as any).projects ?? [];
-
-	const project = projects.find((p: any) => p.metadata.id === params.slug);
+	const source = getDatasource(await import('$lib/datasource.json'));
+	const project = source.projects.find((item) => item.metadata.id === params.slug);
 
 	if (project) {
-		const originalPoster = posters[`/src/lib/assets/posters/${project.metadata.id}.png`];
-		const annotatedPoster = posters[`/src/lib/assets/posters/${project.metadata.id}_annotated.png`];
+		const projectId = project.metadata.id ?? '';
+		const originalPosterPath = `/src/lib/assets/posters/${projectId}.png`;
+		const annotatedPosterPath = `/src/lib/assets/posters/${projectId}_annotated.png`;
+		const [originalPoster, annotatedPoster] = await Promise.all([
+			posters[originalPosterPath]
+				? posters[originalPosterPath]().catch(() => '')
+				: Promise.resolve(''),
+			posters[annotatedPosterPath]
+				? posters[annotatedPosterPath]().catch(() => '')
+				: Promise.resolve('')
+		]);
+
 		return {
-			project: project as any,
-			originalPoster: originalPoster as string,
-			annotatedPoster: annotatedPoster as string
+			project,
+			originalPoster: originalPoster ?? '',
+			annotatedPoster: annotatedPoster ?? ''
 		};
 	}
 
@@ -27,10 +34,9 @@ export const load: PageLoad = async ({ params }) => {
 };
 
 export const entries: EntryGenerator = async () => {
-	const data = await import('$lib/datasource.json');
-	const projects = (data as any).default?.projects ?? (data as any).projects ?? [];
-	return projects
-		.map((p: any) => p?.metadata?.id)
+	const source = getDatasource(await import('$lib/datasource.json'));
+	return source.projects
+		.map((item) => item.metadata.id)
 		.filter((id: unknown): id is string => typeof id === 'string' && id.length > 0)
 		.map((id: string) => ({ slug: id }));
 };

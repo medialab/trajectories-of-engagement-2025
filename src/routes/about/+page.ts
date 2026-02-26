@@ -1,7 +1,7 @@
+import { getDatasource } from '$lib/datasource';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async () => {
-	const data = await import('$lib/datasource.json');
-	const intro = data.intro;
-	return { intro };
+	const source = getDatasource(await import('$lib/datasource.json'));
+	return { intro: source.intro };
 };

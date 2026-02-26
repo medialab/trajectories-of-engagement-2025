@@ -1,48 +1,48 @@
 <script lang="ts">
 	import Header from '$lib/comps/header.svelte';
 	import Button from '$lib/comps/btn.svelte';
-	import BezierCanvas from '$lib/comps/canvas.svelte';
 	import { marked } from 'marked';
 	import Footer from '$lib/comps/footer.svelte';
 
-	import { isMobile } from '$lib/utils';
 	import { pageMeta, siteName } from '$lib/seo';
+	import type { IntroContent } from '$lib/datasource';
 	import { onMount } from 'svelte';
-	import { afterNavigate } from '$app/navigation';
-	import { slide } from 'svelte/transition';
-	import { cubicOut } from 'svelte/easing';
 	import { setupLenis } from '$lib/utils';
 
 	let { data } = $props();
-
-	let isMobileFlag = $state(isMobile());
-	let loadElements = $state(false);
 	const meta = pageMeta.about;
 
-	const getIntroMarkdown = (intro: unknown) => {
-		const fromBook = intro && typeof intro === 'object' ? (intro as any).fromBook : null;
-		const markdown = fromBook && typeof fromBook === 'object' ? (fromBook as any).markdown : '';
-		return typeof markdown === 'string' ? markdown : '';
-	};
+	const getIntroMarkdown = (intro?: IntroContent) => intro?.fromBook?.markdown ?? '';
+	const sanitizeMarkdown = (value: string) =>
+		value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+	const sanitizeHtml = (value: string) =>
+		value
+			.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+			.replace(/\son\w+=["'][^"']*["']/gi, '')
+			.replace(/\s(href|src)=["']\s*javascript:[^"']*["']/gi, ' $1="#"');
 
-	let aboutText = $derived(marked.parse(getIntroMarkdown(data?.intro)));
+	let aboutText = $derived(
+		Promise.resolve(marked.parse(sanitizeMarkdown(getIntroMarkdown(data?.intro)))).then((html) =>
+			sanitizeHtml(typeof html === 'string' ? html : String(html))
+		)
+	);
 
 	onMount(() => {
-		isMobileFlag = isMobile();
+		let lenis: { destroy: () => void } | null = null;
+		const controller = new AbortController();
 
-		let lenis: any = null;
-
-		setupLenis().then((l) => {
+		void setupLenis(undefined, controller.signal).then((l) => {
+			if (controller.signal.aborted) {
+				l?.destroy();
+				return;
+			}
 			lenis = l;
 		});
 
 		return () => {
+			controller.abort();
 			lenis?.destroy();
 		};
-	});
-
-	afterNavigate(() => {
-		loadElements = true;
 	});
 </script>
 
@@ -62,74 +62,39 @@
 	<link rel="canonical" href={meta.url} />
 </svelte:head>
 
-<main class="main_container justify-center">
-	{#if loadElements}
-		<Header />
-		<div
-			class="about_container vertical_flex relative w-1/2 px-4 pt-4 my-16 z-10 place-self-center"
-			transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 300 }}
-		>
-			<h1>About this project</h1>
-			{#await aboutText then text}
-				<p transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}>
-					{@html text}
-				</p>
-			{/await}
-
-			<div class="credits vertical_flex">
-				<p><b>Credits</b></p>
-				<p><span>Project design:</span>Marta Severo, Donato Ricci, Robin de Mourat</p>
-				<p><span>Chapters editing:</span>Élie Petit, Marta Severo, Donato Ricci</p>
-				<p><span>Book design:</span>Donato Ricci</p>
-				<p><span>Website design & development:</span>Tommaso Prinetti</p>
-				<p><span>Preliminary inquiries and workshop preparation:</span> Alex Pellier</p>
-				<p><span>Posters design:</span> Alex Pellier, Donato Ricci, Robin de Mourat</p>
-				<p>
-					<span>Workshop design and animation:</span> Robin de Mourat, Marta Severo, Alex Pellier
-				</p>
-				<p><span>Videos captation and editing:</span> la SCOP des sales gosses</p>
-			</div>
-			<Button label="Get in touch with us" href="mailto:trajectoriesofengagement@sciencespo.fr" />
+<main class="project_page_container justify-center">
+	<div class="col-2 row-span-1 w-full h-fit flex flex-row gap-2 justify-between">
+		<div class="flex flex-row gap-2">
+			<Button label="← GO BACK" href="back" />
+			<Button label="HOME" href="/" />
 		</div>
+	</div>
+	<div
+		class="col-2 flex flex-col gap-[-2.5] relative w-full z-30 place-self-center bg-neutral-100 max-md:w-full max-md:top-auto max-md:left-auto max-md:transform-none max-md:items-start max-md:static max-md:mt-[-20]"
+	>
+		<h1>About this project</h1>
+		{#await aboutText then text}
+			<p class="whitespace-pre-line">
+				{@html text}
+			</p>
+		{:catch}
+			<p>Content is temporarily unavailable.</p>
+		{/await}
+
+		<div class="flex flex-col gap-[-2.5] w-full mb-12">
+			<p><b>Credits</b></p>
+			<p><span>Project design:</span>Marta Severo, Donato Ricci, Robin de Mourat</p>
+			<p><span>Chapters editing:</span>Élie Petit, Marta Severo, Donato Ricci</p>
+			<p><span>Book design:</span>Donato Ricci</p>
+			<p><span>Website design & development:</span>Tommaso Prinetti</p>
+			<p><span>Preliminary inquiries and workshop preparation:</span> Alex Pellier</p>
+			<p><span>Posters design:</span> Alex Pellier, Donato Ricci, Robin de Mourat</p>
+			<p>
+				<span>Workshop design and animation:</span> Robin de Mourat, Marta Severo, Alex Pellier
+			</p>
+			<p><span>Videos captation and editing:</span> la SCOP des sales gosses</p>
+		</div>
+		<Button label="Get in touch with us" href="mailto:robin.demourat@sciencespo.fr" />
 		<Footer />
-	{/if}
-
-	{#if !isMobileFlag}
-		<BezierCanvas />
-		<BezierCanvas />
-	{/if}
+	</div>
 </main>
-
-<style>
-	.about_container {
-		position: relative;
-		height: max-content;
-		top: 10%;
-		row-gap: var(--space-xl);
-		background-color: var(--primary-light);
-		white-space: pre-line;
-		justify-content: flex-start;
-		align-items: center;
-		z-index: 10;
-	}
-
-	.credits {
-		width: 100%;
-		align-items: flex-start;
-		row-gap: var(--space-xs);
-		border-top: 2px solid var(--primary-dark);
-		padding-top: var(--space-m);
-	}
-
-	@media (max-width: 768px) {
-		.about_container {
-			width: 100%;
-			top: unset;
-			left: unset;
-			transform: unset;
-			align-items: flex-start;
-			position: static;
-			margin-top: var(--space-6xl);
-		}
-	}
-</style>

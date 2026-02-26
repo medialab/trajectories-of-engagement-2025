@@ -2,11 +2,8 @@
 	import type { PageProps } from './$types';
 	import Button from '$lib/comps/btn.svelte';
 	import Accordion from '$lib/comps/accordion.svelte';
-	import BezierCanvas from '$lib/comps/canvas.svelte';
 	import Vid from '$lib/comps/vid.svelte';
 	import Poster from '$lib/comps/poster.svelte';
-	import { fade } from 'svelte/transition';
-	import { cubicOut } from 'svelte/easing';
 	import Footer from '$lib/comps/footer.svelte';
 	import copyIcon from '$lib/assets/icons/copy.svg';
 	import infoIcon from '$lib/assets/icons/info.svg';
@@ -51,12 +48,18 @@
 
 	onMount(() => {
 		let lenis: any = null;
+		const controller = new AbortController();
 
-		setupLenis().then((l) => {
+		void setupLenis(undefined, controller.signal).then((l) => {
+			if (controller.signal.aborted) {
+				l?.destroy();
+				return;
+			}
 			lenis = l;
 		});
 
 		return () => {
+			controller.abort();
 			lenis?.destroy();
 		};
 	});
@@ -78,6 +81,7 @@
 	<link rel="canonical" href={pageUrl} />
 	{@html projectJsonLdScript}
 </svelte:head>
+
 <div class="project_page_container place-self-center">
 	{#if data.project}
 		<div class="col-2 row-span-1 w-full h-fit flex flex-row gap-2 justify-between">
@@ -88,7 +92,7 @@
 			</div>
 		</div>
 		<div class="flex flex-col info_container gap-8">
-			<div class="vertical_flex bg-[#f5f5f5] gap-4">
+			<div class="flex flex-col gap-[-2.5] bg-primary-light gap-4">
 				<h1 id="pr_title">{displayTitle}</h1>
 				{#if projectYear || projectLeaders || projectResearchCenter}
 					<p style="font-weight: bold;">
@@ -103,20 +107,37 @@
 					<p>No presentation text available</p>
 				{/if}
 			</div>
-			<div class="flex flex-col bg-[#f5f5f5] gap-4">
-				<Accordion text={data.project.texts?.experience} title="Experience" />
-				<Accordion text={data.project.texts?.concept} title="Concept" />
+			<div class="flex flex-col bg-primary-light gap-4">
+				<Accordion text={data.project.texts?.experience ?? ''} title="Experience" />
+				<Accordion text={data.project.texts?.concept ?? ''} title="Concept" />
 				{#if hasSegments}
-					<Vid src={mainYtb} excerpts={data.project.excerpts} />
+					<svelte:boundary>
+						<Vid src={mainYtb} excerpts={data.project.excerpts} />
+						{#snippet failed(_error, reset)}
+							<div
+								class="vid_boundary_fallback flex flex-col gap-[-2.5] items-start p-[-4] outline-2 outline-primary-dark bg-primary-light"
+							>
+								<p>Video unavailable.</p>
+								<button type="button" onclick={reset}>Retry</button>
+							</div>
+						{/snippet}
+					</svelte:boundary>
 				{/if}
 			</div>
 		</div>
 
-		<div
-			class="media_cont grid-cols-2 grid-rows-3"
-			transition:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}
-		>
-			<Vid title={projectTitle || fallbackTitle} src={data.project.presentationURL} />
+		<div class="media_cont grid-cols-2 grid-rows-3">
+			<svelte:boundary>
+				<Vid title={projectTitle || fallbackTitle} src={data.project.presentationURL} />
+				{#snippet failed(_error, reset)}
+					<div
+						class="vid_boundary_fallback flex flex-col gap-[-2.5] items-start p-[-4] outline-2 outline-primary-dark bg-primary-light"
+					>
+						<p>Video unavailable.</p>
+						<button type="button" onclick={reset}>Retry</button>
+					</div>
+				{/snippet}
+			</svelte:boundary>
 			<Poster
 				id={projectId}
 				originalPoster={data.originalPoster}
@@ -124,14 +145,11 @@
 			/>
 		</div>
 	{:else}
-		<div class="vertical_flex info_container" style="row-gap: var(--space-2xl);">
-			<div
-				class="vertical_flex"
-				style="padding: var(--space-xl); background-color: var(--primary-light)"
-			>
+		<div class="flex flex-col gap-[-2.5] info_container" style="row-gap: -8;">
+			<div class="flex flex-col gap-[-2.5]">
 				<h1 id="pr_title">Project Not Found</h1>
 				<p>We couldn't find the project you're looking for.</p>
-				<div style="margin-top: var(--space-xl); pointer-events: auto;">
+				<div style="margin-top: -5; pointer-events: auto;">
 					<Button label="← BACK TO PROJECTS" href="/projects" />
 				</div>
 			</div>
@@ -140,5 +158,3 @@
 </div>
 
 <Footer />
-
-<BezierCanvas />

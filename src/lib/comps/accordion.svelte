@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Button from '$lib/comps/btn.svelte';
 	import { cubicOut } from 'svelte/easing';
 	import { slide } from 'svelte/transition';
 
@@ -8,44 +7,17 @@
 </script>
 
 {#if text}
-	<div class="vertical_flex">
-		<div
-			class="accordion_header"
-			role="button"
+	<div class="flex flex-col gap-[-2.5] w-full overflow-visible gap-4">
+		<button
+			class="w-full! h-fit! bg-primary rounded-lg p-2 outline -outline-offset-1 overflow-visible hover:brightness-90"
 			tabindex="0"
 			onclick={() => (isOpen = !isOpen)}
 			onkeydown={(e) => e.key === 'Enter' && (isOpen = !isOpen)}
 		>
-			<Button label="{title} {isOpen ? '↑' : '↓'}" />
-		</div>
+			<p class="font-medium">{title} {isOpen ? '↑' : '↓'}</p>
+		</button>
 		{#if isOpen}
 			<p transition:slide={{ duration: 650, easing: cubicOut, axis: 'y' }}>{text}</p>
 		{/if}
 	</div>
 {/if}
-
-<style>
-	.accordion_header,
-	.accordion_header > :global(button) {
-		width: 100%;
-		overflow-x: visible;
-	}
-
-	.vertical_flex {
-		display: flex;
-		flex-direction: column;
-		overflow-x: visible;
-	}
-
-	p {
-		margin-bottom: var(--space-xl);
-		background-color: var(--primary-light);
-	}
-
-	@media (max-width: 768px) {
-		.accordion_header,
-		.accordion_header > :global(button) {
-			width: 100%;
-		}
-	}
-</style>

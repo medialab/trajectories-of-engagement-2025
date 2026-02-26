@@ -28,8 +28,11 @@ export const getDeviceType = () => {
 	}
 };
 
-export const setupLenis = async (scrollContainer?: HTMLElement): Promise<Lenis | null> => {
-	if (!browser) return null;
+export const setupLenis = async (
+	scrollContainer?: HTMLElement,
+	signal?: AbortSignal
+): Promise<Lenis | null> => {
+	if (!browser || signal?.aborted) return null;
 
 	const lenis = new Lenis({
 		autoRaf: true,
@@ -43,8 +46,19 @@ export const setupLenis = async (scrollContainer?: HTMLElement): Promise<Lenis |
 		content: scrollContainer ? undefined : document.body
 	});
 
+	if (signal?.aborted) {
+		lenis.destroy();
+		return null;
+	}
+
 	lenis.start();
 	await tick();
+
+	if (signal?.aborted) {
+		lenis.destroy();
+		return null;
+	}
+
 	lenis.resize();
 
 	return lenis;

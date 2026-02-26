@@ -1,8 +1,19 @@
+/* stylelint-disable at-rule-no-unknown */
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 @import 'lenis/dist/lenis.css';
 
+@theme {
+	--color-primary: #ceffbf;
+	--color-primary-light: #f5f5f5;
+	--color-primary-dark: #111111;
+	--color-primary-light-95: oklch(92% 0 0);
+}
+
 * {
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
+	border-style: none;
 	-webkit-user-drag: none;
 	-khtml-user-drag: none;
 	-moz-user-drag: none;
@@ -13,10 +24,35 @@
 html,
 body {
 	overflow-x: hidden;
+	font-family: 'Inter', sans-serif;
+	font-weight: 300;
+	background-color: var(--color-primary-light);
+	width: 100%;
+	overscroll-behavior: none;
+}
+
+::selection {
+	background-color: var(--color-primary-dark);
+	color: #fff;
+}
+
+button,
+a {
+	@apply uppercase w-fit flex flex-row cursor-pointer hover:cursor-pointer;
+	color: unset;
+	font-weight: unset;
+	font-size: unset;
+	font-family: unset;
+	font-style: unset;
+	font-variant: unset;
+	font-optical-sizing: unset;
+	font-kerning: unset;
+	font-feature-settings: unset;
+	text-wrap: nowrap;
 }
 
 p {
-	@apply text-base md:text-base xl:text-sm 2xl:text-lg leading-tight text-left;
+	@apply text-base md:text-base 2xl:text-lg leading-tight text-left;
 }
 
 h1 {
@@ -35,26 +71,12 @@ i {
 	@apply italic;
 }
 
-.main_container {
-	@apply flex flex-col w-screen overflow-clip place-self-center relative;
-}
-
-button,
-a {
-	@apply uppercase p-2 h-fit w-fit flex flex-row cursor-pointer hover:cursor-pointer;
-}
-
 .generic_btn {
-	@apply rounded-md border-solid border-[1.5] border-black items-center flex justify-center font-medium 2xl:font-normal transition-all duration-75 ease-in-out hover:invert-100 hover:saturate-0 hover:border-white;
+	@apply rounded-md outline items-center flex justify-center font-medium transition-all duration-75 ease-in-out hover:invert-100 hover:saturate-0;
 }
 
 .project_page_container {
-	@apply relative grid h-max grid-cols-[1fr_2fr_1fr] grid-rows-[auto_auto_auto] gap-5 gap-x-2.5 items-center py-[50px] px-[15px] w-full md:max-w-[90%] bg-transparent z-15;
-}
-
-.project_page_container> :first-child>* {
-	@apply bg-[#f5f5f5];
-	/* var(--primary-light) */
+	@apply relative grid h-max grid-cols-[1fr_2fr_1fr] grid-rows-[auto_auto_auto] gap-5 gap-x-2.5 items-center py-[50px] px-[15px] w-full md:max-w-[90%] bg-transparent z-15 content-center;
 }
 
 .info_container {
@@ -62,19 +84,18 @@ a {
 }
 
 .media_cont {
-	@apply col-start-2 row-start-3 relative flex flex-col items-center justify-center h-fit w-[80%] p-0 m-0;
+	@apply col-start-2 row-start-3 relative flex flex-col items-center justify-center h-fit w-5/6 p-0 mx-auto;
 }
 
-.media_cont> :nth-child(1) {
+.media_cont > :nth-child(1) {
 	@apply order-2 self-start mix-blend-normal max-w-[90%] -mt-[26%] z-2;
 }
 
-
-.media_cont> :nth-child(2):hover {
+.media_cont > :nth-child(2):hover {
 	@apply z-10 mix-blend-normal;
 }
 
-.media_cont> :nth-child(2) {
+.media_cont > :nth-child(2) {
 	@apply order-1 self-end max-h-[90%] max-w-[90%] z-1;
 }
 
@@ -87,8 +108,8 @@ a {
 		@apply w-full h-fit gap-y-5 static justify-start mb-[50px];
 	}
 
-	.media_cont> :nth-child(1),
-	.media_cont> :nth-child(2) {
+	.media_cont > :nth-child(1),
+	.media_cont > :nth-child(2) {
 		@apply max-w-full transform-none order-0 mt-0;
 	}
 }

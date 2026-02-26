@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -18,15 +18,17 @@ const projectPaths = projects
 	.sort((a, b) => a.localeCompare(b));
 
 const paths = ['/', '/about/', '/archive/', ...projectPaths];
-const lastmod = new Date().toISOString().split('T')[0];
-
 const urlEntries = paths
 	.map((path) => {
 		const loc = `${baseUrl}${path}`;
-		return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
+		return `  <url>\n    <loc>${loc}</loc>\n  </url>`;
 	})
 	.join('\n');
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urlEntries}\n</urlset>\n`;
+const sitemapPath = resolve(root, 'static/sitemap.xml');
+const previousXml = existsSync(sitemapPath) ? readFileSync(sitemapPath, 'utf8') : '';
 
-writeFileSync(resolve(root, 'static/sitemap.xml'), xml);
+if (xml !== previousXml) {
+	writeFileSync(sitemapPath, xml);
+}

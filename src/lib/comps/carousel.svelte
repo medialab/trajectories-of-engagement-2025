@@ -102,6 +102,24 @@
 			.filter((item: { id: string; poster?: string }) => item.id && item.poster)
 	);
 	const renderCount = $derived.by(() => renderableProjects.length);
+	const initialTextureBatch = $derived.by(() => (isMobileFlag ? 4 : 6));
+	const textureBatchStep = $derived.by(() => (isMobileFlag ? 2 : 3));
+	const textureBatchIntervalMs = 160;
+	let stagedTextureCount = $state(0);
+	let loadedTextureById = $state<Record<string, boolean>>({});
+	let textureBatchTimer: number | null = null;
+	const criticalTextureCount = $derived.by(() =>
+		Math.min(renderableProjects.length, Math.max(1, initialTextureBatch))
+	);
+	const criticalTextureIds = $derived.by((): string[] =>
+		renderableProjects.slice(0, criticalTextureCount).map((item: { id: string }) => item.id)
+	);
+	const loadedCriticalTextureCount = $derived.by(() =>
+		criticalTextureIds.reduce(
+			(count: number, id: string) => count + (loadedTextureById[id] ? 1 : 0),
+			0
+		)
+	);
 	const hasMissingData = $derived.by(
 		() => projectsList.length > 0 && renderableProjects.length < projectsList.length
 	);
@@ -158,6 +176,18 @@
 		if (index < 0 || index >= targetScaleByIndex.length) return;
 		targetScaleByIndex[index] = value;
 		if (hoverAnimFrame === null) hoverAnimFrame = requestAnimationFrame(animateHoverScales);
+	}
+
+	function shouldLoadTexture(index: number) {
+		return index < stagedTextureCount;
+	}
+
+	function markTextureLoaded(id: string) {
+		if (!id || loadedTextureById[id]) return;
+		loadedTextureById = {
+			...loadedTextureById,
+			[id]: true
+		};
 	}
 
 	const originalZByMesh = new WeakMap<ThreeMesh, Float32Array>();
@@ -218,6 +248,39 @@
 	}
 
 	interactivity({ target: props.containerEl });
+
+	$effect(() => {
+		const total = renderableProjects.length;
+		const initialStagedCount = Math.min(total, Math.max(1, initialTextureBatch));
+		let nextCount = initialStagedCount;
+		loadedTextureById = {};
+		stagedTextureCount = initialStagedCount;
+		if (textureBatchTimer !== null) {
+			clearInterval(textureBatchTimer);
+			textureBatchTimer = null;
+		}
+		if (!browser || initialStagedCount >= total) return;
+		textureBatchTimer = window.setInterval(() => {
+			nextCount = Math.min(total, nextCount + Math.max(1, textureBatchStep));
+			stagedTextureCount = nextCount;
+			if (nextCount >= total && textureBatchTimer !== null) {
+				clearInterval(textureBatchTimer);
+				textureBatchTimer = null;
+			}
+		}, textureBatchIntervalMs);
+
+		return () => {
+			if (textureBatchTimer !== null) {
+				clearInterval(textureBatchTimer);
+				textureBatchTimer = null;
+			}
+		};
+	});
+
+	$effect(() => {
+		const required = criticalTextureIds.length;
+		$isTextureReady = required === 0 ? true : loadedCriticalTextureCount >= required;
+	});
 
 	$effect(() => {
 		if (!$isTextureReady || !props.loadstatus) {
@@ -327,97 +390,124 @@
 		if (scrollRAF !== null) cancelAnimationFrame(scrollRAF);
 		if (hoverAnimFrame !== null) cancelAnimationFrame(hoverAnimFrame);
 		if (introTimer !== null) clearTimeout(introTimer);
+		if (textureBatchTimer !== null) clearInterval(textureBatchTimer);
+		$isTextureReady = false;
 	});
 </script>
 
+{#snippet posterMesh(item: any, index: number, map?: any)}
+	{@const project = item.project}
+	<T.Group
+		plugins={[transitions]}
+		initial={false}
+		in={fly}
+		transition={{ y: -20, duration: 1500, delay: 100 * index + 100, easing: cubicOut }}
+	>
+		<T.Mesh
+			position={[0, 0, cardBoundTeleport(startZ + index * spacing + scrollY)]}
+			scale={[baseScale + hoverToScale[index], baseScale + hoverToScale[index], baseScale]}
+			rotation={[0, 0, 0]}
+			oncreate={(value) => {
+				if (value && !meshes.includes(value)) {
+					meshes.push(value);
+					const rand = (min: number, max: number) => Math.random() * (max - min) + min;
+					meshRand.set(value as any, {
+						curlScale: rand(
+							carouselConfig.randomness.curlScale[0],
+							carouselConfig.randomness.curlScale[1]
+						),
+						thresholdShift: rand(
+							carouselConfig.randomness.thresholdShift[0],
+							carouselConfig.randomness.thresholdShift[1]
+						),
+						edgePower: rand(
+							carouselConfig.randomness.edgePower[0],
+							carouselConfig.randomness.edgePower[1]
+						),
+						dirScale: rand(
+							carouselConfig.randomness.dirScale[0],
+							carouselConfig.randomness.dirScale[1]
+						),
+						windScale: rand(
+							carouselConfig.randomness.windScale[0],
+							carouselConfig.randomness.windScale[1]
+						),
+						oscAmp: rand(0.05, 0.18),
+						oscFreq: rand(0.004, 0.012),
+						oscPhase: rand(0, Math.PI * 2)
+					});
+				}
+			}}
+			onpointerenter={(e: any) => {
+				if (!$isTextureReady) return;
+				e.stopPropagation();
+				setHoverTarget(index, carouselConfig.hover.scale);
+				handlePointerEnter(project?.metadata);
+				props.onHoverPoster?.();
+			}}
+			onpointerleave={(e: any) => {
+				if (!$isTextureReady) return;
+				e.stopPropagation();
+				setHoverTarget(index, 0);
+				onPointerLeave();
+			}}
+			onclick={(e: any) => {
+				e.stopPropagation();
+				if (!$isTextureReady) return;
+				const resolvedPath = resolve(`/projects/${item.id}`);
+				goto(resolvedPath);
+			}}
+			interactive={true}
+			castShadow={true}
+			receiveShadow={true}
+		>
+			<T.BoxGeometry
+				args={[
+					carouselConfig.card.width,
+					carouselConfig.card.width * carouselConfig.card.aspectRatio,
+					carouselConfig.card.depth,
+					carouselConfig.card.segments.width,
+					carouselConfig.card.segments.height,
+					carouselConfig.card.segments.depth
+				]}
+			/>
+			{#if map}
+				<T.MeshBasicMaterial {map} toneMapped={false} />
+			{:else}
+				<T.MeshBasicMaterial color="#d5d5d5" toneMapped={false} />
+			{/if}
+		</T.Mesh>
+	</T.Group>
+{/snippet}
+
 {#if renderCount === 0}
-	<div class="carousel_notice">No data to be displayed</div>
+	<div
+		class="carousel_notice fixed top-[-5] left-1/2 -translate-x-1/2 p-[5px_-2.5] bg-primary-light text-sm z-2 pointer-events-none"
+	>
+		No data to be displayed
+	</div>
 {:else if renderCount !== 0 && props.loadstatus}
 	<T.Group rotation={[0.3, -0.5, 0]}>
 		{#each renderableProjects as item, index}
-			{@const project = item.project}
 			{@const poster = item.poster}
-			{@const texture = useTexture(poster as string).then((texture) => texture)}
-			{#await texture then map}
-				{($isTextureReady = true)}
-				<T.Group
-					plugins={[transitions]}
-					initial={false}
-					in={fly}
-					transition={{ y: -20, duration: 1500, delay: 100 * index + 100, easing: cubicOut }}
-				>
-					<T.Mesh
-						position={[0, 0, cardBoundTeleport(startZ + index * spacing + scrollY)]}
-						scale={[baseScale + hoverToScale[index], baseScale + hoverToScale[index], baseScale]}
-						rotation={[0, 0, 0]}
-						oncreate={(value) => {
-							if (value && !meshes.includes(value)) {
-								meshes.push(value);
-								const rand = (min: number, max: number) => Math.random() * (max - min) + min;
-								meshRand.set(value as any, {
-									curlScale: rand(
-										carouselConfig.randomness.curlScale[0],
-										carouselConfig.randomness.curlScale[1]
-									),
-									thresholdShift: rand(
-										carouselConfig.randomness.thresholdShift[0],
-										carouselConfig.randomness.thresholdShift[1]
-									),
-									edgePower: rand(
-										carouselConfig.randomness.edgePower[0],
-										carouselConfig.randomness.edgePower[1]
-									),
-									dirScale: rand(
-										carouselConfig.randomness.dirScale[0],
-										carouselConfig.randomness.dirScale[1]
-									),
-									windScale: rand(
-										carouselConfig.randomness.windScale[0],
-										carouselConfig.randomness.windScale[1]
-									),
-									oscAmp: rand(0.05, 0.18),
-									oscFreq: rand(0.004, 0.012),
-									oscPhase: rand(0, Math.PI * 2)
-								});
-							}
-						}}
-						onpointerenter={(e: any) => {
-							if (!$isTextureReady) return;
-							e.stopPropagation();
-							setHoverTarget(index, carouselConfig.hover.scale);
-							handlePointerEnter(project?.metadata);
-							props.onHoverPoster?.();
-						}}
-						onpointerleave={(e: any) => {
-							if (!$isTextureReady) return;
-							e.stopPropagation();
-							setHoverTarget(index, 0);
-							onPointerLeave();
-						}}
-						onclick={(e: any) => {
-							e.stopPropagation();
-							if (!$isTextureReady) return;
-							const resolvedPath = resolve(`/projects/${item.id}`);
-							goto(resolvedPath);
-						}}
-						interactive={true}
-						castShadow={true}
-						receiveShadow={true}
-					>
-						<T.BoxGeometry
-							args={[
-								carouselConfig.card.width,
-								carouselConfig.card.width * carouselConfig.card.aspectRatio,
-								carouselConfig.card.depth,
-								carouselConfig.card.segments.width,
-								carouselConfig.card.segments.height,
-								carouselConfig.card.segments.depth
-							]}
-						/>
-						<T.MeshBasicMaterial {map} toneMapped={false} />
-					</T.Mesh>
-				</T.Group>
-			{/await}
+			{#if shouldLoadTexture(index)}
+				{@const texture = useTexture(poster as string)
+					.then((loadedTexture) => {
+						markTextureLoaded(item.id);
+						return loadedTexture;
+					})
+					.catch((error) => {
+						markTextureLoaded(item.id);
+						throw error;
+					})}
+				{#await texture then map}
+					{@render posterMesh(item, index, map)}
+				{:catch}
+					{@render posterMesh(item, index, undefined)}
+				{/await}
+			{:else}
+				{@render posterMesh(item, index, undefined)}
+			{/if}
 		{/each}
 	</T.Group>
 {/if}
@@ -435,26 +525,9 @@
 <T.AmbientLight intensity={1000} color="white" />
 
 {#if hasMissingData}
-	<div class="carousel_notice subtle">Some items have no data to display</div>
+	<div
+		class="carousel_notice subtle fixed bottom-[-5] left-1/2 -translate-x-1/2 p-[5px_-2.5] bg-primary-light text-xs z-2 pointer-events-none opacity-70"
+	>
+		Some items have no data to display
+	</div>
 {/if}
-
-<style>
-	.carousel_notice {
-		position: fixed;
-		top: var(--space-xl);
-		left: 50%;
-		transform: translateX(-50%);
-		padding: var(--space-xs) var(--space-m);
-		background-color: var(--primary-light);
-		font-size: 14px;
-		z-index: 2;
-		pointer-events: none;
-	}
-
-	.carousel_notice.subtle {
-		top: auto;
-		bottom: var(--space-xl);
-		font-size: 12px;
-		opacity: 0.7;
-	}
-</style>

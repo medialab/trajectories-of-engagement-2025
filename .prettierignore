@@ -7,3 +7,8 @@ bun.lockb
 
 # Miscellaneous
 /static/
+.codex-skills-backup-*
+cleanup-analysis-report.md
+svelte-check-report.md
+sync-async-preloading-report.md
+seo-llm-plan.md

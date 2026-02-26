@@ -105,21 +105,19 @@
 		markers = next;
 	}
 
+	const onResize = () => {
+		if (!svgEl) return;
+		const r = svgEl.getBoundingClientRect();
+		width = r.width || width;
+		height = r.height || height;
+		regenerate();
+	};
+
 	onMount(() => {
 		const rect = svgEl.getBoundingClientRect();
 		width = rect.width || width;
 		height = rect.height || height;
 		regenerate();
-
-		const onResize = () => {
-			if (!svgEl) return;
-			const r = svgEl.getBoundingClientRect();
-			width = r.width || width;
-			height = r.height || height;
-			regenerate();
-		};
-		window.addEventListener('resize', onResize);
-		onDestroy(() => window.removeEventListener('resize', onResize));
 	});
 
 	onDestroy(() => {
@@ -127,8 +125,11 @@
 			clearTimeout(loopTimeout);
 			loopTimeout = null;
 		}
+		window.removeEventListener('resize', onResize);
 	});
 </script>
+
+<svelte:window onresize={onResize} />
 
 <svg bind:this={svgEl} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none">
 	{#each paths as d, i (d)}

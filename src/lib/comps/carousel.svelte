@@ -2,7 +2,7 @@
 	let props = $props();
 
 	import { T, useThrelte } from '@threlte/core';
-	import { useTexture, transitions, onReveal } from '@threlte/extras';
+	import { useTexture, transitions } from '@threlte/extras';
 	import { onMount, onDestroy } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
 	import { interactivity, useCursor } from '@threlte/extras';
@@ -16,7 +16,6 @@
 
 	import { isMobile, isTextureReady, getDeviceType } from '$lib/utils';
 	import { fly } from 'svelte/transition';
-	import { on } from 'svelte/events';
 
 	const { invalidate } = useThrelte();
 
@@ -176,10 +175,6 @@
 		if (index < 0 || index >= targetScaleByIndex.length) return;
 		targetScaleByIndex[index] = value;
 		if (hoverAnimFrame === null) hoverAnimFrame = requestAnimationFrame(animateHoverScales);
-	}
-
-	function shouldLoadTexture(index: number) {
-		return index < stagedTextureCount;
 	}
 
 	function markTextureLoaded(id: string) {
@@ -490,7 +485,7 @@
 	<T.Group rotation={[0.3, -0.5, 0]}>
 		{#each renderableProjects as item, index}
 			{@const poster = item.poster}
-			{#if shouldLoadTexture(index)}
+			{#if index < stagedTextureCount}
 				{@const texture = useTexture(poster as string)
 					.then((loadedTexture) => {
 						markTextureLoaded(item.id);

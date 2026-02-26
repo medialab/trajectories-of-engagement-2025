@@ -4,31 +4,19 @@
 @import 'lenis/dist/lenis.css';
 
 @theme {
-	--color-primary: #ceffbf;
-	--color-primary-light: #f5f5f5;
-	--color-primary-dark: #111111;
+	--color-primary: oklch(95.01% 0.098 138.44);
+	--color-primary-light: oklch(97.02% 0 0);
+	--color-primary-dark: oklch(17.76% 0 0);
 	--color-primary-light-95: oklch(92% 0 0);
+	--font-family: 'Inter', sans-serif;
 }
 
 * {
-	box-sizing: border-box;
-	-webkit-tap-highlight-color: transparent;
-	border-style: none;
-	-webkit-user-drag: none;
-	-khtml-user-drag: none;
-	-moz-user-drag: none;
-	-o-user-drag: none;
-	user-drag: none;
+	@apply box-border;
 }
 
-html,
-body {
-	overflow-x: hidden;
-	font-family: 'Inter', sans-serif;
-	font-weight: 300;
-	background-color: var(--color-primary-light);
-	width: 100%;
-	overscroll-behavior: none;
+html {
+	@apply overflow-x-hidden font-family bg-primary-light w-screen w-dvw overscroll-none;
 }
 
 ::selection {
@@ -38,17 +26,7 @@ body {
 
 button,
 a {
-	@apply uppercase w-fit flex flex-row cursor-pointer hover:cursor-pointer;
-	color: unset;
-	font-weight: unset;
-	font-size: unset;
-	font-family: unset;
-	font-style: unset;
-	font-variant: unset;
-	font-optical-sizing: unset;
-	font-kerning: unset;
-	font-feature-settings: unset;
-	text-wrap: nowrap;
+	@apply uppercase w-fit flex flex-row cursor-pointer hover:cursor-pointer text-inherit font-normal not-italic whitespace-nowrap;
 }
 
 p {
@@ -76,7 +54,7 @@ i {
 }
 
 .project_page_container {
-	@apply relative grid h-max grid-cols-[1fr_2fr_1fr] grid-rows-[auto_auto_auto] gap-5 gap-x-2.5 items-center py-[50px] px-[15px] w-full md:max-w-[90%] bg-transparent z-15 content-center;
+	@apply relative grid h-max grid-cols-[1fr_2fr_1fr] grid-rows-[auto_auto_auto] gap-5 gap-x-2.5 items-center py-12.5 px-3.75 w-full md:max-w-[90%] bg-transparent z-15 content-center;
 }
 
 .info_container {
@@ -101,11 +79,11 @@ i {
 
 @media (max-width: 768px) {
 	.project_page_container {
-		@apply flex flex-col w-full h-fit m-0 py-[30px] px-5 gap-y-5 overflow-scroll bg-transparent;
+		@apply flex flex-col w-full h-fit m-0 py-7.5 px-5 gap-y-5 overflow-scroll bg-transparent;
 	}
 
 	.media_cont {
-		@apply w-full h-fit gap-y-5 static justify-start mb-[50px];
+		@apply w-full h-fit gap-y-5 static justify-start mb-12.5;
 	}
 
 	.media_cont > :nth-child(1),

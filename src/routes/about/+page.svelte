@@ -62,7 +62,7 @@
 	<link rel="canonical" href={meta.url} />
 </svelte:head>
 
-<main class="project_page_container justify-center">
+<main class="project_page_container justify-center gap-4">
 	<div class="col-2 row-span-1 w-full h-fit flex flex-row gap-2 justify-between">
 		<div class="flex flex-row gap-2">
 			<Button label="← GO BACK" href="back" />

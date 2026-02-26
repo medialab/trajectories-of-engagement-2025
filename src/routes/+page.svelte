@@ -54,7 +54,7 @@
 		<div class="flex flex-col gap-2 bg-primary-light p-2">
 			<h1 class="uppercase">Trajectories<br />of engagement</h1>
 			{#if data.abstract}
-				<p class="line-clamp-5 md:line-clamp-12 w-[90%] md:w-[50ch]">
+				<p class="line-clamp-6 w-[90%] md:w-[50ch]">
 					{@html data.abstract}
 				</p>
 			{/if}

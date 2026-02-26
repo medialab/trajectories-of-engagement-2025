@@ -133,9 +133,9 @@
 	</div>
 
 	<div
-		class="w-full px-4 z-10 bg-primary-light bg-[color-mix(in_srgb,var(--color-primary-light)_95%,transparent)] max-md:relative max-md:top-unset max-md:left-0 max-md:right-0 max-md:transform-none max-md:max-w-none max-md:h-max max-md:bg-transparent max-md:mt-0 max-md:mb-[-5] max-md:bg-primary-light bg-neutral-100"
+		class="w-full px-4 z-10 bg-primary-light bg-opacity-50 max-md:relative max-md:top-unset max-md:left-0 max-md:right-0 max-md:transform-none max-md:max-w-none max-md:h-max max-md:mt-0 max-md:mb-[-5]"
 	>
-		<table class="text-left w-full font-normal border-separate border-spacing-y-[-2.5]">
+		<table class="text-left w-full font-normal border-separate border-spacing-y-5">
 			<thead class="bg-primary font-semibold max-md:hidden">
 				<tr>
 					<th
@@ -205,10 +205,12 @@
 					</th>
 				</tr>
 			</thead>
-			<tbody class="before:content-[''] before:block before:h-[-2.5] max-md:before:h-0">
+			<tbody
+				class="before:content-[''] before:block before:h-[-2.5] max-md:before:h-0 gap-2 border-spacing-2"
+			>
 				{#each sortedProjects() as project, index}
 					<tr
-						class="cursor-pointer hover:bg-primary hover:text-[#949494]"
+						class="cursor-pointer hover:bg-primary hover:text-[#949494] py-20"
 						onclick={(e) => {
 							e.stopPropagation();
 							const resolvedPath = resolve(`/projects/${project.metadata.id}`);

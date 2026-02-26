@@ -48,7 +48,7 @@
 	{/if}
 
 	<div
-		id="title_container"
+		id="hero_title_container"
 		class="fixed flex flex-col gap-2 md:w-fit w-full p-4 2xl:p-6 z-20 h-fit top-0 left-0"
 	>
 		<div class="flex flex-col gap-2 bg-primary-light p-2">

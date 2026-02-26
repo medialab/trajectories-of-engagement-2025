@@ -153,7 +153,7 @@
 			y={m.y - 11}
 			width="22"
 			height="22"
-			fill="var(--primary-color)"
+			fill="var(--color-primary)"
 			{opacity}
 			{stroke}
 			stroke-width={strokeWidth}

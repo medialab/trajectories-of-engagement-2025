@@ -119,14 +119,18 @@
 </script>
 
 {#if hasPosters}
-	<div class="post_img">
+	<div
+		class="max-w-full h-auto rounded-none pointer-events-none relative overflow-hidden outline aspect-[0.69] w-full md:w-[80%]"
+	>
 		<p
-			class="mix_value cursor-grab text-base!"
+			class="mix_value cursor-grab text-base! absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-[1px_5px] bg-primary outline outline-1 outline-black origin-center"
 			style="left: {Math.max(12, Math.min(88, Math.round(mixValue)))}%; white-space: nowrap"
 		>
 			← Grab me →
 		</p>
-		<div class="slid_cont horizontal_flex">
+		<div
+			class="slid_cont flex flex-row gap-[-2.5] absolute h-full w-full z-10 outline outline-1 outline-black justify-between items-center p-0 pointer-events-all mix-normal"
+		>
 			<input
 				class="mix_slider"
 				type="range"
@@ -139,19 +143,19 @@
 			<label for="fading" style="display: none">Fade</label>
 		</div>
 		<img
-			class="base_img"
+			class="h-full w-full object-cover object-top absolute top-0 left-0 z-2"
 			src={props.originalPoster}
 			alt={safeId}
 			style="opacity: {1 - mixOpacity};"
 		/>
 		<img
-			class="blend_img"
+			class="h-full w-full object-cover object-top absolute top-0 left-0 z-2"
 			src={props.annotatedPoster}
 			alt={safeId ? `${safeId}_annotated` : ''}
 			style="opacity: {mixOpacity};"
 		/>
 		<button
-			class="download_btn"
+			class="download_btn absolute bottom-0 right-0 z-12 p-[5px] bg-primary outline outline-1 outline-primary-dark pointer-events-all rounded-tl-[5px]"
 			onclick={() => downloadPoster(props.annotatedPoster, props.originalPoster, safeId)}
 			aria-label="Download poster"
 			aria-busy={isDownloading}
@@ -164,44 +168,22 @@
 			>
 		</button>
 		{#if downloadError}
-			<p class="download_error">{downloadError}</p>
+			<p
+				class="download_error absolute left-[5px] bottom-[5px] z-13 p-[2px_5px] bg-primary-light outline outline-primary-dark"
+			>
+				{downloadError}
+			</p>
 		{/if}
-		<div class="bg_back"></div>
+		<div class="bg_back absolute inset-0 bg-primary-dark z-0"></div>
 	</div>
 {/if}
 
 <style>
-	.mix_value {
-		position: absolute;
-		z-index: 20;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		padding: 1px var(--space-xs);
-		background-color: var(--primary-color);
-		outline: 1px solid black;
-		transform-origin: center;
-	}
-
-	.slid_cont {
-		height: 100%;
-		width: 100%;
-		position: absolute;
-		background-color: transparent;
-		z-index: 10;
-		outline: 1px solid black;
-		justify-content: space-between;
-		align-items: center;
-		padding: 0px;
-		pointer-events: all !important;
-		mix-blend-mode: normal;
-	}
-
 	.mix_slider {
 		width: 110%;
 		-webkit-appearance: none;
 		appearance: none;
-		border-radius: var(--space-xs);
+		border-radius: 5px;
 		outline: 0px solid black;
 		pointer-events: all;
 		background-color: transparent;
@@ -215,20 +197,20 @@
 	.mix_slider::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
-		width: var(--space-m);
+		width: 10px;
 		height: 2000px;
-		background: var(--primary-color);
+		background: var(--color-primary);
 		cursor: inherit;
-		border-radius: var(--space-xs);
+		border-radius: 5px;
 		outline: 1px solid black;
 	}
 
 	.mix_slider::-moz-range-thumb {
-		width: var(--space-m);
+		width: 10px;
 		height: 2000px;
-		background: var(--primary-color);
+		background: var(--color-primary);
 		cursor: inherit;
-		border-radius: var(--space-xs);
+		border-radius: 5px;
 		outline: 1px solid black;
 	}
 
@@ -252,59 +234,9 @@
 
 	.mix_slider::-webkit-slider-track {
 		width: 100%;
-		height: var(--space-2xs);
-		border-radius: var(--space-3xs);
+		height: 4px;
+		border-radius: 2px;
 		outline: 1px solid black;
-	}
-
-	.post_img {
-		width: 80%;
-		max-width: 100%;
-		height: auto;
-		border-radius: 0px;
-		pointer-events: none;
-		position: relative;
-		overflow: hidden;
-		outline: 0.5px solid black;
-		aspect-ratio: 0.69;
-		mix-blend-mode: normal;
-	}
-
-	.post_img > img {
-		height: 100%;
-		width: 100%;
-		object-fit: cover;
-		object-position: top;
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 2;
-	}
-
-	.base_img {
-		z-index: 1;
-	}
-
-	.bg_back {
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		background-color: var(--primary-dark);
-		z-index: 0;
-	}
-
-	.download_btn {
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		z-index: 12;
-		padding: var(--space-xs);
-		background-color: var(--primary-color);
-		outline: 1px solid var(--primary-dark);
-		pointer-events: all;
-		border-radius: var(--space-xs) 0px 0px 0px;
 	}
 
 	.download_btn:hover {
@@ -319,17 +251,17 @@
 	.download_btn svg {
 		width: 25px;
 		height: 21px;
-		fill: var(--primary-dark);
+		fill: var(--color-primary-dark);
 	}
 
 	.download_error {
 		position: absolute;
-		left: var(--space-xs);
-		bottom: var(--space-xs);
+		left: 5px;
+		bottom: 5px;
 		z-index: 13;
-		padding: 2px var(--space-xs);
-		background-color: var(--primary-light);
-		outline: 1px solid var(--primary-dark);
+		padding: 2px 5px;
+		background-color: var(--color-primary-light);
+		outline: 1px solid var(--color-primary-dark);
 	}
 
 	@media (max-width: 768px) {

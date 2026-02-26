@@ -62,19 +62,26 @@
 	<link rel="canonical" href={meta.url} />
 </svelte:head>
 
-<main class="main_container justify-center">
-	<Header />
-	<div class="about_container vertical_flex relative w-1/2 px-4 pt-4 my-16 z-10 place-self-center">
+<main class="project_page_container justify-center">
+	<div class="col-2 row-span-1 w-full h-fit flex flex-row gap-2 justify-between">
+		<div class="flex flex-row gap-2">
+			<Button label="← GO BACK" href="back" />
+			<Button label="HOME" href="/" />
+		</div>
+	</div>
+	<div
+		class="col-2 flex flex-col gap-[-2.5] relative w-full z-30 place-self-center bg-neutral-100 max-md:w-full max-md:top-auto max-md:left-auto max-md:transform-none max-md:items-start max-md:static max-md:mt-[-20]"
+	>
 		<h1>About this project</h1>
 		{#await aboutText then text}
-			<p>
+			<p class="whitespace-pre-line">
 				{@html text}
 			</p>
 		{:catch}
 			<p>Content is temporarily unavailable.</p>
 		{/await}
 
-		<div class="credits vertical_flex">
+		<div class="flex flex-col gap-[-2.5] w-full mb-12">
 			<p><b>Credits</b></p>
 			<p><span>Project design:</span>Marta Severo, Donato Ricci, Robin de Mourat</p>
 			<p><span>Chapters editing:</span>Élie Petit, Marta Severo, Donato Ricci</p>
@@ -87,41 +94,7 @@
 			</p>
 			<p><span>Videos captation and editing:</span> la SCOP des sales gosses</p>
 		</div>
-		<Button label="Get in touch with us" href="mailto:trajectoriesofengagement@sciencespo.fr" />
+		<Button label="Get in touch with us" href="mailto:robin.demourat@sciencespo.fr" />
+		<Footer />
 	</div>
-	<Footer />
 </main>
-
-<style>
-	.about_container {
-		position: relative;
-		height: max-content;
-		top: 10%;
-		row-gap: var(--space-xl);
-		background-color: var(--primary-light);
-		white-space: pre-line;
-		justify-content: flex-start;
-		align-items: center;
-		z-index: 10;
-	}
-
-	.credits {
-		width: 100%;
-		align-items: flex-start;
-		row-gap: var(--space-xs);
-		outline: 2px solid var(--primary-dark);
-		padding-top: var(--space-m);
-	}
-
-	@media (max-width: 768px) {
-		.about_container {
-			width: 100%;
-			top: unset;
-			left: unset;
-			transform: unset;
-			align-items: flex-start;
-			position: static;
-			margin-top: var(--space-6xl);
-		}
-	}
-</style>

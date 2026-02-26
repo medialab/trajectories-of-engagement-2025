@@ -481,7 +481,11 @@
 {/snippet}
 
 {#if renderCount === 0}
-	<div class="carousel_notice">No data to be displayed</div>
+	<div
+		class="carousel_notice fixed top-[-5] left-1/2 -translate-x-1/2 p-[5px_-2.5] bg-primary-light text-sm z-2 pointer-events-none"
+	>
+		No data to be displayed
+	</div>
 {:else if renderCount !== 0 && props.loadstatus}
 	<T.Group rotation={[0.3, -0.5, 0]}>
 		{#each renderableProjects as item, index}
@@ -521,26 +525,9 @@
 <T.AmbientLight intensity={1000} color="white" />
 
 {#if hasMissingData}
-	<div class="carousel_notice subtle">Some items have no data to display</div>
+	<div
+		class="carousel_notice subtle fixed bottom-[-5] left-1/2 -translate-x-1/2 p-[5px_-2.5] bg-primary-light text-xs z-2 pointer-events-none opacity-70"
+	>
+		Some items have no data to display
+	</div>
 {/if}
-
-<style>
-	.carousel_notice {
-		position: fixed;
-		top: var(--space-xl);
-		left: 50%;
-		transform: translateX(-50%);
-		padding: var(--space-xs) var(--space-m);
-		background-color: var(--primary-light);
-		font-size: 14px;
-		z-index: 2;
-		pointer-events: none;
-	}
-
-	.carousel_notice.subtle {
-		top: auto;
-		bottom: var(--space-xl);
-		font-size: 12px;
-		opacity: 0.7;
-	}
-</style>

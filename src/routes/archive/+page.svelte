@@ -17,6 +17,7 @@
 	let isMobileFlag = $state(isMobile());
 
 	let sortedBy = $state('year');
+	let sortOrder = $state<'asc' | 'desc'>('asc');
 	const meta = pageMeta.archive;
 
 	const toText = (value: unknown) => (value == null ? '' : String(value));
@@ -47,16 +48,32 @@
 	const sortedProjects = $derived(() => {
 		const arr = [...data.projects];
 		const key = sortedBy;
+		const orderMultiplier = sortOrder === 'asc' ? 1 : -1;
+
 		return arr.sort((a, b) => {
 			const av = getKeyValue(a, key);
 			const bv = getKeyValue(b, key);
-			if (typeof av === 'number' && typeof bv === 'number') return av - bv;
-			return String(av).localeCompare(String(bv), undefined, {
-				numeric: true,
-				sensitivity: 'base'
-			});
+			let cmp = 0;
+			if (typeof av === 'number' && typeof bv === 'number') {
+				cmp = av - bv;
+			} else {
+				cmp = String(av).localeCompare(String(bv), undefined, {
+					numeric: true,
+					sensitivity: 'base'
+				});
+			}
+			return cmp * orderMultiplier;
 		});
 	});
+
+	function handleSort(key: string) {
+		if (sortedBy === key) {
+			sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+		} else {
+			sortedBy = key;
+			sortOrder = 'asc';
+		}
+	}
 
 	onMount(() => {
 		let lenis: any = null;
@@ -76,6 +93,18 @@
 		};
 	});
 </script>
+
+{#snippet sortArrow(key: string)}
+	<span
+		class="transition-all duration-300 inline-block {sortedBy === key
+			? 'opacity-100'
+			: 'opacity-0 group-hover:opacity-50'} {sortedBy === key && sortOrder === 'desc'
+			? 'rotate-180'
+			: ''}"
+	>
+		↑
+	</span>
+{/snippet}
 
 <svelte:head>
 	<title>{meta.title}</title>
@@ -97,180 +126,119 @@
 	<Header />
 	<div class="relative w-fit p-4 mt-16">
 		{#if !isMobileFlag}
-			<h1 class="uppercase">Trajectories of engagement</h1>
+			<h1 class="uppercase bg-neutral-100">Trajectories of engagement</h1>
 		{:else}
 			<h1>ARCHIVE</h1>
 		{/if}
 	</div>
 
-	<div class="t_container w-full px-4">
-		<table class="archive_table">
-			<thead class="t_header">
+	<div
+		class="w-full px-4 z-10 bg-primary-light bg-[color-mix(in_srgb,var(--color-primary-light)_95%,transparent)] max-md:relative max-md:top-unset max-md:left-0 max-md:right-0 max-md:transform-none max-md:max-w-none max-md:h-max max-md:bg-transparent max-md:mt-0 max-md:mb-[-5] max-md:bg-primary-light bg-neutral-100"
+	>
+		<table class="text-left w-full font-normal border-separate border-spacing-y-[-2.5]">
+			<thead class="bg-primary font-semibold max-md:hidden">
 				<tr>
-					<th scope="col" style="width: 5%;" onclick={() => (sortedBy = 'index')}
-						><button class="cursor-pointer"><p>(N) {sortedBy === 'index' ? '↑' : ''}</p></button
-						></th
-					>
-					<th scope="col" style="width: 10%;" id="year" onclick={() => (sortedBy = 'year')}
-						><button class="cursor-pointer"><p>Dates {sortedBy === 'year' ? '↑' : ''}</p></button
-						></th
-					>
-					<th scope="col" style="width: 30%;" id="title" onclick={() => (sortedBy = 'title')}
-						><button class="cursor-pointer"><p>Title {sortedBy === 'title' ? '↑' : ''}</p></button
-						></th
-					>
 					<th
 						scope="col"
-						style="width: 15%;"
+						class="w-[5%] p-[5px_5px_5px_0px] group"
+						onclick={() => handleSort('index')}
+					>
+						<button class="cursor-pointer flex items-center gap-1">
+							<p>(N)</p>
+							{@render sortArrow('index')}
+						</button>
+					</th>
+					<th
+						scope="col"
+						class="w-[10%] p-[5px_5px_5px_0px] group"
+						id="year"
+						onclick={() => handleSort('year')}
+					>
+						<button class="cursor-pointer flex items-center gap-1">
+							<p>Dates</p>
+							{@render sortArrow('year')}
+						</button>
+					</th>
+					<th
+						scope="col"
+						class="w-[30%] p-[5px_5px_5px_0px] group"
+						id="title"
+						onclick={() => handleSort('title')}
+					>
+						<button class="cursor-pointer flex items-center gap-1">
+							<p>Title</p>
+							{@render sortArrow('title')}
+						</button>
+					</th>
+					<th
+						scope="col"
+						class="w-[15%] p-[5px_5px_5px_0px] group"
 						id="project_leaders"
-						onclick={() => (sortedBy = 'project_leaders')}
-						><button class="cursor-pointer"
-							><p>Author {sortedBy === 'project_leaders' ? '↑' : ''}</p></button
-						></th
+						onclick={() => handleSort('project_leaders')}
 					>
+						<button class="cursor-pointer flex items-center gap-1">
+							<p>Author</p>
+							{@render sortArrow('project_leaders')}
+						</button>
+					</th>
 					<th
 						scope="col"
-						style="width: 25%;"
+						class="w-[25%] p-[5px_5px_5px_0px] group"
 						id="research_center"
-						onclick={() => (sortedBy = 'research_center')}
-						><button class="cursor-pointer"
-							><p>University {sortedBy === 'research_center' ? '↑' : ''}</p></button
-						></th
+						onclick={() => handleSort('research_center')}
 					>
+						<button class="cursor-pointer flex items-center gap-1">
+							<p>University</p>
+							{@render sortArrow('research_center')}
+						</button>
+					</th>
 					<th
 						scope="col"
-						style="width: 15%;"
+						class="w-[15%] p-[5px_5px_5px_0px] group"
 						id="link"
-						onclick={() => (sortedBy = 'presentationURL')}
-						><button class="cursor-pointer"
-							><p>Link {sortedBy === 'presentationURL' ? '↑' : ''}</p></button
-						></th
+						onclick={() => handleSort('presentationURL')}
 					>
+						<button class="cursor-pointer flex items-center gap-1">
+							<p>Link</p>
+							{@render sortArrow('presentationURL')}
+						</button>
+					</th>
 				</tr>
 			</thead>
-			<tbody class="t_body">
+			<tbody class="before:content-[''] before:block before:h-[-2.5] max-md:before:h-0">
 				{#each sortedProjects() as project, index}
 					<tr
-						id="row"
-						class="cursor-pointer"
+						class="cursor-pointer hover:bg-primary hover:text-[#949494]"
 						onclick={(e) => {
 							e.stopPropagation();
 							const resolvedPath = resolve(`/projects/${project.metadata.id}`);
 							goto(resolvedPath);
 						}}
 					>
-						<th scope="row" class="t_num"><p>({index + 1})</p></th>
-						<td id="year"><p>{safeTrim(project.metadata?.year)}</p></td>
-						<td id="title"><p>{safeTrim(project.metadata?.title)}</p></td>
-						<td id="project_leaders"><p>{safeTrim(project.metadata?.project_leaders)}</p></td>
-						<td id="research_center"><p>{safeTrim(project.metadata?.research_center)}</p></td>
-						<td id="link"><p>{safeTrim(project.presentationURL)}</p></td>
+						<th scope="row" class="text-[#949494] font-normal align-top max-md:p-[0px_-5_0px_0px]">
+							<p>({index + 1})</p>
+						</th>
+						<td class="align-top text-start max-md:hidden" id="year">
+							<p>{safeTrim(project.metadata?.year)}</p>
+						</td>
+						<td class="align-top text-start" id="title">
+							<p>{safeTrim(project.metadata?.title)}</p>
+						</td>
+						<td class="align-top text-start max-md:hidden" id="project_leaders">
+							<p>{safeTrim(project.metadata?.project_leaders)}</p>
+						</td>
+						<td class="align-top text-start max-md:hidden" id="research_center">
+							<p>{safeTrim(project.metadata?.research_center)}</p>
+						</td>
+						<td
+							class="align-top text-start overflow-hidden text-ellipsis whitespace-nowrap max-md:hidden"
+							id="link"
+						>
+							<p>{safeTrim(project.presentationURL)}</p>
+						</td>
 					</tr>
 				{/each}
 			</tbody>
 		</table>
 	</div>
 </main>
-
-<style>
-	.t_container {
-		z-index: 10;
-		background-color: var(--primary-light);
-		background-color: color-mix(in srgb, var(--primary-light) 95%, transparent);
-	}
-
-	.archive_table {
-		text-align: left;
-		width: 100%;
-		font-weight: 400;
-		border-collapse: separate;
-		border-spacing: 0 var(--space-m);
-	}
-
-	.archive_table tbody::before {
-		content: '';
-		display: block;
-		height: var(--space-m);
-	}
-
-	.t_header {
-		background-color: var(--primary-color);
-		font-weight: 600;
-	}
-
-	.t_header th {
-		padding: var(--space-xs) var(--space-xs) var(--space-xs) 0px;
-		outline: 2px solid #000;
-	}
-
-	.t_header th:first-child {
-		outline: 2px solid #000;
-	}
-	.t_header th:last-child {
-		outline: 2px solid #000;
-	}
-
-	.t_num {
-		color: #949494;
-		font-weight: 400;
-		vertical-align: top;
-	}
-
-	#row:hover {
-		background-color: var(--primary-color);
-		color: #949494;
-	}
-
-	#row {
-		cursor: pointer;
-	}
-
-	#link {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
-	td {
-		vertical-align: top;
-		justify-items: start;
-		text-align: start;
-	}
-
-	@media (max-width: 768px) {
-		.t_header {
-			display: none;
-		}
-
-		.t_container {
-			position: relative;
-			top: unset;
-			left: 0;
-			right: 0;
-			transform: none;
-			width: 100%;
-			max-width: none;
-			height: max-content;
-			background-color: unset;
-			margin-top: 0px;
-			margin-bottom: var(--space-xl);
-			background-color: var(--primary-light);
-			z-index: 10;
-		}
-
-		#year,
-		#project_leaders,
-		#research_center,
-		#link {
-			display: none;
-		}
-
-		.archive_table tbody::before {
-			height: 0px;
-		}
-
-		.t_num {
-			padding: 0px var(--space-xl) 0px 0px;
-		}
-	}
-</style>

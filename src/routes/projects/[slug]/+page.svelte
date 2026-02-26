@@ -92,7 +92,7 @@
 			</div>
 		</div>
 		<div class="flex flex-col info_container gap-8">
-			<div class="vertical_flex bg-[#f5f5f5] gap-4">
+			<div class="flex flex-col gap-[-2.5] bg-primary-light gap-4">
 				<h1 id="pr_title">{displayTitle}</h1>
 				{#if projectYear || projectLeaders || projectResearchCenter}
 					<p style="font-weight: bold;">
@@ -107,14 +107,16 @@
 					<p>No presentation text available</p>
 				{/if}
 			</div>
-			<div class="flex flex-col bg-[#f5f5f5] gap-4">
+			<div class="flex flex-col bg-primary-light gap-4">
 				<Accordion text={data.project.texts?.experience ?? ''} title="Experience" />
 				<Accordion text={data.project.texts?.concept ?? ''} title="Concept" />
 				{#if hasSegments}
 					<svelte:boundary>
 						<Vid src={mainYtb} excerpts={data.project.excerpts} />
 						{#snippet failed(_error, reset)}
-							<div class="vid_boundary_fallback">
+							<div
+								class="vid_boundary_fallback flex flex-col gap-[-2.5] items-start p-[-4] outline-2 outline-primary-dark bg-primary-light"
+							>
 								<p>Video unavailable.</p>
 								<button type="button" onclick={reset}>Retry</button>
 							</div>
@@ -128,7 +130,9 @@
 			<svelte:boundary>
 				<Vid title={projectTitle || fallbackTitle} src={data.project.presentationURL} />
 				{#snippet failed(_error, reset)}
-					<div class="vid_boundary_fallback">
+					<div
+						class="vid_boundary_fallback flex flex-col gap-[-2.5] items-start p-[-4] outline-2 outline-primary-dark bg-primary-light"
+					>
 						<p>Video unavailable.</p>
 						<button type="button" onclick={reset}>Retry</button>
 					</div>
@@ -141,11 +145,11 @@
 			/>
 		</div>
 	{:else}
-		<div class="vertical_flex info_container" style="row-gap: var(--space-2xl);">
-			<div class="vertical_flex">
+		<div class="flex flex-col gap-[-2.5] info_container" style="row-gap: -8;">
+			<div class="flex flex-col gap-[-2.5]">
 				<h1 id="pr_title">Project Not Found</h1>
 				<p>We couldn't find the project you're looking for.</p>
-				<div style="margin-top: var(--space-xl); pointer-events: auto;">
+				<div style="margin-top: -5; pointer-events: auto;">
 					<Button label="← BACK TO PROJECTS" href="/projects" />
 				</div>
 			</div>
@@ -154,15 +158,3 @@
 </div>
 
 <Footer />
-
-<style>
-	.vid_boundary_fallback {
-		display: flex;
-		flex-direction: column;
-		row-gap: var(--space-m);
-		align-items: flex-start;
-		padding: var(--space-l);
-		outline: 2px solid var(--primary-dark);
-		background-color: var(--primary-light);
-	}
-</style>

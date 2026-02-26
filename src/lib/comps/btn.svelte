@@ -76,7 +76,9 @@
 <button
 	type="button"
 	data-sveltekit-reload
-	class="generic_btn active:scale-[98%] focus:scale-[98%] transition-all ease-in-out duration-125 h-[40px]"
+	class="generic_btn active:scale-[98%] focus:scale-[98%] transition-all ease-in-out duration-125 h-[40px] {props?.img
+		? 'aspect-square'
+		: ''}"
 	class:disabled={props?.disabled === true}
 	onclick={() => {
 		if (props.onClick) {
@@ -94,9 +96,8 @@
 		</p>
 	{/if}
 
-	{#if props?.img && !hasBeenClicked}
+	{#if props?.img}
 		<div
-			class="aspect-square h-fill w-auto"
 			out:slide={{ duration: 350, easing: cubicInOut, axis: 'y' }}
 			in:slide={{ duration: 350, easing: cubicInOut, axis: 'y', delay: 1200 }}
 		>
@@ -111,12 +112,12 @@
 
 <style>
 	.generic_btn {
-		background-color: var(--primary-color);
+		background-color: var(--color-primary);
 	}
 
 	.generic_btn:active {
-		background-color: var(--primary-dark) !important;
-		color: var(--primary-color);
+		background-color: var(--color-primary-dark) !important;
+		color: var(--color-primary);
 	}
 
 	.generic_btn:active img {

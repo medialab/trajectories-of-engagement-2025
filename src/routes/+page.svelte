@@ -42,10 +42,7 @@
 
 <main class="main_container h-screen h-dvh">
 	{#if !$isTextureReady}
-		<section
-			class="loader_screen w-full h-full fixed z-100"
-			out:fade={{ duration: 1000, easing: cubicOut, delay: 1000 }}
-		>
+		<section class="loader_screen w-full h-full fixed z-100">
 			<p out:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 200 }}>Loading...</p>
 		</section>
 	{/if}
@@ -53,9 +50,8 @@
 	<div
 		id="title_container"
 		class="fixed flex flex-col gap-2 md:w-fit w-full p-4 2xl:p-6 z-20 h-fit top-0 left-0"
-		transition:slide={{ duration: 1000, easing: cubicOut, axis: 'y', delay: 600 }}
 	>
-		<div class="flex flex-col gap-2 bg-[#f5f5f5] p-2">
+		<div class="flex flex-col gap-2 bg-primary-light p-2">
 			<h1 class="uppercase">Trajectories<br />of engagement</h1>
 			{#if data.abstract}
 				<p class="line-clamp-5 md:line-clamp-12 w-[90%] md:w-[50ch]">
@@ -154,7 +150,7 @@
 	}
 
 	.loader_screen {
-		background-color: var(--primary-light);
+		background-color: var(--color-primary-light);
 		top: 0;
 		left: 0;
 		z-index: 300;
@@ -185,8 +181,8 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-m);
-		background-color: var(--primary-light);
+		gap: -2.5;
+		background-color: var(--color-primary-light);
 		z-index: 40;
 	}
 </style>

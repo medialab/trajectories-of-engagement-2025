@@ -9,6 +9,7 @@
 	import infoIcon from '$lib/assets/icons/info.svg';
 	import checkIcon from '$lib/assets/icons/check.svg';
 	import { setupLenis, baseUrl } from '$lib/utils';
+	import Lenis from 'lenis';
 	import { getProjectMeta, getProjectJsonLdScript, siteName } from '$lib/seo';
 	import { onMount } from 'svelte';
 
@@ -47,7 +48,7 @@
 	let projectJsonLdScript = $derived(getProjectJsonLdScript(project));
 
 	onMount(() => {
-		let lenis: any = null;
+		let lenis: Lenis | null = null;
 		const controller = new AbortController();
 
 		void setupLenis(undefined, controller.signal).then((l) => {

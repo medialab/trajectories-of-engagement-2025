@@ -1,6 +1,4 @@
 <script lang="ts">
-	let props = $props();
-
 	import { T, useThrelte } from '@threlte/core';
 	import { useTexture, transitions } from '@threlte/extras';
 	import { onMount, onDestroy } from 'svelte';
@@ -20,6 +18,25 @@
 
 	const { invalidate } = useThrelte();
 
+	type CarouselProps = {
+		containerEl?: HTMLElement;
+		onHoverPoster?: () => void;
+		projects?: ProjectRecord[];
+		posters?: Record<string, string>;
+		loadstatus?: boolean;
+		introDelayMs?: number;
+		deformationStrength?: number;
+	};
+
+	type GeometryWithParameters = ThreeMesh['geometry'] & {
+		parameters?: {
+			width?: unknown;
+			height?: unknown;
+		};
+	};
+
+	let props: CarouselProps = $props();
+
 	let scrollY = $state(0);
 
 	let scrollFactor = carouselConfig.scrollFactor;
@@ -34,19 +51,16 @@
 	let hasIntroPlayed = $state(false);
 
 	let windVelocity = $state(0);
-	const windDamping = (carouselConfig.wind as { damping?: number })?.damping ?? 0.92;
+	const windDamping = carouselConfig.wind.damping;
 	const windEpsilon = 0.0005;
 
 	const introDelayMs = $derived.by(() =>
-		typeof (props as { introDelayMs?: number })?.introDelayMs === 'number'
-			? (props as { introDelayMs?: number }).introDelayMs
-			: 0
+		typeof props.introDelayMs === 'number' ? props.introDelayMs : 0
 	);
 
 	$effect(() => {
-		if ((props as { deformationStrength?: number })?.deformationStrength !== undefined) {
-			deformationStrength = (props as { deformationStrength?: number })
-				.deformationStrength as number;
+		if (props.deformationStrength !== undefined) {
+			deformationStrength = props.deformationStrength;
 		}
 	});
 
@@ -223,7 +237,7 @@
 				originalZByMesh.set(mesh, baseZ);
 			}
 
-			const geomParams = (mesh.geometry as any)?.parameters ?? {};
+			const geomParams = (mesh.geometry as GeometryWithParameters).parameters ?? {};
 			const width = typeof geomParams.width === 'number' ? geomParams.width : 1;
 			const height = typeof geomParams.height === 'number' ? geomParams.height : 1;
 			const halfW = width / 2;

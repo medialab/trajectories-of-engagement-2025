@@ -11,7 +11,7 @@
 	import { cubicOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
 	import { setupLenis } from '$lib/utils';
-	import Lenis from 'lenis';
+	import type Lenis from 'lenis';
 
 	let { data }: PageProps = $props();
 

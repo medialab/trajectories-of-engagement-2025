@@ -6,7 +6,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { cubicOut } from 'svelte/easing';
 	import { interactivity, useCursor } from '@threlte/extras';
-	import type { Mesh as ThreeMesh } from 'three';
+	import type { Mesh as ThreeMesh, Texture } from 'three';
 	import { browser } from '$app/environment';
 	import { currentTag, currentAuthor, currentResearchCenter, carouselConfig } from '$lib/utils';
 	import { goto } from '$app/navigation';
@@ -15,6 +15,7 @@
 	import Tempus from 'tempus';
 
 	import { isMobile, isTextureReady, getDeviceType } from '$lib/utils';
+	import type { ProjectRecord } from '$lib/datasource';
 	import { fly } from 'svelte/transition';
 	import { on } from 'svelte/events';
 
@@ -34,22 +35,22 @@
 	let hasIntroPlayed = $state(false);
 
 	let windVelocity = $state(0);
-	const windDamping = (carouselConfig.wind as any)?.damping ?? 0.92;
+	const windDamping = (carouselConfig.wind as { damping?: number })?.damping ?? 0.92;
 	const windEpsilon = 0.0005;
 
 	const introDelayMs = $derived.by(() =>
-		typeof (props as any)?.introDelayMs === 'number' ? (props as any).introDelayMs : 0
+		typeof (props as { introDelayMs?: number })?.introDelayMs === 'number' ? (props as { introDelayMs?: number }).introDelayMs : 0
 	);
 
 	$effect(() => {
-		if ((props as any)?.deformationStrength !== undefined) {
-			deformationStrength = (props as any).deformationStrength as number;
+		if ((props as { deformationStrength?: number })?.deformationStrength !== undefined) {
+			deformationStrength = (props as { deformationStrength?: number }).deformationStrength as number;
 		}
 	});
 
 	const { onPointerEnter: cursorEnter, onPointerLeave } = useCursor();
 
-	const handlePointerEnter = (d?: any) => {
+	const handlePointerEnter = (d?: { title?: string; project_leaders?: string; research_center?: string }) => {
 		if (isMobileFlag) return;
 		cursorEnter();
 		const title = typeof d?.title === 'string' && d.title.trim().length > 0 ? d.title : '';
@@ -79,7 +80,7 @@
 
 	const startZ = carouselConfig.startZ;
 
-	const getProjectId = (project: any) => {
+	const getProjectId = (project: ProjectRecord) => {
 		if (!project?.metadata) return '';
 		const value = project.metadata.id;
 		return typeof value === 'string' ? value.trim() : '';
@@ -94,7 +95,7 @@
 	const projectsList = $derived.by(() => (Array.isArray(props.projects) ? props.projects : []));
 	const renderableProjects = $derived.by(() =>
 		projectsList
-			.map((project: any) => {
+			.map((project: ProjectRecord) => {
 				const id = getProjectId(project);
 				const poster = id ? getPoster(id) : undefined;
 				return { project, id, poster };
@@ -302,7 +303,7 @@
 					if (!$isTextureReady || !props.loadstatus) return;
 					startIntroNudge();
 				},
-				Math.max(0, introDelayMs)
+				Math.max(0, introDelayMs ?? 0)
 			);
 		}
 	});
@@ -395,7 +396,7 @@
 	});
 </script>
 
-{#snippet posterMesh(item: any, index: number, map?: any)}
+{#snippet posterMesh(item: { project: ProjectRecord; id: string; poster?: unknown }, index: number, map?: Texture)}
 	{@const project = item.project}
 	<T.Group
 		plugins={[transitions]}
@@ -411,7 +412,7 @@
 				if (value && !meshes.includes(value)) {
 					meshes.push(value);
 					const rand = (min: number, max: number) => Math.random() * (max - min) + min;
-					meshRand.set(value as any, {
+					meshRand.set(value as ThreeMesh, {
 						curlScale: rand(
 							carouselConfig.randomness.curlScale[0],
 							carouselConfig.randomness.curlScale[1]
@@ -438,20 +439,20 @@
 					});
 				}
 			}}
-			onpointerenter={(e: any) => {
+			onpointerenter={(e: PointerEvent) => {
 				if (!$isTextureReady) return;
 				e.stopPropagation();
 				setHoverTarget(index, carouselConfig.hover.scale);
 				handlePointerEnter(project?.metadata);
 				props.onHoverPoster?.();
 			}}
-			onpointerleave={(e: any) => {
+			onpointerleave={(e: PointerEvent) => {
 				if (!$isTextureReady) return;
 				e.stopPropagation();
 				setHoverTarget(index, 0);
 				onPointerLeave();
 			}}
-			onclick={(e: any) => {
+			onclick={(e: PointerEvent) => {
 				e.stopPropagation();
 				if (!$isTextureReady) return;
 				const resolvedPath = resolve(`/projects/${item.id}`);

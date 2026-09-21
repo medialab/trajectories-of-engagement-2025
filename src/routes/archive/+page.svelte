@@ -11,6 +11,7 @@
 	import { cubicOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
 	import { setupLenis } from '$lib/utils';
+	import Lenis from 'lenis';
 
 	let { data }: PageProps = $props();
 
@@ -76,7 +77,7 @@
 	}
 
 	onMount(() => {
-		let lenis: any = null;
+		let lenis: Lenis | null = null;
 		const controller = new AbortController();
 
 		void setupLenis(undefined, controller.signal).then((l) => {

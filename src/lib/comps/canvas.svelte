@@ -3,21 +3,23 @@
 	import { draw, fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 
-	export let numCurves: number = 2;
-	export let stroke = '#000';
-	export let strokeWidth = 4;
-	export let opacity = 1;
-	export let edgeMargin = 100;
+	let { numCurves = 2, stroke = '#000', strokeWidth = 4, opacity = 1, edgeMargin = 100 }: {
+		numCurves?: number;
+		stroke?: string;
+		strokeWidth?: number;
+		opacity?: number;
+		edgeMargin?: number;
+	} = $props();
 
 	const IN_MS = 1200;
 	const OUT_MS = 600;
 
 	let svgEl: SVGSVGElement;
-	let width = 1000;
-	let height = 1000;
-	let paths: string[] = [];
+	let width = $state(1000);
+	let height = $state(1000);
+	let paths = $state<string[]>([]);
 	let pathEls: SVGPathElement[] = [];
-	let markers: { x: number; y: number }[] = [];
+	let markers = $state<{ x: number; y: number }[]>([]);
 	let loopTimeout: number | null = null;
 
 	function rand(max: number) {

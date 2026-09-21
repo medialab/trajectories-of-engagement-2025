@@ -5,9 +5,9 @@ import { cubicOut } from 'svelte/easing';
 import { tick } from 'svelte';
 import site from '$lib/site.json';
 
-export let currentTag = writable(undefined);
-export let currentAuthor = writable('');
-export let currentResearchCenter = writable('');
+export let currentTag = writable<string>('');
+export let currentAuthor = writable<string>('');
+export let currentResearchCenter = writable<string>('');
 export let menuOpen = writable(false);
 export let isTextureReady = writable(false);
 

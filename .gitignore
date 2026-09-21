@@ -22,5 +22,11 @@ Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# Local Codex artifacts
+# Agent / AI tool artifacts
 .codex-skills-backup-*
+.opencode/
+.agent/
+
+# IDEs
+.vscode/
+.idea/

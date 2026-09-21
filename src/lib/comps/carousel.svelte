@@ -38,18 +38,25 @@
 	const windEpsilon = 0.0005;
 
 	const introDelayMs = $derived.by(() =>
-		typeof (props as { introDelayMs?: number })?.introDelayMs === 'number' ? (props as { introDelayMs?: number }).introDelayMs : 0
+		typeof (props as { introDelayMs?: number })?.introDelayMs === 'number'
+			? (props as { introDelayMs?: number }).introDelayMs
+			: 0
 	);
 
 	$effect(() => {
 		if ((props as { deformationStrength?: number })?.deformationStrength !== undefined) {
-			deformationStrength = (props as { deformationStrength?: number }).deformationStrength as number;
+			deformationStrength = (props as { deformationStrength?: number })
+				.deformationStrength as number;
 		}
 	});
 
 	const { onPointerEnter: cursorEnter, onPointerLeave } = useCursor();
 
-	const handlePointerEnter = (d?: { title?: string; project_leaders?: string; research_center?: string }) => {
+	const handlePointerEnter = (d?: {
+		title?: string;
+		project_leaders?: string;
+		research_center?: string;
+	}) => {
 		if (isMobileFlag) return;
 		cursorEnter();
 		const title = typeof d?.title === 'string' && d.title.trim().length > 0 ? d.title : '';
@@ -391,7 +398,11 @@
 	});
 </script>
 
-{#snippet posterMesh(item: { project: ProjectRecord; id: string; poster?: unknown }, index: number, map?: Texture)}
+{#snippet posterMesh(
+	item: { project: ProjectRecord; id: string; poster?: unknown },
+	index: number,
+	map?: Texture
+)}
 	{@const project = item.project}
 	<T.Group
 		plugins={[transitions]}

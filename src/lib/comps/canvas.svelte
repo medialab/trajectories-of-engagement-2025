@@ -3,7 +3,13 @@
 	import { draw, fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 
-	let { numCurves = 2, stroke = '#000', strokeWidth = 4, opacity = 1, edgeMargin = 100 }: {
+	let {
+		numCurves = 2,
+		stroke = '#000',
+		strokeWidth = 4,
+		opacity = 1,
+		edgeMargin = 100
+	}: {
 		numCurves?: number;
 		stroke?: string;
 		strokeWidth?: number;

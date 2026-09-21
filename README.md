@@ -3,7 +3,7 @@
 
 [![Deploy to GitHub Pages](https://github.com/medialab/trajectories-of-engagement-2025/actions/workflows/sitebuilder.yml/badge.svg?branch=main)](https://github.com/medialab/trajectories-of-engagement-2025/actions/workflows/sitebuilder.yml)
 
-<img width="1624" height="1061" alt="Screenshot 2026-09-21 at 11 40 16" src="https://github.com/user-attachments/assets/3d3a1a98-79b5-48ac-8edb-3265a637f55b" />
+<img width="5088" height="3344" alt="Trajectories of Engagement" src="https://github.com/user-attachments/assets/df944cf2-bbe9-437a-9ceb-487c66fbde0d" />
 
 ## What it is
 
